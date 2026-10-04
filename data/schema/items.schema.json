@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "items",
+  "description": "もちもの一覧。技の威力倍率を変更するものだけに絞り込む（1.1倍系/1.2倍系/1.3倍系）。メガストーンはここに含めない",
+  "type": "object",
+  "required": ["id", "name", "multiplier", "applies_to"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "持ち物の一意なID（ローマ字スラグ、例: life_orb）"
+    },
+    "name": {
+      "type": "string",
+      "description": "持ち物名（日本語、例: いのちのたま）"
+    },
+    "multiplier": {
+      "type": "number",
+      "enum": [1.1, 1.2, 1.3],
+      "description": "技威力への倍率。README指定の1.1/1.2/1.3倍系のみ対象"
+    },
+    "applies_to": {
+      "type": "object",
+      "description": "倍率が適用される対象の指定方法（いずれか1つを指定）",
+      "properties": {
+        "move_type": {
+          "type": ["string", "null"],
+          "description": "特定タイプの技にのみ適用（例: プレート、半減の実系）"
+        },
+        "move_id": {
+          "type": ["string", "null"],
+          "description": "特定の技にのみ適用（技名指定アイテム）"
+        },
+        "move_category": {
+          "type": ["string", "null"],
+          "enum": ["物理", "特殊", "変化", null],
+          "description": "物理/特殊技全般に適用されるタイプ（該当なければnull）"
+        },
+        "all_moves": {
+          "type": "boolean",
+          "default": false,
+          "description": "いのちのたま等、全技に適用される場合はtrue"
+        }
+      }
+    },
+    "side_effect": {
+      "type": ["string", "null"],
+      "description": "倍率以外の副作用（例: いのちのたまの反動ダメージ）。なければnull"
+    }
+  },
+  "additionalProperties": false
+}

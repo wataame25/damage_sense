@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "abilities",
+  "description": "特性一覧。攻撃・防御に関連するものに絞り込み、持久力のようにターン経過/被弾で状態が変わる特性には caution_flag を立てる",
+  "type": "object",
+  "required": ["id", "name", "description", "category", "caution_flag"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "特性の一意なID（ローマ字スラグ、例: stamina）"
+    },
+    "name": {
+      "type": "string",
+      "description": "特性名（日本語、例: じきゅうりょく）"
+    },
+    "description": {
+      "type": "string",
+      "description": "効果の説明文"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["攻撃強化", "防御強化", "持久・回復系", "天候関連", "状態異常関連", "その他"],
+      "description": "README「攻撃や防御に関連する」の絞り込みに使うタグ"
+    },
+    "caution_flag": {
+      "type": "boolean",
+      "description": "ターン経過・被弾・残りHP等で発動条件/効果量が変わる特性はtrue（README「持久力は特に注意」への対応）。出題ロジック側で前提条件の明示が必要"
+    },
+    "effect_modifiers": {
+      "type": "array",
+      "description": "計算式に組み込むための構造化された効果（複数持つ特性もあるため配列）",
+      "items": {
+        "type": "object",
+        "required": ["target", "stat", "multiplier"],
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": ["self", "opponent"],
+            "description": "効果の対象"
+          },
+          "stat": {
+            "type": "string",
+            "description": "影響するステータスまたは技威力（例: attack, defense, move_power）"
+          },
+          "multiplier": {
+            "type": "number",
+            "description": "倍率"
+          },
+          "condition": {
+            "type": ["string", "null"],
+            "description": "発動条件（例: 'HPが1/3以下', '接触技を受けた時'）。条件なしはnull"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

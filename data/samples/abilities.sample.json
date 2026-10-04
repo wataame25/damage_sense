@@ -1,0 +1,61 @@
+[
+  {
+    "id": "stamina",
+    "name": "じきゅうりょく",
+    "description": "攻撃を受けるたびに防御が1段階上がる",
+    "category": "防御強化",
+    "caution_flag": true,
+    "effect_modifiers": [
+      {
+        "target": "self",
+        "stat": "defense",
+        "multiplier": 1.5,
+        "condition": "攻撃技を受けた直後（被弾回数に応じて再計算が必要）"
+      }
+    ]
+  },
+  {
+    "id": "intimidate",
+    "name": "いかく",
+    "description": "登場時に相手の攻撃を1段階下げる",
+    "category": "防御強化",
+    "caution_flag": false,
+    "effect_modifiers": [
+      {
+        "target": "opponent",
+        "stat": "attack",
+        "multiplier": 0.67,
+        "condition": "登場時のみ"
+      }
+    ]
+  },
+  {
+    "id": "drought",
+    "name": "ひでり",
+    "description": "場に出た時、天候を『晴れ』にする",
+    "category": "天候関連",
+    "caution_flag": false,
+    "effect_modifiers": [
+      {
+        "target": "self",
+        "stat": "fire_move_power",
+        "multiplier": 1.5,
+        "condition": "晴れの間、ほのおタイプの技"
+      },
+      {
+        "target": "self",
+        "stat": "water_move_power",
+        "multiplier": 0.5,
+        "condition": "晴れの間、みずタイプの技"
+      }
+    ]
+  },
+  {
+    "id": "regenerator",
+    "name": "さいせいりょく",
+    "description": "引っ込めた時にHPが1/3回復する",
+    "category": "持久・回復系",
+    "caution_flag": true,
+    "effect_modifiers": []
+  }
+]

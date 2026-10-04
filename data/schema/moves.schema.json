@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "moves",
+  "description": "技一覧（技名・タイプ・追加効果に加え、ダメージ計算に必要な最小項目を含む）",
+  "type": "object",
+  "required": ["id", "name", "type", "category", "power", "accuracy", "pp"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "技の一意なID（ローマ字スラグ、例: dragon_dance）"
+    },
+    "name": {
+      "type": "string",
+      "description": "技名（日本語、例: りゅうのまい）"
+    },
+    "type": {
+      "type": "string",
+      "description": "技のタイプ（例: ドラゴン、ノーマル等、全18タイプのいずれか）"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["物理", "特殊", "変化"],
+      "description": "技の分類。ダメージ計算式の分岐に必須（README未記載だが追加した前提項目）"
+    },
+    "power": {
+      "type": ["number", "null"],
+      "description": "威力。変化技はnull"
+    },
+    "accuracy": {
+      "type": ["number", "null"],
+      "description": "命中率（%）。必中技はnull"
+    },
+    "pp": {
+      "type": "integer",
+      "description": "最大PP"
+    },
+    "additional_effect": {
+      "type": ["string", "null"],
+      "description": "追加効果の説明文（例: 10%の確率で相手を火傷状態にする）"
+    },
+    "effect_chance": {
+      "type": ["number", "null"],
+      "description": "追加効果の発生率（%）。発生率のない効果はnull"
+    },
+    "priority": {
+      "type": "integer",
+      "default": 0,
+      "description": "優先度（先制技等）"
+    },
+    "makes_contact": {
+      "type": "boolean",
+      "description": "接触技かどうか（特性・持ち物の発動条件判定に使用）"
+    },
+    "boosts_own_stat": {
+      "type": ["object", "null"],
+      "description": "りゅうのまい等、自身の能力を強化する変化技である場合の詳細。該当しない技はnull",
+      "properties": {
+        "stat": {
+          "type": "string",
+          "enum": ["attack", "sp_attack", "speed", "defense", "sp_defense"]
+        },
+        "stages": {
+          "type": "integer",
+          "description": "変化する段階数（例: +1, +2）"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
