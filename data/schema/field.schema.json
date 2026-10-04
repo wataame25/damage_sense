@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "field",
+  "description": "フィールド（テラスタイプではなくグラス/エレキ/ミスト/サイコ等の『フィールド』）マスタ。恩恵を受けるポケモン・技の判定に使用",
+  "type": "object",
+  "required": ["id", "name", "grounded_only", "move_type_multiplier", "defender_type_multiplier"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "フィールドの一意なID（ローマ字スラグ、例: electric_terrain）"
+    },
+    "name": {
+      "type": "string",
+      "description": "フィールド名（日本語、例: エレキフィールド）"
+    },
+    "grounded_only": {
+      "type": "boolean",
+      "description": "恩恵が『接地しているポケモン』に限定されるか（フィールド効果は原則true）"
+    },
+    "move_type_multiplier": {
+      "type": "object",
+      "description": "接地している攻撃側が該当タイプの技を使った場合の威力倍率。キー=技タイプ、値=倍率。該当なしは空オブジェクト",
+      "additionalProperties": { "type": "number" }
+    },
+    "defender_type_multiplier": {
+      "type": "object",
+      "description": "接地している防御側が該当タイプの技を受けた場合の被ダメージ倍率。キー=技タイプ、値=倍率。該当なしは空オブジェクト",
+      "additionalProperties": { "type": "number" }
+    },
+    "additional_effects": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "威力/被ダメージ倍率以外の付随効果（状態異常防止、先制技無効化等）"
+    }
+  },
+  "additionalProperties": false
+}

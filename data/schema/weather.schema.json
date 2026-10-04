@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "weather",
+  "description": "天候マスタ。晴れ/雨は攻撃側の技威力に好影響、すなあらし/ゆきは防御側の該当タイプに好影響（README該当記述に対応）",
+  "type": "object",
+  "required": ["id", "name", "move_type_multiplier", "defender_stat_multiplier"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "天候の一意なID（ローマ字スラグ、例: sunny）"
+    },
+    "name": {
+      "type": "string",
+      "description": "天候名（日本語、例: はれ）"
+    },
+    "move_type_multiplier": {
+      "type": "object",
+      "description": "攻撃側の技威力への倍率。キー=技タイプ、値=倍率。該当なしは空オブジェクト",
+      "additionalProperties": { "type": "number" }
+    },
+    "defender_stat_multiplier": {
+      "type": "object",
+      "description": "防御側の種族タイプに応じたステータス倍率。キー=ポケモンのタイプ、値={stat, multiplier}。該当なしは空オブジェクト",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["stat", "multiplier"],
+        "properties": {
+          "stat": { "type": "string", "enum": ["defense", "sp_defense"] },
+          "multiplier": { "type": "number" }
+        }
+      }
+    },
+    "additional_effects": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "威力/防御倍率以外の付随効果（命中率変化、ソーラービームの挙動、天候ダメージ等）"
+    }
+  },
+  "additionalProperties": false
+}

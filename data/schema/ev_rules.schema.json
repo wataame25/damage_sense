@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ev_rules",
+  "description": "出題時の努力値(EV)選択ルール。乱数ではなく固定の選択肢から選ぶ（main実行ファイルがこのルールに従って努力値を割り振り、出題時に開示する）",
+  "type": "object",
+  "required": ["attacker", "defender"],
+  "properties": {
+    "attacker": {
+      "type": "object",
+      "description": "攻撃側のEV選択ルール",
+      "required": ["target_stat", "choices"],
+      "properties": {
+        "target_stat": {
+          "type": "string",
+          "description": "出題技の分類に応じて決まる対象ステータス（物理技ならattack、特殊技ならsp_attack）"
+        },
+        "choices": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "対象ステータスのEVとして選択可能な値（2択）"
+        }
+      }
+    },
+    "defender": {
+      "type": "object",
+      "description": "防御側のEV選択ルール",
+      "required": ["default_choices", "targeted_stat_choices", "targeted_stat_rule"],
+      "properties": {
+        "default_choices": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "被弾する技の対象ステータス以外（HP・素早さ・使われない方の防御系ステータス等）のEV選択肢（2択）"
+        },
+        "targeted_stat_rule": {
+          "type": "string",
+          "description": "被弾する技の分類に応じてどちらのステータスが対象になるかの説明（物理技ならdefense、特殊技ならsp_defense）"
+        },
+        "targeted_stat_choices": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "被弾する技の対象ステータス（defenseまたはsp_defense）のEV選択肢（4択）"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

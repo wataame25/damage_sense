@@ -1,0 +1,44 @@
+[
+  {
+    "id": "electric_terrain",
+    "name": "エレキフィールド",
+    "grounded_only": true,
+    "move_type_multiplier": { "でんき": 1.3 },
+    "defender_type_multiplier": {},
+    "additional_effects": [
+      "接地しているポケモンはねむり状態にならない（既にねむっている場合も起きる効果は別途）"
+    ]
+  },
+  {
+    "id": "grassy_terrain",
+    "name": "グラスフィールド",
+    "grounded_only": true,
+    "move_type_multiplier": { "くさ": 1.3 },
+    "defender_type_multiplier": { "じめん": 0.5 },
+    "additional_effects": [
+      "接地しているポケモンはターン終了時に最大HPの1/16回復する",
+      "じめんタイプの技（じしん・じならし・マグニチュード）の威力が半減する（接地している対象が受ける場合）"
+    ]
+  },
+  {
+    "id": "misty_terrain",
+    "name": "ミストフィールド",
+    "grounded_only": true,
+    "move_type_multiplier": {},
+    "defender_type_multiplier": { "ドラゴン": 0.5 },
+    "additional_effects": [
+      "技威力の倍率ボーナスは無い（フェアリー技は強化されない）",
+      "接地しているポケモンは状態異常にならず、能力ランクを下げられない"
+    ]
+  },
+  {
+    "id": "psychic_terrain",
+    "name": "サイコフィールド",
+    "grounded_only": true,
+    "move_type_multiplier": { "エスパー": 1.3 },
+    "defender_type_multiplier": {},
+    "additional_effects": [
+      "接地しているポケモンに対する優先度が0より高い技（先制技）が無効化される"
+    ]
+  }
+]
