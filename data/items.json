@@ -1,0 +1,254 @@
+[
+  {
+    "id": "item_266",
+    "name": "ちからのハチマキ",
+    "multiplier": 1.1,
+    "applies_to": {
+      "move_type": null,
+      "move_id": null,
+      "move_category": "物理",
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_267",
+    "name": "ものしりメガネ",
+    "multiplier": 1.1,
+    "applies_to": {
+      "move_type": null,
+      "move_id": null,
+      "move_category": "特殊",
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_249",
+    "name": "もくたん",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "ほのお",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_242",
+    "name": "じしゃく",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "でんき",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_243",
+    "name": "しんぴのしずく",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "みず",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_239",
+    "name": "きせきのタネ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "くさ",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_244",
+    "name": "するどいくちばし",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "ひこう",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_248",
+    "name": "まがったスプーン",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "エスパー",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_246",
+    "name": "とけないこおり",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "こおり",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_250",
+    "name": "りゅうのキバ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "ドラゴン",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_237",
+    "name": "やわらかいすな",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "じめん",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_241",
+    "name": "くろおび",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "かくとう",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_233",
+    "name": "メタルコート",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "はがね",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_251",
+    "name": "シルクのスカーフ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "ノーマル",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_240",
+    "name": "くろいメガネ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "あく",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_222",
+    "name": "ぎんのこな",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "むし",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_247",
+    "name": "のろいのおふだ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "ゴースト",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_2401",
+    "name": "ようせいのハネ",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": "フェアリー",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": null
+  },
+  {
+    "id": "item_268",
+    "name": "たつじんのおび",
+    "multiplier": 1.2,
+    "applies_to": {
+      "move_type": null,
+      "move_id": null,
+      "move_category": null,
+      "all_moves": true
+    },
+    "side_effect": "効果バツグン（タイプ相性で1倍を超える）の技にのみ適用。等倍以下の技には効果なし"
+  },
+  {
+    "id": "item_270",
+    "name": "いのちのたま",
+    "multiplier": 1.3,
+    "applies_to": {
+      "move_type": null,
+      "move_id": null,
+      "move_category": null,
+      "all_moves": true
+    },
+    "side_effect": "攻撃技を使うと自分の最大HPの1/10のダメージを受ける"
+  },
+  {
+    "id": "item_564",
+    "name": "ノーマルジュエル",
+    "multiplier": 1.3,
+    "applies_to": {
+      "move_type": "ノーマル",
+      "move_id": null,
+      "move_category": null,
+      "all_moves": false
+    },
+    "side_effect": "1度使用すると消費されてなくなる（消費アイテム）"
+  }
+]

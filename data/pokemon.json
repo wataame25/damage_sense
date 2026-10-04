@@ -1,0 +1,2666 @@
+[
+  {
+    "id": "pokemon_0445-00",
+    "name": "ガブリアス",
+    "types": [
+      "ドラゴン",
+      "じめん"
+    ],
+    "abilities": [
+      "ability_8",
+      "ability_24"
+    ],
+    "base_stats": {
+      "hp": 108,
+      "attack": 130,
+      "defense": 95,
+      "sp_attack": 80,
+      "sp_defense": 85,
+      "speed": 102
+    },
+    "moves": [
+      "move_89",
+      "move_446",
+      "move_525",
+      "move_434",
+      "move_53"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 1,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 33.9,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガ化率33.9%だが、通常/メガで技カテゴリ（物理・特殊）が大きく異なり計算の前提が崩れるため、通常ガブリアスに固定して出題する"
+  },
+  {
+    "id": "pokemon_0373-00",
+    "name": "ボーマンダ",
+    "types": [
+      "ドラゴン",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_22",
+      "ability_153"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 135,
+      "defense": 80,
+      "sp_attack": 110,
+      "sp_defense": 80,
+      "speed": 100
+    },
+    "moves": [
+      "move_38",
+      "move_89",
+      "move_349",
+      "move_355",
+      "move_434"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 2,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 97.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0373-01",
+    "name": "メガボーマンダ",
+    "types": [
+      "ドラゴン",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_184"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 145,
+      "defense": 130,
+      "sp_attack": 120,
+      "sp_defense": 90,
+      "speed": 120
+    },
+    "moves": [
+      "move_38",
+      "move_89",
+      "move_349",
+      "move_355",
+      "move_434"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 2,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 97.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0373-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が97.1%（内 ボーマンダナイト 97.1%）と高いため、メガボーマンダに固定して出題する"
+  },
+  {
+    "id": "pokemon_0730-00",
+    "name": "アシレーヌ",
+    "types": [
+      "みず",
+      "フェアリー"
+    ],
+    "abilities": [
+      "ability_67",
+      "ability_204"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 74,
+      "defense": 74,
+      "sp_attack": 126,
+      "sp_defense": 116,
+      "speed": 60
+    },
+    "moves": [
+      "move_585",
+      "move_664",
+      "move_453",
+      "move_227",
+      "move_347"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 3,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0998-00",
+    "name": "セグレイブ",
+    "types": [
+      "ドラゴン",
+      "こおり"
+    ],
+    "abilities": [
+      "ability_115",
+      "ability_270"
+    ],
+    "base_stats": {
+      "hp": 115,
+      "attack": 145,
+      "defense": 92,
+      "sp_attack": 75,
+      "sp_defense": 86,
+      "speed": 87
+    },
+    "moves": [
+      "move_420",
+      "move_89",
+      "move_862",
+      "move_556",
+      "move_14"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 4,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 31.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0998-01",
+    "name": "メガセグレイブ",
+    "types": [
+      "ドラゴン",
+      "こおり"
+    ],
+    "abilities": [
+      "ability_270"
+    ],
+    "base_stats": {
+      "hp": 115,
+      "attack": 175,
+      "defense": 117,
+      "sp_attack": 105,
+      "sp_defense": 101,
+      "speed": 87
+    },
+    "moves": [
+      "move_420",
+      "move_89",
+      "move_862",
+      "move_556",
+      "move_14"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 4,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 31.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0998-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0448-00",
+    "name": "ルカリオ",
+    "types": [
+      "かくとう",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_39",
+      "ability_80",
+      "ability_154"
+    ],
+    "base_stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 70,
+      "sp_attack": 115,
+      "sp_defense": 70,
+      "speed": 90
+    },
+    "moves": [
+      "move_399",
+      "move_417",
+      "move_396",
+      "move_430",
+      "move_410"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 5,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 99.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0448-02",
+    "name": "メガルカリオＺ",
+    "types": [
+      "かくとう",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_317"
+    ],
+    "base_stats": {
+      "hp": 70,
+      "attack": 100,
+      "defense": 70,
+      "sp_attack": 164,
+      "sp_defense": 70,
+      "speed": 151
+    },
+    "moves": [
+      "move_399",
+      "move_417",
+      "move_396",
+      "move_430",
+      "move_410"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 5,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 99.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0448-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が99.1%（内 ルカリオナイトＺ 90.6%）と高いため、メガルカリオＺに固定して出題する"
+  },
+  {
+    "id": "pokemon_0768-00",
+    "name": "グソクムシャ",
+    "types": [
+      "むし",
+      "みず"
+    ],
+    "abilities": [
+      "ability_194"
+    ],
+    "base_stats": {
+      "hp": 75,
+      "attack": 125,
+      "defense": 140,
+      "sp_attack": 60,
+      "sp_defense": 90,
+      "speed": 40
+    },
+    "moves": [
+      "move_442",
+      "move_389",
+      "move_660",
+      "move_141",
+      "move_529"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 6,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 97.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0768-01",
+    "name": "メガグソクムシャ",
+    "types": [
+      "むし",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_181"
+    ],
+    "base_stats": {
+      "hp": 75,
+      "attack": 150,
+      "defense": 175,
+      "sp_attack": 70,
+      "sp_defense": 120,
+      "speed": 40
+    },
+    "moves": [
+      "move_442",
+      "move_389",
+      "move_660",
+      "move_141",
+      "move_529"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 6,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 97.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0768-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が97.8%（内 グソクムシャナイト 97.8%）と高いため、メガグソクムシャに固定して出題する"
+  },
+  {
+    "id": "pokemon_0450-00",
+    "name": "カバルドン",
+    "types": [
+      "じめん"
+    ],
+    "abilities": [
+      "ability_45",
+      "ability_159"
+    ],
+    "base_stats": {
+      "hp": 108,
+      "attack": 112,
+      "defense": 118,
+      "sp_attack": 68,
+      "sp_defense": 72,
+      "speed": 47
+    },
+    "moves": [
+      "move_89",
+      "move_281",
+      "move_446",
+      "move_18",
+      "move_303"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 7,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_1018-00",
+    "name": "ブリジュラス",
+    "types": [
+      "はがね",
+      "ドラゴン"
+    ],
+    "abilities": [
+      "ability_5",
+      "ability_192",
+      "ability_242"
+    ],
+    "base_stats": {
+      "hp": 90,
+      "attack": 105,
+      "defense": 130,
+      "sp_attack": 125,
+      "sp_defense": 65,
+      "speed": 85
+    },
+    "moves": [
+      "move_434",
+      "move_430",
+      "move_85",
+      "move_446",
+      "move_525"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 8,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_1000-00",
+    "name": "サーフゴー",
+    "types": [
+      "はがね",
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_283"
+    ],
+    "base_stats": {
+      "hp": 87,
+      "attack": 60,
+      "defense": 95,
+      "sp_attack": 133,
+      "sp_defense": 91,
+      "speed": 84
+    },
+    "moves": [
+      "move_247",
+      "move_874",
+      "move_417",
+      "move_105",
+      "move_85"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 9,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0778-00",
+    "name": "ミミッキュ",
+    "types": [
+      "ゴースト",
+      "フェアリー"
+    ],
+    "abilities": [
+      "ability_209"
+    ],
+    "base_stats": {
+      "hp": 55,
+      "attack": 90,
+      "defense": 80,
+      "sp_attack": 50,
+      "sp_defense": 105,
+      "speed": 96
+    },
+    "moves": [
+      "move_583",
+      "move_425",
+      "move_14",
+      "move_421",
+      "move_452"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 10,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 80.3
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0812-00",
+    "name": "ゴリランダー",
+    "types": [
+      "くさ"
+    ],
+    "abilities": [
+      "ability_65",
+      "ability_229"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 125,
+      "defense": 90,
+      "sp_attack": 60,
+      "sp_defense": 70,
+      "speed": 85
+    },
+    "moves": [
+      "move_803",
+      "move_369",
+      "move_282",
+      "move_667",
+      "move_778"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 11,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 23.7
+      },
+      {
+        "item_id": "item_239",
+        "usage_rate": 23.3
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0006-00",
+    "name": "リザードン",
+    "types": [
+      "ほのお",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_66",
+      "ability_94"
+    ],
+    "base_stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "sp_attack": 109,
+      "sp_defense": 85,
+      "speed": 100
+    },
+    "moves": [
+      "move_76",
+      "move_53",
+      "move_406",
+      "move_355",
+      "move_403"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 12,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 98.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0006-02",
+    "name": "メガリザードンＹ",
+    "types": [
+      "ほのお",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_70"
+    ],
+    "base_stats": {
+      "hp": 78,
+      "attack": 104,
+      "defense": 78,
+      "sp_attack": 159,
+      "sp_defense": 115,
+      "speed": 100
+    },
+    "moves": [
+      "move_76",
+      "move_53",
+      "move_406",
+      "move_355",
+      "move_403"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 12,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 98.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0006-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が98.5%（内 リザードナイトＹ 76.5%）と高いため、メガリザードンＹに固定して出題する"
+  },
+  {
+    "id": "pokemon_0908-00",
+    "name": "マスカーニャ",
+    "types": [
+      "くさ",
+      "あく"
+    ],
+    "abilities": [
+      "ability_65",
+      "ability_168"
+    ],
+    "base_stats": {
+      "hp": 76,
+      "attack": 110,
+      "defense": 70,
+      "sp_attack": 81,
+      "sp_defense": 70,
+      "speed": 123
+    },
+    "moves": [
+      "move_870",
+      "move_813",
+      "move_282",
+      "move_369",
+      "move_389"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 13,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0823-00",
+    "name": "アーマーガア",
+    "types": [
+      "ひこう",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_46",
+      "ability_127",
+      "ability_240"
+    ],
+    "base_stats": {
+      "hp": 98,
+      "attack": 87,
+      "defense": 105,
+      "sp_attack": 53,
+      "sp_defense": 85,
+      "speed": 67
+    },
+    "moves": [
+      "move_355",
+      "move_369",
+      "move_776",
+      "move_334",
+      "move_442"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 14,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": true,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0970-00",
+    "name": "キラフロル",
+    "types": [
+      "いわ",
+      "どく"
+    ],
+    "abilities": [
+      "ability_212",
+      "ability_295"
+    ],
+    "base_stats": {
+      "hp": 83,
+      "attack": 55,
+      "defense": 90,
+      "sp_attack": 130,
+      "sp_defense": 81,
+      "speed": 86
+    },
+    "moves": [
+      "move_408",
+      "move_446",
+      "move_414",
+      "move_482",
+      "move_412"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 15,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 12.4,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が12.4%と低いため、通常キラフロルのみを出題対象とする"
+  },
+  {
+    "id": "pokemon_0903-00",
+    "name": "オオニューラ",
+    "types": [
+      "かくとう",
+      "どく"
+    ],
+    "abilities": [
+      "ability_46",
+      "ability_84",
+      "ability_143"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 130,
+      "defense": 60,
+      "sp_attack": 40,
+      "sp_defense": 80,
+      "speed": 120
+    },
+    "moves": [
+      "move_370",
+      "move_827",
+      "move_14",
+      "move_675",
+      "move_252"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 16,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_564",
+        "usage_rate": 32.9
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0815-00",
+    "name": "エースバーン",
+    "types": [
+      "ほのお"
+    ],
+    "abilities": [
+      "ability_66",
+      "ability_236"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 116,
+      "defense": 75,
+      "sp_attack": 65,
+      "sp_defense": 75,
+      "speed": 119
+    },
+    "moves": [
+      "move_780",
+      "move_136",
+      "move_441",
+      "move_389",
+      "move_369"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 17,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 17.7
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0130-00",
+    "name": "ギャラドス",
+    "types": [
+      "みず",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_22",
+      "ability_153"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 125,
+      "defense": 79,
+      "sp_attack": 60,
+      "sp_defense": 100,
+      "speed": 81
+    },
+    "moves": [
+      "move_438",
+      "move_419",
+      "move_127",
+      "move_269",
+      "move_89"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 18,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 23.3,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が23.3%と低いため、通常ギャラドスのみを出題対象とする"
+  },
+  {
+    "id": "pokemon_0902-00",
+    "name": "イダイトウ (オス)",
+    "types": [
+      "みず",
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_33",
+      "ability_91",
+      "ability_104"
+    ],
+    "base_stats": {
+      "hp": 120,
+      "attack": 112,
+      "defense": 65,
+      "sp_attack": 80,
+      "sp_defense": 75,
+      "speed": 78
+    },
+    "moves": [
+      "move_854",
+      "move_834",
+      "move_453",
+      "move_812",
+      "move_97"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 19,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0376-00",
+    "name": "メタグロス",
+    "types": [
+      "はがね",
+      "エスパー"
+    ],
+    "abilities": [
+      "ability_29",
+      "ability_135"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 135,
+      "defense": 130,
+      "sp_attack": 95,
+      "sp_defense": 90,
+      "speed": 70
+    },
+    "moves": [
+      "move_418",
+      "move_706",
+      "move_8",
+      "move_89",
+      "move_9"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 20,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 94.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0376-01",
+    "name": "メガメタグロス",
+    "types": [
+      "はがね",
+      "エスパー"
+    ],
+    "abilities": [
+      "ability_181"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 145,
+      "defense": 150,
+      "sp_attack": 105,
+      "sp_defense": 110,
+      "speed": 110
+    },
+    "moves": [
+      "move_418",
+      "move_706",
+      "move_8",
+      "move_89",
+      "move_9"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 20,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 94.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0376-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が94.7%（内 メタグロスナイト 94.7%）と高いため、メガメタグロスに固定して出題する"
+  },
+  {
+    "id": "pokemon_0681-00",
+    "name": "ギルガルド",
+    "types": [
+      "はがね",
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_176"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 140,
+      "sp_attack": 50,
+      "sp_defense": 140,
+      "speed": 60
+    },
+    "moves": [
+      "move_425",
+      "move_588",
+      "move_809",
+      "move_533",
+      "move_247"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 21,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_247",
+        "usage_rate": 24.8
+      },
+      {
+        "item_id": "item_270",
+        "usage_rate": 12.9
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0876-00",
+    "name": "イエッサン (オス)",
+    "types": [
+      "エスパー",
+      "ノーマル"
+    ],
+    "abilities": [
+      "ability_28",
+      "ability_39",
+      "ability_227"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 55,
+      "sp_attack": 105,
+      "sp_defense": 95,
+      "speed": 95
+    },
+    "moves": [
+      "move_797",
+      "move_595",
+      "move_227",
+      "move_605",
+      "move_271"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 22,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0658-00",
+    "name": "ゲッコウガ",
+    "types": [
+      "みず",
+      "あく"
+    ],
+    "abilities": [
+      "ability_67",
+      "ability_168"
+    ],
+    "base_stats": {
+      "hp": 72,
+      "attack": 95,
+      "defense": 67,
+      "sp_attack": 103,
+      "sp_defense": 71,
+      "speed": 122
+    },
+    "moves": [
+      "move_58",
+      "move_399",
+      "move_482",
+      "move_594",
+      "move_57"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 23,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 44.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0658-03",
+    "name": "メガゲッコウガ",
+    "types": [
+      "みず",
+      "あく"
+    ],
+    "abilities": [
+      "ability_168"
+    ],
+    "base_stats": {
+      "hp": 72,
+      "attack": 125,
+      "defense": 77,
+      "sp_attack": 133,
+      "sp_defense": 81,
+      "speed": 142
+    },
+    "moves": [
+      "move_58",
+      "move_399",
+      "move_482",
+      "move_594",
+      "move_57"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 23,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 44.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0658-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0149-00",
+    "name": "カイリュー",
+    "types": [
+      "ドラゴン",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_39",
+      "ability_136"
+    ],
+    "base_stats": {
+      "hp": 91,
+      "attack": 134,
+      "defense": 95,
+      "sp_attack": 100,
+      "sp_defense": 100,
+      "speed": 80
+    },
+    "moves": [
+      "move_355",
+      "move_53",
+      "move_245",
+      "move_434",
+      "move_85"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 24,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 56.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0149-01",
+    "name": "メガカイリュー",
+    "types": [
+      "ドラゴン",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_136"
+    ],
+    "base_stats": {
+      "hp": 91,
+      "attack": 124,
+      "defense": 115,
+      "sp_attack": 145,
+      "sp_defense": 125,
+      "speed": 100
+    },
+    "moves": [
+      "move_355",
+      "move_53",
+      "move_245",
+      "move_434",
+      "move_85"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 24,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 56.8,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0149-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0009-00",
+    "name": "カメックス",
+    "types": [
+      "みず"
+    ],
+    "abilities": [
+      "ability_44",
+      "ability_67"
+    ],
+    "base_stats": {
+      "hp": 79,
+      "attack": 83,
+      "defense": 100,
+      "sp_attack": 85,
+      "sp_defense": 105,
+      "speed": 78
+    },
+    "moves": [
+      "move_504",
+      "move_396",
+      "move_399",
+      "move_805",
+      "move_352"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 25,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 96.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0009-01",
+    "name": "メガカメックス",
+    "types": [
+      "みず"
+    ],
+    "abilities": [
+      "ability_178"
+    ],
+    "base_stats": {
+      "hp": 79,
+      "attack": 103,
+      "defense": 120,
+      "sp_attack": 135,
+      "sp_defense": 115,
+      "speed": 78
+    },
+    "moves": [
+      "move_504",
+      "move_396",
+      "move_399",
+      "move_805",
+      "move_352"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 25,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 96.1,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0009-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が96.1%（内 カメックスナイト 96.1%）と高いため、メガカメックスに固定して出題する"
+  },
+  {
+    "id": "pokemon_0038-01",
+    "name": "キュウコン (アローラ)",
+    "types": [
+      "こおり",
+      "フェアリー"
+    ],
+    "abilities": [
+      "ability_81",
+      "ability_117"
+    ],
+    "base_stats": {
+      "hp": 73,
+      "attack": 67,
+      "defense": 75,
+      "sp_attack": 81,
+      "sp_defense": 100,
+      "speed": 109
+    },
+    "moves": [
+      "move_694",
+      "move_573",
+      "move_227",
+      "move_59",
+      "move_585"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 26,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0923-00",
+    "name": "パーモット",
+    "types": [
+      "でんき",
+      "かくとう"
+    ],
+    "abilities": [
+      "ability_10",
+      "ability_30",
+      "ability_89"
+    ],
+    "base_stats": {
+      "hp": 70,
+      "attack": 115,
+      "defense": 70,
+      "sp_attack": 70,
+      "sp_defense": 60,
+      "speed": 105
+    },
+    "moves": [
+      "move_892",
+      "move_863",
+      "move_8",
+      "move_370",
+      "move_183"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 27,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0479-02",
+    "name": "ウォッシュロトム",
+    "types": [
+      "でんき",
+      "みず"
+    ],
+    "abilities": [
+      "ability_26"
+    ],
+    "base_stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_attack": 105,
+      "sp_defense": 107,
+      "speed": 86
+    },
+    "moves": [
+      "move_56",
+      "move_521",
+      "move_261",
+      "move_85",
+      "move_220"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 28,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0637-00",
+    "name": "ウルガモス",
+    "types": [
+      "むし",
+      "ほのお"
+    ],
+    "abilities": [
+      "ability_49",
+      "ability_68"
+    ],
+    "base_stats": {
+      "hp": 85,
+      "attack": 60,
+      "defense": 65,
+      "sp_attack": 135,
+      "sp_defense": 105,
+      "speed": 100
+    },
+    "moves": [
+      "move_483",
+      "move_552",
+      "move_202",
+      "move_234",
+      "move_405"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 29,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0260-00",
+    "name": "ラグラージ",
+    "types": [
+      "みず",
+      "じめん"
+    ],
+    "abilities": [
+      "ability_6",
+      "ability_67"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 110,
+      "defense": 90,
+      "sp_attack": 85,
+      "sp_defense": 90,
+      "speed": 60
+    },
+    "moves": [
+      "move_89",
+      "move_812",
+      "move_446",
+      "move_281",
+      "move_8"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 30,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 41.4,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が41.4%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0260-01",
+    "name": "メガラグラージ",
+    "types": [
+      "みず",
+      "じめん"
+    ],
+    "abilities": [
+      "ability_33"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 150,
+      "defense": 110,
+      "sp_attack": 95,
+      "sp_defense": 110,
+      "speed": 70
+    },
+    "moves": [
+      "move_89",
+      "move_812",
+      "move_446",
+      "move_281",
+      "move_8"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 30,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 41.4,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0260-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が41.4%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0094-00",
+    "name": "ゲンガー",
+    "types": [
+      "ゴースト",
+      "どく"
+    ],
+    "abilities": [
+      "ability_130"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 60,
+      "sp_attack": 130,
+      "sp_defense": 75,
+      "speed": 110
+    },
+    "moves": [
+      "move_247",
+      "move_482",
+      "move_194",
+      "move_182",
+      "move_196"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 31,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 74.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0094-01",
+    "name": "メガゲンガー",
+    "types": [
+      "ゴースト",
+      "どく"
+    ],
+    "abilities": [
+      "ability_23"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 80,
+      "sp_attack": 170,
+      "sp_defense": 95,
+      "speed": 130
+    },
+    "moves": [
+      "move_247",
+      "move_482",
+      "move_194",
+      "move_182",
+      "move_196"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 31,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 74.7,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0094-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が74.7%（内 ゲンガナイト 74.7%）と高いため、メガゲンガーに固定して出題する"
+  },
+  {
+    "id": "pokemon_0911-00",
+    "name": "ラウドボーン",
+    "types": [
+      "ほのお",
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_66",
+      "ability_109"
+    ],
+    "base_stats": {
+      "hp": 104,
+      "attack": 75,
+      "defense": 100,
+      "sp_attack": 110,
+      "sp_defense": 75,
+      "speed": 66
+    },
+    "moves": [
+      "move_871",
+      "move_303",
+      "move_261",
+      "move_247",
+      "move_506"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 32,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0395-00",
+    "name": "エンペルト",
+    "types": [
+      "みず",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_67",
+      "ability_172"
+    ],
+    "base_stats": {
+      "hp": 84,
+      "attack": 86,
+      "defense": 88,
+      "sp_attack": 111,
+      "sp_defense": 101,
+      "speed": 60
+    },
+    "moves": [
+      "move_58",
+      "move_281",
+      "move_446",
+      "move_812",
+      "move_57"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 33,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0479-01",
+    "name": "ヒートロトム",
+    "types": [
+      "でんき",
+      "ほのお"
+    ],
+    "abilities": [
+      "ability_26"
+    ],
+    "base_stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_attack": 105,
+      "sp_defense": 107,
+      "speed": 86
+    },
+    "moves": [
+      "move_315",
+      "move_521",
+      "move_261",
+      "move_85",
+      "move_220"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 34,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0983-00",
+    "name": "ドドゲザン",
+    "types": [
+      "あく",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_46",
+      "ability_128",
+      "ability_293"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 135,
+      "defense": 120,
+      "sp_attack": 60,
+      "sp_defense": 85,
+      "speed": 50
+    },
+    "moves": [
+      "move_389",
+      "move_869",
+      "move_442",
+      "move_14",
+      "move_368"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 35,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_240",
+        "usage_rate": 47.3
+      },
+      {
+        "item_id": "item_270",
+        "usage_rate": 10.6
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0635-00",
+    "name": "サザンドラ",
+    "types": [
+      "あく",
+      "ドラゴン"
+    ],
+    "abilities": [
+      "ability_26"
+    ],
+    "base_stats": {
+      "hp": 92,
+      "attack": 105,
+      "defense": 90,
+      "sp_attack": 125,
+      "sp_defense": 90,
+      "speed": 98
+    },
+    "moves": [
+      "move_399",
+      "move_434",
+      "move_369",
+      "move_53",
+      "move_126"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 36,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0700-00",
+    "name": "ニンフィア",
+    "types": [
+      "フェアリー"
+    ],
+    "abilities": [
+      "ability_56",
+      "ability_182"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 65,
+      "defense": 65,
+      "sp_attack": 110,
+      "sp_defense": 130,
+      "speed": 60
+    },
+    "moves": [
+      "move_304",
+      "move_281",
+      "move_273",
+      "move_182",
+      "move_595"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 37,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_2401",
+        "usage_rate": 15.7
+      }
+    ],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0026-00",
+    "name": "ライチュウ",
+    "types": [
+      "でんき"
+    ],
+    "abilities": [
+      "ability_9",
+      "ability_31"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 55,
+      "sp_attack": 90,
+      "sp_defense": 80,
+      "speed": 110
+    },
+    "moves": [
+      "move_192",
+      "move_411",
+      "move_447",
+      "move_164",
+      "move_521"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 38,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 98.0,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0026-03",
+    "name": "メガライチュウＹ",
+    "types": [
+      "でんき"
+    ],
+    "abilities": [
+      "ability_99"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 100,
+      "defense": 55,
+      "sp_attack": 160,
+      "sp_defense": 80,
+      "speed": 130
+    },
+    "moves": [
+      "move_192",
+      "move_411",
+      "move_447",
+      "move_164",
+      "move_521"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 38,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 98.0,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0026-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が98.0%（内 ライチュウナイトＹ 92.8%）と高いため、メガライチュウＹに固定して出題する"
+  },
+  {
+    "id": "pokemon_0257-00",
+    "name": "バシャーモ",
+    "types": [
+      "ほのお",
+      "かくとう"
+    ],
+    "abilities": [
+      "ability_3",
+      "ability_66"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 70,
+      "sp_attack": 110,
+      "sp_defense": 70,
+      "speed": 80
+    },
+    "moves": [
+      "move_394",
+      "move_370",
+      "move_14",
+      "move_182",
+      "move_9"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 39,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 14.4
+      }
+    ],
+    "mega_stone_usage_rate": 55.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0257-01",
+    "name": "メガバシャーモ",
+    "types": [
+      "ほのお",
+      "かくとう"
+    ],
+    "abilities": [
+      "ability_3"
+    ],
+    "base_stats": {
+      "hp": 80,
+      "attack": 160,
+      "defense": 80,
+      "sp_attack": 130,
+      "sp_defense": 80,
+      "speed": 100
+    },
+    "moves": [
+      "move_394",
+      "move_370",
+      "move_14",
+      "move_182",
+      "move_9"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 39,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 14.4
+      }
+    ],
+    "mega_stone_usage_rate": 55.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0257-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0197-00",
+    "name": "ブラッキー",
+    "types": [
+      "あく"
+    ],
+    "abilities": [
+      "ability_28",
+      "ability_39"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 65,
+      "defense": 110,
+      "sp_attack": 60,
+      "sp_defense": 130,
+      "speed": 65
+    },
+    "moves": [
+      "move_492",
+      "move_182",
+      "move_273",
+      "move_281",
+      "move_92"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 40,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0655-00",
+    "name": "マフォクシー",
+    "types": [
+      "ほのお",
+      "エスパー"
+    ],
+    "abilities": [
+      "ability_66",
+      "ability_170"
+    ],
+    "base_stats": {
+      "hp": 75,
+      "attack": 69,
+      "defense": 72,
+      "sp_attack": 114,
+      "sp_defense": 100,
+      "speed": 104
+    },
+    "moves": [
+      "move_53",
+      "move_94",
+      "move_417",
+      "move_605",
+      "move_164"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 41,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 96.3,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0655-01",
+    "name": "メガマフォクシー",
+    "types": [
+      "ほのお",
+      "エスパー"
+    ],
+    "abilities": [
+      "ability_26"
+    ],
+    "base_stats": {
+      "hp": 75,
+      "attack": 69,
+      "defense": 72,
+      "sp_attack": 159,
+      "sp_defense": 125,
+      "speed": 134
+    },
+    "moves": [
+      "move_53",
+      "move_94",
+      "move_417",
+      "move_605",
+      "move_164"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 41,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 96.3,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0655-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が96.3%（内 マフォクシナイト 96.3%）と高いため、メガマフォクシーに固定して出題する"
+  },
+  {
+    "id": "pokemon_0212-00",
+    "name": "ハッサム",
+    "types": [
+      "むし",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_68",
+      "ability_101",
+      "ability_135"
+    ],
+    "base_stats": {
+      "hp": 70,
+      "attack": 130,
+      "defense": 100,
+      "sp_attack": 55,
+      "sp_defense": 80,
+      "speed": 65
+    },
+    "moves": [
+      "move_418",
+      "move_369",
+      "move_355",
+      "move_14",
+      "move_282"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 42,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 11.6
+      }
+    ],
+    "mega_stone_usage_rate": 31.2,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0212-01",
+    "name": "メガハッサム",
+    "types": [
+      "むし",
+      "はがね"
+    ],
+    "abilities": [
+      "ability_101"
+    ],
+    "base_stats": {
+      "hp": 70,
+      "attack": 150,
+      "defense": 140,
+      "sp_attack": 65,
+      "sp_defense": 100,
+      "speed": 75
+    },
+    "moves": [
+      "move_418",
+      "move_369",
+      "move_355",
+      "move_14",
+      "move_282"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 42,
+    "usage_rate": null,
+    "item_candidates": [
+      {
+        "item_id": "item_270",
+        "usage_rate": 11.6
+      }
+    ],
+    "mega_stone_usage_rate": 31.2,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": true,
+    "is_mega": true,
+    "mega_of": "pokemon_0212-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0748-00",
+    "name": "ドヒドイデ",
+    "types": [
+      "どく",
+      "みず"
+    ],
+    "abilities": [
+      "ability_7",
+      "ability_144",
+      "ability_196"
+    ],
+    "base_stats": {
+      "hp": 50,
+      "attack": 63,
+      "defense": 152,
+      "sp_attack": 53,
+      "sp_defense": 142,
+      "speed": 35
+    },
+    "moves": [
+      "move_105",
+      "move_92",
+      "move_611",
+      "move_114",
+      "move_661"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 43,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": true,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0248-00",
+    "name": "バンギラス",
+    "types": [
+      "いわ",
+      "あく"
+    ],
+    "abilities": [
+      "ability_45",
+      "ability_127"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 134,
+      "defense": 110,
+      "sp_attack": 95,
+      "sp_defense": 100,
+      "speed": 61
+    },
+    "moves": [
+      "move_282",
+      "move_444",
+      "move_8",
+      "move_446",
+      "move_89"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 44,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 46.3,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0248-01",
+    "name": "メガバンギラス",
+    "types": [
+      "いわ",
+      "あく"
+    ],
+    "abilities": [
+      "ability_45"
+    ],
+    "base_stats": {
+      "hp": 100,
+      "attack": 164,
+      "defense": 150,
+      "sp_attack": 95,
+      "sp_defense": 120,
+      "speed": 71
+    },
+    "moves": [
+      "move_282",
+      "move_444",
+      "move_8",
+      "move_446",
+      "move_89"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 44,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 46.3,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0248-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する"
+  },
+  {
+    "id": "pokemon_0398-00",
+    "name": "ムクホーク",
+    "types": [
+      "ノーマル",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_22",
+      "ability_120"
+    ],
+    "base_stats": {
+      "hp": 85,
+      "attack": 120,
+      "defense": 70,
+      "sp_attack": 50,
+      "sp_defense": 60,
+      "speed": 100
+    },
+    "moves": [
+      "move_370",
+      "move_413",
+      "move_355",
+      "move_299",
+      "move_369"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 45,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 84.6,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0398-01",
+    "name": "メガムクホーク",
+    "types": [
+      "かくとう",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_126"
+    ],
+    "base_stats": {
+      "hp": 85,
+      "attack": 140,
+      "defense": 100,
+      "sp_attack": 60,
+      "sp_defense": 90,
+      "speed": 110
+    },
+    "moves": [
+      "move_370",
+      "move_413",
+      "move_355",
+      "move_299",
+      "move_369"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 45,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 84.6,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0398-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が84.6%（内 ムクホークナイト 84.6%）と高いため、メガムクホークに固定して出題する"
+  },
+  {
+    "id": "pokemon_0279-00",
+    "name": "ペリッパー",
+    "types": [
+      "みず",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_2",
+      "ability_44",
+      "ability_51"
+    ],
+    "base_stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 100,
+      "sp_attack": 95,
+      "sp_defense": 70,
+      "speed": 65
+    },
+    "moves": [
+      "move_542",
+      "move_369",
+      "move_58",
+      "move_57",
+      "move_311"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 46,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0354-00",
+    "name": "ジュペッタ",
+    "types": [
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_15",
+      "ability_119",
+      "ability_130"
+    ],
+    "base_stats": {
+      "hp": 64,
+      "attack": 115,
+      "defense": 65,
+      "sp_attack": 83,
+      "sp_defense": 63,
+      "speed": 65
+    },
+    "moves": [
+      "move_194",
+      "move_809",
+      "move_227",
+      "move_425",
+      "move_269"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 47,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 99.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0354-01",
+    "name": "メガジュペッタ",
+    "types": [
+      "ゴースト"
+    ],
+    "abilities": [
+      "ability_158"
+    ],
+    "base_stats": {
+      "hp": 64,
+      "attack": 165,
+      "defense": 75,
+      "sp_attack": 93,
+      "sp_defense": 83,
+      "speed": 75
+    },
+    "moves": [
+      "move_194",
+      "move_809",
+      "move_227",
+      "move_425",
+      "move_269"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 47,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 99.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0354-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が99.5%（内 ジュペッタナイト 99.5%）と高いため、メガジュペッタに固定して出題する"
+  },
+  {
+    "id": "pokemon_0036-00",
+    "name": "ピクシー",
+    "types": [
+      "フェアリー"
+    ],
+    "abilities": [
+      "ability_56",
+      "ability_98",
+      "ability_109"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 70,
+      "defense": 73,
+      "sp_attack": 95,
+      "sp_defense": 90,
+      "speed": 60
+    },
+    "moves": [
+      "move_236",
+      "move_585",
+      "move_322",
+      "move_53",
+      "move_500"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 48,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 76.7,
+    "is_defensive_only": true,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0036-01",
+    "name": "メガピクシー",
+    "types": [
+      "フェアリー",
+      "ひこう"
+    ],
+    "abilities": [
+      "ability_156"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 80,
+      "defense": 93,
+      "sp_attack": 135,
+      "sp_defense": 110,
+      "speed": 70
+    },
+    "moves": [
+      "move_236",
+      "move_585",
+      "move_322",
+      "move_53",
+      "move_500"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 48,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 76.7,
+    "is_defensive_only": true,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0036-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が76.7%（内 ピクシナイト 76.7%）と高いため、メガピクシーに固定して出題する"
+  },
+  {
+    "id": "pokemon_0350-00",
+    "name": "ミロカロス",
+    "types": [
+      "みず"
+    ],
+    "abilities": [
+      "ability_56",
+      "ability_63",
+      "ability_172"
+    ],
+    "base_stats": {
+      "hp": 95,
+      "attack": 60,
+      "defense": 79,
+      "sp_attack": 100,
+      "sp_defense": 125,
+      "speed": 81
+    },
+    "moves": [
+      "move_503",
+      "move_105",
+      "move_58",
+      "move_243",
+      "move_114"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 49,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  },
+  {
+    "id": "pokemon_0473-00",
+    "name": "マンムー",
+    "types": [
+      "こおり",
+      "じめん"
+    ],
+    "abilities": [
+      "ability_12",
+      "ability_47",
+      "ability_81"
+    ],
+    "base_stats": {
+      "hp": 110,
+      "attack": 130,
+      "defense": 80,
+      "sp_attack": 70,
+      "sp_defense": 60,
+      "speed": 80
+    },
+    "moves": [
+      "move_89",
+      "move_420",
+      "move_556",
+      "move_446",
+      "move_333"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 50,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": null,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": false,
+    "mega_of": null,
+    "fixed_mega_only": false,
+    "mega_fixed_note": null
+  }
+]

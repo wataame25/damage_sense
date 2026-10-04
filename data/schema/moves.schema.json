@@ -52,16 +52,20 @@
       "description": "接触技かどうか（特性・持ち物の発動条件判定に使用）"
     },
     "boosts_own_stat": {
-      "type": ["object", "null"],
-      "description": "りゅうのまい等、自身の能力を強化する変化技である場合の詳細。該当しない技はnull",
-      "properties": {
-        "stat": {
-          "type": "string",
-          "enum": ["attack", "sp_attack", "speed", "defense", "sp_defense"]
-        },
-        "stages": {
-          "type": "integer",
-          "description": "変化する段階数（例: +1, +2）"
+      "type": ["array", "null"],
+      "description": "りゅうのまい等、自身の能力を強化する変化技である場合の詳細（複数ステータスを同時に上げる技があるため配列）。該当しない技はnull",
+      "items": {
+        "type": "object",
+        "required": ["stat", "stages"],
+        "properties": {
+          "stat": {
+            "type": "string",
+            "enum": ["attack", "sp_attack", "speed", "defense", "sp_defense"]
+          },
+          "stages": {
+            "type": "integer",
+            "description": "変化する段階数（例: +1, +2）"
+          }
         }
       }
     }

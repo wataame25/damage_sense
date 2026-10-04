@@ -60,8 +60,8 @@
       "description": "使用率ランキング順位（上位50位以内のみ採用）"
     },
     "usage_rate": {
-      "type": "number",
-      "description": "使用率（%）"
+      "type": ["number", "null"],
+      "description": "使用率（%）。データソース（champs.pokedb.tokyo）がポケモン単体の使用率%を公開していないため、現状はnull（使用率ランキングの順位usage_rankのみ取得可能）"
     },
     "item_candidates": {
       "type": "array",
