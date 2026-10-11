@@ -81,12 +81,12 @@
     },
     "moves": {
       "type": "array",
-      "maxItems": 5,
+      "maxItems": 6,
       "items": {
         "type": "string",
         "description": "moves.id への参照"
       },
-      "description": "使用率上位5種の技（攻撃技に絞り込み。りゅうのまい等の強化技が含まれる場合もある）"
+      "description": "採用率上位の攻撃技5つ（変化技は除く）＋採用率上位5位以内に入っている積み技（りゅうのまい/つるぎのまい/わるだくみ/ちょうのまい）。採用率順"
     },
     "snapshot_id": {
       "type": "string",

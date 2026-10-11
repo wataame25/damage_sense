@@ -181,7 +181,7 @@
   function renderBattle(q) {
     var a = q.attacker, d = q.defender, r = q.result;
     var physical = r.move.category === "物理";
-    var aKey = physical ? "attack" : "sp_attack", dKey = physical ? "defense" : "sp_defense";
+    var aKey = physical ? "attack" : "sp_attack", dKey = r.defenseKey;
     var boost = "";
     if (a.boostMove) {
       var st = a.boosts[aKey] || 0;
@@ -287,7 +287,7 @@
       '<details class="breakdown"><summary>計算の内訳</summary><div class="calc">' +
       traceRow("威力", t.power, "<code>" + r.basePower + " → " + r.power + "</code>") +
       traceRow(r.move.category === "物理" ? "こうげき" : "とくこう", t.attack, "<code>" + r.attackStat + "</code>") +
-      traceRow(r.move.category === "物理" ? "ぼうぎょ" : "とくぼう", t.defense, "<code>" + r.defenseStat + "</code>") +
+      traceRow(STAT_LABEL[r.defenseKey], t.defense, "<code>" + r.defenseStat + "</code>") +
       '<div class="calc-row"><span>基本ダメージ</span><span><code>floor(floor(22 × ' + r.power + " × " + r.attackStat + " ÷ " + r.defenseStat +
       ") ÷ 50) + 2 = " + r.baseDamage + "</code></span></div>" +
       traceRow("中略（乱数前）", t.middle) +
@@ -365,7 +365,7 @@
 
   var snap = data.snapshot;
   if (snap) {
-    document.getElementById("snapshot").textContent = "シーズン" + snap.snapshot_id.replace("_single", "") + " シングル使用率上位50（" + snap.date + "時点）";
+    document.getElementById("snapshot").textContent = "シーズン" + snap.snapshot_id.replace("_single", "") + " シングル使用率上位50（" + snap.date + "取得）";
     document.getElementById("source").textContent = snap.source_url;
   }
   newQuestion();

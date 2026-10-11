@@ -1,8 +1,8 @@
 [
   {
     "snapshot_id": "M-6_single",
-    "date": "2026-10-04",
-    "source_url": "https://champs.pokedb.tokyo/pokemon/list?rule=0",
-    "description": "シーズンM-6（レギュレーションM-C、シングルバトル）使用率上位50位。シーズン期間: 2026/9/9-2026/10/7。取得日時点（シーズン進行中）のランキング・採用技・特性・持ち物データ。"
+    "date": "2026-10-11",
+    "source_url": "https://champs.pokedb.tokyo/pokemon/list?season=6&rule=0",
+    "description": "シーズンM-6（シングルバトル）使用率上位50位。レギュレーションM-C、期間 2026/9/9-2026/10/7、シーズン終了後の確定データ。2026-10-11取得。ランキング・採用技・特性・持ち物・性格・能力ポイントの採用率データ。"
   }
 ]

@@ -69,6 +69,14 @@ class DamageTest(unittest.TestCase):
         sun = calc_damage(DATA, atk, dfn, move("かえんほうしゃ"), Battle("sunny", None))
         self.assertGreater(sun.min_damage, none.min_damage * 1.4)
 
+    def test_psyshock_uses_target_defense(self):
+        atk = Combatant(row("マフォクシー"), ability="もうか", points={"sp_attack": 32})
+        dfn = Combatant(row("ドヒドイデ"), ability="さいせいりょく", points={"defense": 32, "sp_defense": 0})
+        res = calc_damage(DATA, atk, dfn, move("サイコショック"), Battle(None, None))
+        self.assertEqual(res.defense_key, "defense")
+        dfn.points = {"defense": 0, "sp_defense": 32}
+        self.assertGreater(calc_damage(DATA, atk, dfn, move("サイコショック"), Battle(None, None)).min_damage, res.min_damage)
+
     def test_multiscale_halves(self):
         atk = Combatant(row("マンムー"), ability="どんかん")
         dfn = Combatant(row("カイリュー"), ability="せいしんりょく")

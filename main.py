@@ -110,12 +110,15 @@ def type_effectiveness(move_type, defender_types, move_name=None):
 # 出題対象外の技（威力が変動する／連続技／カウンター系／参照ステータスが特殊）
 UNSUPPORTED_MOVES = {
     "ミラーコート", "メタルバースト", "くさむすび",          # 威力なし・相手依存
-    "つららばり", "みずしゅりけん", "トリプルアクセル",      # 連続技（ヒット数が変動）
+    "つららばり", "みずしゅりけん", "トリプルアクセル", "ダブルウイング",  # 連続技
     "ボディプレス", "イカサマ",                             # 攻撃側のこうげき/とくこう以外を参照
 }
-PUNCH_MOVES = {"れいとうパンチ", "かみなりパンチ", "ほのおのパンチ", "マッハパンチ", "バレットパンチ", "コメットパンチ"}
+PUNCH_MOVES = {"れいとうパンチ", "かみなりパンチ", "ほのおのパンチ", "マッハパンチ", "バレットパンチ", "コメットパンチ",
+               "ドレインパンチ"}
 PULSE_MOVES = {"みずのはどう", "あくのはどう", "りゅうのはどう", "はどうだん"}
-SOUND_MOVES = {"ハイパーボイス", "うたかたのアリア", "むしのさざめき", "フレアソング"}
+SOUND_MOVES = {"ハイパーボイス", "うたかたのアリア", "むしのさざめき", "フレアソング", "みわくのボイス", "バークアウト"}
+# 特殊技だが相手のぼうぎょで計算する技
+TARGET_DEFENSE_SPECIAL_MOVES = {"サイコショック"}
 RECOIL_MOVES = {"すてみタックル", "フレアドライブ", "ブレイブバード", "ウッドハンマー", "ウェーブタックル", "とびひざげり"}
 ALWAYS_CRIT_MOVES = {"トリックフラワー"}
 # README記載の「攻撃力を強化する技」。出題時にランダムで1回使用済みにできる
@@ -232,6 +235,7 @@ class DamageResult:
     hp: int
     effectiveness: float
     notes: list
+    defense_key: str = "defense"   # 防御側の参照ステータス（サイコショックは特殊でもdefense）
 
     @property
     def min_damage(self):
@@ -314,6 +318,8 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
     if name == "はたきおとす" and not dfn.row["is_mega"]:
         power_mods.append(6144)  # 防御側は道具を持っている前提（メガストーンは落とせないので対象外）
         notes.append("はたきおとす：防御側が道具を持っている前提で威力1.5倍")
+    if name == "アクロバット":
+        notes.append("アクロバット：攻撃側が道具を持っている前提で威力2倍にしない")
     if atk.item and item_applies(atk.item, move, move_type, physical, eff):
         power_mods.append(to4096(atk.item_multiplier))
     if battle.field:
@@ -340,7 +346,7 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
     a_stat = max(1, apply_mod(a_stat, chain_mods(atk_mods)))
 
     # --- 防御側のぼうぎょ/とくぼう ---
-    d_key = "defense" if physical else "sp_defense"
+    d_key = "defense" if physical or name in TARGET_DEFENSE_SPECIAL_MOVES else "sp_defense"
     d_stat = dfn.stat(d_key)
     if atk.ability != "てんねん":
         d_stat = apply_rank(d_stat, dfn.boosts.get(d_key, 0))
@@ -387,7 +393,7 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
         damages.append(max(1, d))
 
     return DamageResult(move=move, move_type=move_type, power=power, damages=damages,
-                        hp=dfn.stat("hp"), effectiveness=eff, notes=notes)
+                        hp=dfn.stat("hp"), effectiveness=eff, notes=notes, defense_key=d_key)
 
 
 def item_applies(item, move, move_type, physical, eff):
@@ -569,7 +575,7 @@ def format_question(data, q: Question):
     a, d, r = q.attacker, q.defender, q.result
     physical = r.move["category"] == "物理"
     a_key = "attack" if physical else "sp_attack"
-    d_key = "defense" if physical else "sp_defense"
+    d_key = r.defense_key
     move_desc = f"{r.move['name']}（{r.move_type}・{r.move['category']}・威力{r.move['power']}）"
     lines = [
         f"【攻撃側】{a.name}（{'/'.join(a.types)}）",

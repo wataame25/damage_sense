@@ -37,10 +37,11 @@ var DamageEngine = (function () {
 
   function set(arr) { var o = {}; arr.forEach(function (x) { o[x] = true; }); return o; }
   var UNSUPPORTED_MOVES = set(["ミラーコート", "メタルバースト", "くさむすび", "つららばり", "みずしゅりけん",
-    "トリプルアクセル", "ボディプレス", "イカサマ"]);
-  var PUNCH_MOVES = set(["れいとうパンチ", "かみなりパンチ", "ほのおのパンチ", "マッハパンチ", "バレットパンチ", "コメットパンチ"]);
+    "トリプルアクセル", "ダブルウイング", "ボディプレス", "イカサマ"]);
+  var PUNCH_MOVES = set(["れいとうパンチ", "かみなりパンチ", "ほのおのパンチ", "マッハパンチ", "バレットパンチ", "コメットパンチ", "ドレインパンチ"]);
   var PULSE_MOVES = set(["みずのはどう", "あくのはどう", "りゅうのはどう", "はどうだん"]);
-  var SOUND_MOVES = set(["ハイパーボイス", "うたかたのアリア", "むしのさざめき", "フレアソング"]);
+  var SOUND_MOVES = set(["ハイパーボイス", "うたかたのアリア", "むしのさざめき", "フレアソング", "みわくのボイス", "バークアウト"]);
+  var TARGET_DEFENSE_SPECIAL_MOVES = set(["サイコショック"]);  // 特殊技だが相手のぼうぎょで計算
   var RECOIL_MOVES = set(["すてみタックル", "フレアドライブ", "ブレイブバード", "ウッドハンマー", "ウェーブタックル", "とびひざげり"]);
   var ALWAYS_CRIT_MOVES = set(["トリックフラワー"]);
   var BOOST_MOVES = set(["りゅうのまい", "つるぎのまい", "わるだくみ", "ちょうのまい"]);
@@ -173,6 +174,7 @@ var DamageEngine = (function () {
       addP(6144, "はたきおとす（道具あり）");
       notes.push("はたきおとす：防御側が道具を持っている前提で威力1.5倍");
     }
+    if (name === "アクロバット") notes.push("アクロバット：攻撃側が道具を持っている前提で威力2倍にしない");
     if (atk.item && itemApplies(atk.item, move, moveType, physical, eff)) {
       addP(to4096(atk.itemMultiplier), atk.item.name);
     }
@@ -208,7 +210,7 @@ var DamageEngine = (function () {
     aStat = Math.max(1, applyMod(aStat, chainMods(am)));
 
     // ぼうぎょ/とくぼう
-    var dKey = physical ? "defense" : "sp_defense";
+    var dKey = physical || TARGET_DEFENSE_SPECIAL_MOVES[name] ? "defense" : "sp_defense";
     var dStat = dfn.stat(dKey);
     if (atk.ability !== "てんねん") dStat = applyRank(dStat, dfn.boosts[dKey] || 0);
     var dm = [];
@@ -267,7 +269,7 @@ var DamageEngine = (function () {
     var hp = dfn.stat("hp");
     return {
       move: move, moveType: moveType, basePower: basePower, power: power,
-      attackStat: aStat, defenseStat: dStat, baseDamage: baseDamage,
+      attackStat: aStat, defenseStat: dStat, defenseKey: dKey, baseDamage: baseDamage,
       damages: damages, hp: hp, effectiveness: eff, notes: notes, trace: trace,
       minDamage: damages[0], maxDamage: damages[15],
       minPercent: damages[0] / hp * 100, maxPercent: damages[15] / hp * 100
