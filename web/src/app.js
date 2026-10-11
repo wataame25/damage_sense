@@ -1,0 +1,359 @@
+// damage_sense 画面ロジック。計算は engine.js（DamageEngine）に任せる
+(function () {
+  "use strict";
+
+  var E = DamageEngine;
+  var data = E.indexData(GAME_DATA);
+  var rng = E.makeRng();
+  var NORMAL_TOLERANCE = 5;
+  var CHALLENGE_QUESTIONS = 10;
+  var BEST_KEY = "damage_sense.challengeBest";
+
+  var TYPE_COLOR = {
+    "ノーマル": "#9a9a7a", "ほのお": "#e8742f", "みず": "#4a86e8", "でんき": "#d9ad1c", "くさ": "#5aa83e",
+    "こおり": "#4fb7b3", "かくとう": "#b8322b", "どく": "#9a43a0", "じめん": "#c69a45", "ひこう": "#8c7fd9",
+    "エスパー": "#e8507c", "むし": "#93a51f", "いわ": "#a99037", "ゴースト": "#6a5394", "ドラゴン": "#6236e0",
+    "あく": "#6b5546", "はがね": "#8f8fac", "フェアリー": "#d97ba6"
+  };
+  var STAT_LABEL = { hp: "HP", attack: "こうげき", defense: "ぼうぎょ", sp_attack: "とくこう", sp_defense: "とくぼう" };
+
+  var state = { mode: "easy", q: null, answered: false, history: [], options: null, guess: null, finished: false };
+
+  var $main = document.getElementById("main");
+  var $status = document.getElementById("status");
+
+  // ------------------------------------------------------------ 小物
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function pct(x) { return x.toFixed(1) + "%"; }
+  function typeChip(t) { return '<span class="type" style="background:' + (TYPE_COLOR[t] || "#888") + '">' + esc(t) + "</span>"; }
+  function storageGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function storageSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { /* 保存できなくても続行 */ } }
+  function sampleN(arr, n) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rng() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a.slice(0, n);
+  }
+
+  function itemLabel(c) {
+    if (!c.item) return "なし（火力アップ系以外）";
+    var rule = c.item.applies_to, target;
+    if (c.item.name === "たつじんのおび") target = "効果バツグンの技";
+    else if (rule.move_type) target = rule.move_type + "技";
+    else if (rule.move_category) target = rule.move_category + "技";
+    else target = "全ての攻撃技";
+    return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.itemMultiplier + "</span>";
+  }
+  function statBlock(c, key) {
+    var nat = (c.nature[key] || 1) > 1;
+    return '<div class="stat"><span class="stat-note">' + STAT_LABEL[key] + '</span><span class="stat-val">' + c.stat(key) +
+      '</span><span class="stat-note">種族値' + c.row.base_stats[key] + " ・ " + (c.points[key] || 0) + "振り" +
+      (nat ? ' ・ <span class="flag up">性格↑</span>' : "") + "</span></div>";
+  }
+  // 確定数（防御側はHP満タン、乱数は16通り）
+  function koLabel(r) {
+    if (r.minDamage >= r.hp) return "確定1発";
+    if (r.maxDamage >= r.hp) return "乱数1発";
+    for (var n = 2; n <= 6; n++) {
+      if (r.minDamage * n >= r.hp) return "確定" + n + "発";
+      if (r.maxDamage * n >= r.hp) return "乱数" + n + "発";
+    }
+    return "7発以上";
+  }
+
+  // ------------------------------------------------------------ 出題
+
+  function newQuestion() {
+    state.q = E.generateQuestion(data, rng);
+    state.answered = false;
+    state.guess = null;
+    state.options = state.mode === "easy" ? makeChoices(state.q) : null;
+    render();
+    var input = document.getElementById("guess");
+    if (input) input.focus({ preventScroll: true });
+  }
+
+  // 4択：正解レンジ＋倍率をずらしたダミー3つ（main.py の easy_choices と同じ考え方）
+  function makeChoices(q) {
+    var lo = q.result.minPercent, hi = q.result.maxPercent;
+    var opts = [{ lo: lo, hi: hi, correct: true }].concat(
+      sampleN([0.5, 0.67, 0.8, 1.25, 1.5, 2.0], 3).map(function (f) { return { lo: lo * f, hi: hi * f, correct: false }; }));
+    return sampleN(opts, 4);
+  }
+
+  function submitChoice(i) {
+    if (state.answered) return;
+    var opt = state.options[i];
+    state.answered = true;
+    state.guess = { choice: i, correct: opt.correct };
+    record(opt.correct, null);
+    render();
+  }
+
+  function submitNumber() {
+    if (state.answered) return;
+    var input = document.getElementById("guess");
+    var v = parseFloat(input.value);
+    var err = document.getElementById("guess-error");
+    if (isNaN(v) || v < 0) { err.textContent = "0以上の数値を入力してください（例: 42.5）"; input.focus(); return; }
+    var diff = Math.abs(v - state.q.answer);
+    state.answered = true;
+    state.guess = { value: v, diff: diff, correct: diff <= NORMAL_TOLERANCE };
+    record(state.guess.correct, diff);
+    render();
+  }
+
+  function record(correct, diff) {
+    var q = state.q;
+    state.history.push({
+      attacker: q.attacker.row.name, defender: q.defender.row.name, move: q.result.move.name,
+      answer: q.answer, guess: state.guess.value, diff: diff, correct: correct
+    });
+  }
+
+  function next() {
+    if (state.mode === "challenge" && state.history.length >= CHALLENGE_QUESTIONS) { finish(); return; }
+    newQuestion();
+  }
+
+  function finish() {
+    state.finished = true;
+    if (state.mode === "challenge") {
+      var total = state.history.reduce(function (a, h) { return a + h.diff; }, 0);
+      var best = parseFloat(storageGet(BEST_KEY));
+      state.prevBest = isNaN(best) ? null : best;
+      if (isNaN(best) || total < best) storageSet(BEST_KEY, String(total));
+    }
+    render();
+  }
+
+  function setMode(mode) {
+    state.mode = mode;
+    state.history = [];
+    state.finished = false;
+    newQuestion();
+  }
+
+  // ------------------------------------------------------------ 描画
+
+  function renderStatus() {
+    var h = state.history;
+    var html = "";
+    if (state.mode === "challenge") {
+      html += '<div class="pips" aria-label="進行状況">';
+      for (var i = 0; i < CHALLENGE_QUESTIONS; i++) {
+        var cls = i < h.length ? "done" : (i === h.length && !state.finished ? "now" : "");
+        html += '<span class="pip ' + cls + '"></span>';
+      }
+      html += "</div>";
+      var total = h.reduce(function (a, x) { return a + x.diff; }, 0);
+      html += "<span>第<strong>" + Math.min(h.length + (state.answered || state.finished ? 0 : 1), CHALLENGE_QUESTIONS) +
+        "</strong>問 / " + CHALLENGE_QUESTIONS + "</span><span>誤差の合計 <strong>" + total.toFixed(1) + "%</strong></span>";
+      var best = parseFloat(storageGet(BEST_KEY));
+      if (!isNaN(best)) html += "<span>自己ベスト <strong>" + best.toFixed(1) + "%</strong></span>";
+    } else {
+      var ok = h.filter(function (x) { return x.correct; }).length;
+      html += "<span>回答 <strong>" + h.length + "</strong>問</span><span>正解 <strong>" + ok + "</strong>問</span>";
+      html += state.mode === "easy" ? "<span>4択から最低〜最高乱数の割合を選ぶ</span>"
+        : "<span>最低乱数の割合を入力、誤差±" + NORMAL_TOLERANCE + "%以内で正解</span>";
+    }
+    $status.innerHTML = html;
+    document.querySelectorAll(".modes button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode));
+    });
+  }
+
+  function renderBattle(q) {
+    var a = q.attacker, d = q.defender, r = q.result;
+    var physical = r.move.category === "物理";
+    var aKey = physical ? "attack" : "sp_attack", dKey = physical ? "defense" : "sp_defense";
+    var boost = "";
+    if (a.boostMove) {
+      var st = a.boosts[aKey] || 0;
+      boost = "<dt>強化</dt><dd>" + esc(a.boostMove) + "を1回使用済み" +
+        (st ? ' <span class="flag up">' + STAT_LABEL[aKey] + "ランク" + (st > 0 ? "+" : "") + st + "</span>" : "（" + STAT_LABEL[aKey] + "は変化なし）") + "</dd>";
+    }
+    var w = q.battle.weather ? data.weather[q.battle.weather].name : "なし";
+    var f = q.battle.field ? data.field[q.battle.field].name : "なし";
+    var typeChanged = r.moveType !== r.move.type;
+    return '<section class="battle" aria-label="出題">' +
+      '<div class="side"><div class="role">攻撃側</div><h2 class="mon-name">' + esc(a.row.name) + "</h2>" +
+      '<div class="chips">' + a.row.types.map(typeChip).join("") + "</div>" +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost + "</dl>" +
+      statBlock(a, aKey) + "</div>" +
+      '<div class="center"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
+      '<div class="chips" style="justify-content:center">' + typeChip(r.moveType) + "</div>" +
+      '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b></span>" +
+      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div>" +
+      '<div class="env"><div><span>天候</span><span>' + esc(w) + '</span></div><div><span>フィールド</span><span>' + esc(f) + "</span></div></div></div>" +
+      '<div class="side"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
+      '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd></dl>" +
+      statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
+      "</section>";
+  }
+
+  function renderAnswer(q) {
+    if (state.mode === "easy") {
+      var html = '<section class="answer"><h2>ダメージの割合（最低〜最高乱数）は？</h2><div class="choices">';
+      state.options.forEach(function (o, i) {
+        var cls = "";
+        if (state.answered) cls = o.correct ? "correct" : (state.guess.choice === i ? "wrong" : "");
+        html += '<button type="button" class="choice ' + cls + '" data-choice="' + i + '"' + (state.answered ? " disabled" : "") +
+          '><span class="key">' + (i + 1) + '</span><span class="range">' + pct(o.lo) + " 〜 " + pct(o.hi) + "</span></button>";
+      });
+      return html + "</div></section>";
+    }
+    return '<section class="answer"><h2>最低乱数のダメージは防御側HPの何%？</h2>' +
+      '<form class="input-row" id="guess-form" novalidate><label class="num" for="guess"><input id="guess" type="number" inputmode="decimal" step="0.1" min="0" placeholder="0.0"' +
+      (state.answered ? " disabled value=\"" + state.guess.value + "\"" : "") + '><span>%</span></label>' +
+      '<button class="btn" type="submit"' + (state.answered ? " disabled" : "") + ">回答する</button></form>" +
+      '<p class="hint" id="guess-error" role="alert"></p>' +
+      '<p class="hint">' + (state.mode === "normal" ? "誤差±" + NORMAL_TOLERANCE + "%以内で正解。" : "") +
+      "最低乱数が100%を超える場合は100と入力。</p></section>";
+  }
+
+  function hpBar(r, guessPct) {
+    // 0〜100% を表示。最低乱数〜最高乱数の削り幅を斜線、残りHPを色で表す
+    var lo = Math.min(100, r.minPercent), hi = Math.min(100, r.maxPercent);
+    var remain = 100 - lo;
+    var color = remain > 50 ? "var(--hp-good)" : remain > 20 ? "var(--hp-warn)" : "var(--hp-bad)";
+    // 左端から残りHPを描き、右側（削られた分）を空ける
+    var html = '<div class="hpbox"><div class="hp-head"><span>' + esc(state.q.defender.row.name) + " の残りHP</span><span><b>" +
+      Math.max(0, r.hp - r.maxDamage) + "〜" + Math.max(0, r.hp - r.minDamage) + "</b> / " + r.hp + "</span></div>" +
+      '<div class="hpbar" role="img" aria-label="ダメージ ' + pct(r.minPercent) + "〜" + pct(r.maxPercent) + '">' +
+      '<div class="hp-remain" style="width:' + (100 - hi) + "%;background:" + color + '"></div>' +
+      '<div class="hp-roll" style="left:' + (100 - hi) + "%;width:" + (hi - lo) + '%"></div>';
+    if (guessPct !== null && guessPct !== undefined) {
+      var g = Math.max(0, Math.min(100, guessPct));
+      html += '<div class="hp-guess" style="left:' + (100 - g) + '%"><span>回答 ' + pct(guessPct) + "</span></div>";
+    }
+    html += '</div><div class="hp-scale"><span style="left:0">HP 0%</span><span style="left:50%">50%</span><span style="left:100%">100%</span></div>' +
+      '<div class="hp-legend"><span><i class="sw" style="background:' + color + '"></i>最高乱数でも残るHP</span>' +
+      '<span><i class="sw" style="background:repeating-linear-gradient(135deg,var(--dmg-soft) 0 3px,transparent 3px 5px);border:1px solid var(--dmg)"></i>乱数で変わる幅</span>' +
+      (guessPct !== null && guessPct !== undefined ? '<span><i class="sw" style="border-left:2px dashed var(--ink);border-radius:0;width:6px"></i>あなたの回答（右端からの削り）</span>' : "") +
+      "</div></div>";
+    return html;
+  }
+
+  function modLabel(m) {
+    if (m.mod === null || m.mod === undefined) return esc(m.label) + (m.value !== undefined ? " ×" + m.value : "");
+    return esc(m.label) + " ×" + (m.mod / 4096).toFixed(m.mod % 1024 === 0 ? 1 : 2) + "<span class=\"stat-note\">（" + m.mod + "/4096）</span>";
+  }
+  function traceRow(label, list, extra) {
+    var body = list.length ? list.map(modLabel).join("、") : "なし";
+    return '<div class="calc-row"><span>' + label + "</span><span>" + (extra ? extra + "　" : "") + body + "</span></div>";
+  }
+
+  function renderResult(q) {
+    var r = q.result, g = state.guess, head;
+    if (state.mode === "easy") {
+      head = '<span class="mark ' + (g.correct ? "ok" : "ng") + '">' + (g.correct ? "正解！" : "不正解") + "</span>" +
+        '<span class="sub">正解は <b>' + pct(r.minPercent) + " 〜 " + pct(r.maxPercent) + "</b></span>";
+    } else {
+      var label = state.mode === "challenge" ? "誤差 " + g.diff.toFixed(1) + "%" : (g.correct ? "正解！" : "不正解");
+      var cls = g.correct ? "ok" : "ng";
+      head = '<span class="mark ' + cls + '">' + label + "</span>" +
+        '<span class="sub">正解 <b>' + pct(q.answer) + "</b>　あなたの回答 <b>" + pct(g.value) + "</b>" +
+        (state.mode === "challenge" ? "" : "　誤差 <b>" + g.diff.toFixed(1) + "%</b>") + "</span>";
+    }
+    var last = state.mode === "challenge" && state.history.length >= CHALLENGE_QUESTIONS;
+    var nextLabel = last ? "結果を見る" : "次の問題";
+    var t = r.trace;
+    var html = '<section class="result reveal" aria-live="polite"><div class="verdict">' + head + "</div>" +
+      hpBar(r, state.mode === "easy" ? null : Math.min(100, g.value)) +
+      '<div class="figures">' +
+      '<div class="fig"><span>ダメージ</span><b>' + r.minDamage + "〜" + r.maxDamage + "</b></div>" +
+      '<div class="fig"><span>割合</span><b>' + pct(r.minPercent) + "〜" + pct(r.maxPercent) + "</b></div>" +
+      '<div class="fig"><span>タイプ相性</span><b>×' + r.effectiveness + "</b></div>" +
+      '<div class="fig"><span>確定数</span><b>' + koLabel(r) + "</b></div></div>" +
+      '<details class="breakdown"><summary>計算の内訳</summary><div class="calc">' +
+      traceRow("威力", t.power, "<code>" + r.basePower + " → " + r.power + "</code>") +
+      traceRow(r.move.category === "物理" ? "こうげき" : "とくこう", t.attack, "<code>" + r.attackStat + "</code>") +
+      traceRow(r.move.category === "物理" ? "ぼうぎょ" : "とくぼう", t.defense, "<code>" + r.defenseStat + "</code>") +
+      '<div class="calc-row"><span>基本ダメージ</span><span><code>floor(floor(22 × ' + r.power + " × " + r.attackStat + " ÷ " + r.defenseStat +
+      ") ÷ 50) + 2 = " + r.baseDamage + "</code></span></div>" +
+      traceRow("中略（乱数前）", t.middle) +
+      traceRow("後略（乱数後）", t.final) +
+      '<div class="calc-row"><span>乱数16通り</span><span class="rolls">' + r.damages.join(" ") + "</span></div>" +
+      "</div>" + (r.notes.length ? '<ul class="notes">' + r.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "") +
+      "</details>" +
+      '<div class="actions"><button class="btn" type="button" id="next">' + nextLabel + "</button>" +
+      (state.mode !== "challenge" ? '<button class="btn ghost" type="button" id="quit">やめる</button>' : "") +
+      '<span class="kbd">Enterで' + nextLabel + "</span></div></section>";
+    return html;
+  }
+
+  function renderSummary() {
+    var h = state.history;
+    var html = '<section class="summary reveal"><h2>' + (state.mode === "challenge" ? "チャレンジ結果" : "おつかれさまでした") + "</h2><div class=\"big\">";
+    if (state.mode === "challenge") {
+      var total = h.reduce(function (a, x) { return a + x.diff; }, 0);
+      html += "<div><span>誤差の合計</span><b>" + total.toFixed(1) + "%</b></div><div><span>1問あたり</span><b>" + (total / h.length).toFixed(1) + "%</b></div>";
+      if (state.prevBest !== null && state.prevBest !== undefined) {
+        html += "<div><span>これまでの自己ベスト</span><b>" + state.prevBest.toFixed(1) + "%</b></div>";
+      }
+    } else {
+      var ok = h.filter(function (x) { return x.correct; }).length;
+      html += "<div><span>回答</span><b>" + h.length + "問</b></div><div><span>正解</span><b>" + ok + "問</b></div>";
+      if (h.length) html += "<div><span>正答率</span><b>" + Math.round(ok / h.length * 100) + "%</b></div>";
+    }
+    html += "</div>";
+    if (h.length) {
+      html += '<div class="table-wrap"><table><thead><tr><th>#</th><th>攻撃側</th><th>技</th><th>防御側</th><th class="n">正解</th>' +
+        (state.mode === "easy" ? "<th>結果</th>" : '<th class="n">回答</th><th class="n">誤差</th>') + "</tr></thead><tbody>";
+      h.forEach(function (x, i) {
+        html += '<tr><td class="n">' + (i + 1) + "</td><td>" + esc(x.attacker) + "</td><td>" + esc(x.move) + "</td><td>" + esc(x.defender) +
+          '</td><td class="n">' + pct(x.answer) + "</td>" +
+          (state.mode === "easy" ? "<td>" + (x.correct ? "正解" : "不正解") + "</td>"
+            : '<td class="n">' + pct(x.guess) + '</td><td class="n">' + x.diff.toFixed(1) + "%</td>") + "</tr>";
+      });
+      html += "</tbody></table></div>";
+    }
+    html += '<div class="actions"><button class="btn" type="button" id="again">もう一度</button></div></section>';
+    return html;
+  }
+
+  function render() {
+    renderStatus();
+    if (state.finished) {
+      $main.innerHTML = renderSummary();
+    } else {
+      $main.innerHTML = renderBattle(state.q) + renderAnswer(state.q) + (state.answered ? renderResult(state.q) : "");
+    }
+    bind();
+  }
+
+  function bind() {
+    $main.querySelectorAll("[data-choice]").forEach(function (b) {
+      b.addEventListener("click", function () { submitChoice(+b.dataset.choice); });
+    });
+    var form = document.getElementById("guess-form");
+    if (form) form.addEventListener("submit", function (e) { e.preventDefault(); submitNumber(); });
+    var nextBtn = document.getElementById("next");
+    if (nextBtn) { nextBtn.addEventListener("click", next); nextBtn.focus({ preventScroll: true }); }
+    var quit = document.getElementById("quit");
+    if (quit) quit.addEventListener("click", finish);
+    var again = document.getElementById("again");
+    if (again) again.addEventListener("click", function () { setMode(state.mode); });
+  }
+
+  document.querySelectorAll(".modes button").forEach(function (b) {
+    b.addEventListener("click", function () { setMode(b.dataset.mode); });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!state.finished && !state.answered && state.mode === "easy" && /^[1-4]$/.test(e.key)) submitChoice(+e.key - 1);
+  });
+
+  var snap = data.snapshot;
+  if (snap) {
+    document.getElementById("snapshot").textContent = "シーズン" + snap.snapshot_id.replace("_single", "") + " シングル使用率上位50（" + snap.date + "時点）";
+    document.getElementById("source").textContent = snap.source_url;
+  }
+  newQuestion();
+})();

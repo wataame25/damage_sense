@@ -273,6 +273,25 @@ champs.pokedb.tokyo の各ページから特性の採用率を再取得し、`ab
 - チャレンジ：全10問、誤差の合計を表示
 - 最低乱数が100%を超える場合の正解値は100
 
-## 8. 残タスク
+## 8. ブラウザ版（web/）
 
-1. ブラウザ/アプリ向けのUI（現状はCLIのみ）。
+`web/index.html` をブラウザで開くだけで遊べる（サーバー不要・データも埋め込み済み）。
+
+```
+web/src/index.html   # 画面のテンプレート（CSS含む）
+web/src/engine.js    # 計算エンジン（main.py のJavaScript移植版）
+web/src/app.js       # 画面ロジック（出題・回答・結果表示・まとめ）
+build_web.py         # data/*.json と上記を1ファイルにまとめて web/index.html を生成
+test_web.py          # engine.js と main.py の計算結果が一致するかを照合（macOSのjscで実行）
+```
+
+- **計算の正は main.py**。engine.js を変更したら `python3 -m unittest test_web` で一致を確認する
+  （約1万通りの技×状況で16通りの乱数ダメージを照合）。
+- data/*.json や web/src を変更したら `python3 build_web.py` で web/index.html を作り直す。
+- 結果画面では、防御側の残りHPバー上に乱数幅と回答位置を表示し、確定数と「計算の内訳」
+  （威力・攻撃・防御の補正、基本ダメージの式、乱数16通り）を確認できる。
+- チャレンジの自己ベスト（誤差の合計）はブラウザのlocalStorageに保存する。
+
+## 9. 残タスク
+
+なし（追加要望待ち）。
