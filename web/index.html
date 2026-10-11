@@ -587,7 +587,8 @@ var DamageEngine = (function () {
     pickSpreadAndNature(row, rng, c);
     if (role === "attacker") {
       c.item = pickItem(data, row, rng);
-      if (c.item) c.itemMultiplier = choice(rng, ITEM_MULTIPLIER_CHOICES);
+      // タイプ指定の持ち物（のろいのおふだ等）は items.json の倍率どおり、それ以外は1.2倍か1.3倍をランダム
+      if (c.item) c.itemMultiplier = c.item.applies_to.move_type ? c.item.multiplier : choice(rng, ITEM_MULTIPLIER_CHOICES);
       var boostMoves = row.moves.map(function (m) { return data.moves[m]; })
         .filter(function (m) { return BOOST_MOVES[m.name]; });
       if (boostMoves.length && row.boost_move_used_flag_eligible && rng() < P_BOOST_USED) {

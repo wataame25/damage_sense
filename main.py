@@ -137,7 +137,7 @@ IMMUNITY_ABILITIES = {"ふゆう": "じめん", "ちくでん": "でんき", "�
 P_NO_WEATHER = 0.5
 P_NO_FIELD = 0.6
 P_BOOST_USED = 0.5
-# 火力アップ持ち物の倍率（ゲーム内の正確な値が未確認のため、出題ごとに1.2倍か1.3倍をランダムに決める）
+# タイプ指定でない火力アップ持ち物（いのちのたま等）の倍率。出題ごとに1.2倍か1.3倍をランダムに決める
 ITEM_MULTIPLIER_CHOICES = [1.2, 1.3]
 USAGE_THRESHOLD = 10          # 採用率がこれ未満の性格・振り方・持ち物は選ばない
 NATURE_CONFLICT_POINTS = 16   # これ以上振ったステータスを下げる性格は選ばない
@@ -446,6 +446,13 @@ def pick_ability(data, row, rng):
     return data.abilities[chosen["ability_id"]]["name"]
 
 
+def item_multiplier(item, rng):
+    """タイプ指定の持ち物（のろいのおふだ等）は items.json の倍率どおり、それ以外は1.2倍か1.3倍をランダム"""
+    if item["applies_to"]["move_type"]:
+        return item["multiplier"]
+    return rng.choice(ITEM_MULTIPLIER_CHOICES)
+
+
 def pick_item(data, row, rng):
     """所持率10%超の火力アップ持ち物を、その所持率の確率で持たせる。
     メガポケモンには持たせない。1.1倍系（ハチマキ/メガネ）は持つ機会が少ないため対象外"""
@@ -468,7 +475,7 @@ def make_combatant(data, row, rng, role):
     if role == "attacker":
         c.item = pick_item(data, row, rng)
         if c.item:
-            c.item_multiplier = rng.choice(ITEM_MULTIPLIER_CHOICES)
+            c.item_multiplier = item_multiplier(c.item, rng)
         boost_moves = [data.moves[m] for m in row["moves"] if data.moves[m]["name"] in BOOST_MOVES]
         if boost_moves and row.get("boost_move_used_flag_eligible") and rng.random() < P_BOOST_USED:
             bm = rng.choice(boost_moves)

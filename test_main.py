@@ -113,8 +113,17 @@ class ItemTest(unittest.TestCase):
                 self.assertIsNone(a.item)
             if a.item:
                 self.assertGreaterEqual(a.item["multiplier"], 1.2)
-                seen.add(a.item_multiplier)
+                if a.item["applies_to"]["move_type"]:
+                    self.assertEqual(a.item_multiplier, a.item["multiplier"])
+                else:
+                    seen.add(a.item_multiplier)
         self.assertEqual(seen, {1.2, 1.3})
+
+    def test_type_items_are_fixed(self):
+        rng = random.Random(0)
+        for name in ("のろいのおふだ", "くろいメガネ", "ようせいのハネ", "きせきのタネ"):
+            item = next(i for i in DATA.items.values() if i["name"] == name)
+            self.assertEqual({main.item_multiplier(item, rng) for _ in range(50)}, {1.2})
 
 
 class SpreadNatureTest(unittest.TestCase):
