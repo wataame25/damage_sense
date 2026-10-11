@@ -134,6 +134,8 @@ IMMUNITY_ABILITIES = {"ふゆう": "じめん", "ちくでん": "でんき", "�
 P_NO_WEATHER = 0.5
 P_NO_FIELD = 0.6
 P_BOOST_USED = 0.5
+# 火力アップ持ち物の倍率（ゲーム内の正確な値が未確認のため、出題ごとに1.2倍か1.3倍をランダムに決める）
+ITEM_MULTIPLIER_CHOICES = [1.2, 1.3]
 
 
 # ---------------------------------------------------------------------------
@@ -188,6 +190,7 @@ class Combatant:
     row: dict
     ability: str                     # 特性名
     item: dict | None = None         # items.jsonの1件（持ち物なしはNone）
+    item_multiplier: float = 1.0     # 持ち物の倍率（1.2 or 1.3）
     points: dict = field(default_factory=dict)   # 能力ポイント
     nature: dict = field(default_factory=dict)   # 性格補正 {stat: 1.0/1.1}
     boosts: dict = field(default_factory=dict)   # 能力ランク {stat: 段階}
@@ -306,10 +309,8 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
     if name == "はたきおとす" and not dfn.row["is_mega"]:
         power_mods.append(6144)  # 防御側は道具を持っている前提（メガストーンは落とせないので対象外）
         notes.append("はたきおとす：防御側が道具を持っている前提で威力1.5倍")
-    if atk.item:
-        item_mod = item_power_mod(atk.item, move, move_type, physical)
-        if item_mod:
-            power_mods.append(item_mod)
+    if atk.item and item_applies(atk.item, move, move_type, physical, eff):
+        power_mods.append(to4096(atk.item_multiplier))
     if battle.field:
         fd = data.field[battle.field]
         if atk.is_grounded() and move_type in fd["move_type_multiplier"]:
@@ -369,10 +370,6 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
         final_mods.append(2048)  # HP満タン前提
     if dfn_ability == "はどうのぼうご" and move.get("makes_contact"):
         final_mods.append(2048)
-    if atk.item and atk.item["name"] == "いのちのたま":
-        final_mods.append(5324)
-    if atk.item and atk.item["name"] == "たつじんのおび" and eff > 1:
-        final_mods.append(4915)
     final = chain_mods(final_mods)
 
     damages = []
@@ -388,18 +385,18 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
                         hp=dfn.stat("hp"), effectiveness=eff, notes=notes)
 
 
-def item_power_mod(item, move, move_type, physical):
-    """威力補正として掛かる持ち物の倍率（いのちのたま・たつじんのおびは最終補正なので除外）"""
-    if item["name"] in ("いのちのたま", "たつじんのおび"):
-        return None
+def item_applies(item, move, move_type, physical, eff):
+    """持ち物の倍率がこの技に掛かるか（タイプ強化系は一致タイプのみ、たつじんのおびは効果バツグンのみ）"""
     rule = item["applies_to"]
+    if item["name"] == "たつじんのおび" and eff <= 1:
+        return False
     if rule["move_type"] and rule["move_type"] != move_type:
-        return None
+        return False
     if rule["move_category"] and rule["move_category"] != ("物理" if physical else "特殊"):
-        return None
+        return False
     if rule["move_id"] and rule["move_id"] != move["id"]:
-        return None
-    return to4096(item["multiplier"])
+        return False
+    return True
 
 
 # ---------------------------------------------------------------------------
@@ -439,10 +436,15 @@ def pick_ability(data, row, rng):
 
 
 def pick_item(data, row, rng):
-    """所持率10%超の火力アップ持ち物を、その所持率の確率で持たせる"""
+    """所持率10%超の火力アップ持ち物を、その所持率の確率で持たせる。
+    メガポケモンには持たせない。1.1倍系（ハチマキ/メガネ）は持つ機会が少ないため対象外"""
+    if row["is_mega"]:
+        return None
     roll = rng.uniform(0, 100)
     acc = 0.0
     for cand in row.get("item_candidates", []):
+        if data.items[cand["item_id"]]["multiplier"] < 1.2:
+            continue
         acc += cand["usage_rate"]
         if roll < acc:
             return data.items[cand["item_id"]]
@@ -455,6 +457,8 @@ def make_combatant(data, row, rng, role):
     natures = rules["nature"]["choices"]
     if role == "attacker":
         c.item = pick_item(data, row, rng)
+        if c.item:
+            c.item_multiplier = rng.choice(ITEM_MULTIPLIER_CHOICES)
         for key in ("attack", "sp_attack"):
             c.points[key] = rng.choice(rules["attacker"]["choices"])
             c.nature[key] = rng.choice(natures)
@@ -530,6 +534,21 @@ def _stat_line(c, key):
     return f"{STAT_LABEL[key]} {c.stat(key)}（種族値{c.row['base_stats'][key]}・{c.points.get(key, 0)}振り{nat}）"
 
 
+def format_item(c):
+    if not c.item:
+        return "なし（火力アップ系以外）"
+    rule = c.item["applies_to"]
+    if c.item["name"] == "たつじんのおび":
+        target = "効果バツグンの技"
+    elif rule["move_type"]:
+        target = f"{rule['move_type']}技"
+    elif rule["move_category"]:
+        target = f"{rule['move_category']}技"
+    else:
+        target = "全ての攻撃技"
+    return f"{c.item['name']}（{target}×{c.item_multiplier:g}）"
+
+
 def format_question(data, q: Question):
     a, d, r = q.attacker, q.defender, q.result
     physical = r.move["category"] == "物理"
@@ -538,7 +557,7 @@ def format_question(data, q: Question):
     move_desc = f"{r.move['name']}（{r.move_type}・{r.move['category']}・威力{r.move['power']}）"
     lines = [
         f"【攻撃側】{a.name}（{'/'.join(a.types)}）",
-        f"  特性: {a.ability}　持ち物: {a.item['name'] if a.item else 'なし（火力アップ系以外）'}",
+        f"  特性: {a.ability}　持ち物: {format_item(a)}",
         f"  {_stat_line(a, a_key)}",
     ]
     if a.boost_move:

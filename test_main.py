@@ -73,6 +73,37 @@ class DamageTest(unittest.TestCase):
         self.assertAlmostEqual(half.max_damage, full.max_damage / 2, delta=1)
 
 
+class ItemTest(unittest.TestCase):
+    def test_item_multiplier_applied_to_matching_type(self):
+        item = next(i for i in DATA.items.values() if i["name"] == "くろいメガネ")
+        base = Combatant(row("ドドゲザン"), ability="そうだいしょう")
+        plain = calc_damage(DATA, base, Combatant(row("ゲンガー"), ability="のろわれボディ"),
+                            move("ドゲザン"), Battle(None, None))
+        for mult in (1.2, 1.3):
+            atk = Combatant(row("ドドゲザン"), ability="そうだいしょう", item=item, item_multiplier=mult)
+            res = calc_damage(DATA, atk, Combatant(row("ゲンガー"), ability="のろわれボディ"),
+                              move("ドゲザン"), Battle(None, None))
+            self.assertAlmostEqual(res.max_damage / plain.max_damage, mult, delta=0.03)
+        # タイプ不一致の技には掛からない
+        atk = Combatant(row("ドドゲザン"), ability="そうだいしょう", item=item, item_multiplier=1.3)
+        dfn = Combatant(row("ゲンガー"), ability="のろわれボディ")
+        self.assertEqual(calc_damage(DATA, atk, dfn, move("アイアンヘッド"), Battle(None, None)).damages,
+                         calc_damage(DATA, base, dfn, move("アイアンヘッド"), Battle(None, None)).damages)
+
+    def test_items_only_on_non_mega_with_random_multiplier(self):
+        rng = random.Random(1)
+        seen = set()
+        for _ in range(3000):
+            q = main.generate_question(DATA, rng)
+            a = q.attacker
+            if a.row["is_mega"]:
+                self.assertIsNone(a.item)
+            if a.item:
+                self.assertGreaterEqual(a.item["multiplier"], 1.2)
+                seen.add(a.item_multiplier)
+        self.assertEqual(seen, {1.2, 1.3})
+
+
 class GeneratorTest(unittest.TestCase):
     def test_bulk_generation_respects_rules(self):
         rng = random.Random(0)
