@@ -1,4 +1,5 @@
-"""web/src のテンプレートに data/*.json と engine.js を埋め込み、1ファイルで動く web/index.html を作る。
+"""web/src のテンプレートに data/*.json と engine.js を埋め込み、1ファイルで動く docs/index.html を作る。
+（GitHub Pages は docs/ フォルダを公開する設定にする）
 
     python3 build_web.py
 """
@@ -8,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "web" / "src"
-OUT = ROOT / "web" / "index.html"
+OUT = ROOT / "docs" / "index.html"
 TABLES = ["pokemon", "moves", "abilities", "items", "weather", "field", "ev_rules", "usage_snapshot"]
 
 
@@ -30,6 +31,8 @@ def render():
 
 
 def build():
+    OUT.parent.mkdir(exist_ok=True)
+    (OUT.parent / ".nojekyll").touch()  # GitHub Pages の Jekyll 処理を無効化（そのまま配信させる）
     OUT.write_text('<!doctype html>\n<html lang="ja">\n' + render() + "\n</html>\n", encoding="utf-8")
     return OUT
 

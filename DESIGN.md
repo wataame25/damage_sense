@@ -305,19 +305,20 @@ python3 build_web.py                           # ブラウザ版に反映
 
 ## 8. ブラウザ版（web/）
 
-`web/index.html` をブラウザで開くだけで遊べる（サーバー不要・データも埋め込み済み）。
+`docs/index.html` をブラウザで開くだけで遊べる（サーバー不要・データも埋め込み済み）。
+GitHub Pages で `docs/` を公開すればWebでも遊べる（手順は README.md「公開方法」）。
 
 ```
 web/src/index.html   # 画面のテンプレート（CSS含む）
 web/src/engine.js    # 計算エンジン（main.py のJavaScript移植版）
 web/src/app.js       # 画面ロジック（出題・回答・結果表示・まとめ）
-build_web.py         # data/*.json と上記を1ファイルにまとめて web/index.html を生成
+build_web.py         # data/*.json と上記を1ファイルにまとめて docs/index.html を生成
 test_web.py          # engine.js と main.py の計算結果が一致するかを照合（macOSのjscで実行）
 ```
 
 - **計算の正は main.py**。engine.js を変更したら `python3 -m unittest test_web` で一致を確認する
   （約1万通りの技×状況で16通りの乱数ダメージを照合）。
-- data/*.json や web/src を変更したら `python3 build_web.py` で web/index.html を作り直す。
+- data/*.json や web/src を変更したら `python3 build_web.py` で docs/index.html を作り直す。
 - 結果画面では、防御側の残りHPバー上に乱数幅と回答位置を表示し、確定数と「計算の内訳」
   （威力・攻撃・防御の補正、基本ダメージの式、乱数16通り）を確認できる。
 - チャレンジの自己ベスト（誤差の合計）はブラウザのlocalStorageに保存する。

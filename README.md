@@ -45,3 +45,24 @@ mainファイル内で実装したいもの
 ・メガ進化して使用する技が全く異なるようなポケモンの扱いに苦慮しています。
 例：メガリザYはソーラービームを打ちますがメガリザXは打たない。通常ガブリアスは物理型のポケモンだが、メガガブリアスZは特殊型のポケモン
 →上記懸念事項について、リザードンはメガリザードンYであることが多いため特殊型のメガリザYのみを出題、ガブリスはメガしない型が多いので通常のガブリアスとして出題を固定させてください。
+
+遊び方
+・ブラウザ版：docs/index.html をブラウザで開く（このファイル1つで動く。データも埋め込み済み）
+・ターミナル版：python3 main.py --mode easy（normal / challenge）
+・データやコードを変更したら python3 build_web.py で docs/index.html を作り直す
+
+公開方法（GitHub Pages）
+1. GitHubで新しいリポジトリを作成する（例：damage_sense）。README等の初期ファイルは作らない
+2. このフォルダでリモートを登録してpushする
+   git remote add origin https://github.com/<ユーザー名>/<リポジトリ名>.git
+   git push -u origin poke_damage
+   ※パスワードの代わりにGitHubの Personal Access Token（Settings → Developer settings → Tokens）を入力する
+3. リポジトリの Settings → Pages → Build and deployment で
+   Source：Deploy from a branch、Branch：poke_damage、フォルダ：/docs を選んで Save
+4. 数分後に https://<ユーザー名>.github.io/<リポジトリ名>/ で遊べるようになる
+5. 以降の更新は python3 build_web.py → git commit → git push で自動的に反映される
+
+注意
+・公開リポジトリにすると、コードと data/ のデータも誰でも見られる
+・使用率データの出典は champs.pokedb.tokyo。公開前に利用規約（https://champs.pokedb.tokyo/terms）を確認すること
+・取得したページのキャッシュ（.cache/）は .gitignore 済みでpushされない
