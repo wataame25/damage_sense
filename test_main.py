@@ -86,6 +86,30 @@ class DamageTest(unittest.TestCase):
         self.assertAlmostEqual(half.max_damage, full.max_damage / 2, delta=1)
 
 
+class AbilityBoostTest(unittest.TestCase):
+    def ratio(self, atk, ability, mv, dfn, battle=None):
+        d = Combatant(row(dfn), ability="x")
+        on = calc_damage(DATA, Combatant(row(atk), ability=ability), d, move(mv), battle or Battle(None, None))
+        off = calc_damage(DATA, Combatant(row(atk), ability="x"), d, move(mv), battle or Battle(None, None))
+        return on.max_damage / off.max_damage
+
+    def test_attack_abilities(self):
+        cases = [("イダイトウ (オス)", "てきおうりょく", "ウェーブタックル", "ガブリアス", 2 / 1.5),
+                 ("メガメタグロス", "かたいツメ", "アイアンヘッド", "ニンフィア", 1.3),
+                 ("メガメタグロス", "かたいツメ", "じしん", "ニンフィア", 1.0),
+                 ("メガハッサム", "テクニシャン", "バレットパンチ", "ニンフィア", 1.5),
+                 ("パーモット", "てつのこぶし", "れいとうパンチ", "ガブリアス", 1.2),
+                 ("パーモット", "てつのこぶし", "でんこうそうげき", "ギャラドス", 1.2),
+                 ("メガカメックス", "メガランチャー", "あくのはどう", "ゲンガー", 1.5),
+                 ("ムクホーク", "すてみ", "ブレイブバード", "ゴリランダー", 1.2)]
+        for atk, ability, mv, dfn, expected in cases:
+            self.assertAlmostEqual(self.ratio(atk, ability, mv, dfn), expected, delta=0.04, msg=(ability, mv))
+
+    def test_terrain_pulse_gets_mega_launcher(self):
+        r = self.ratio("メガカメックス", "メガランチャー", "だいちのはどう", "ゲンガー", Battle(None, "grassy_terrain"))
+        self.assertAlmostEqual(r, 1.5, delta=0.04)
+
+
 class ItemTest(unittest.TestCase):
     def item(self, name):
         return next(i for i in DATA.items.values() if i["name"] == name)
