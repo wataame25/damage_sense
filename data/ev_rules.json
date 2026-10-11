@@ -4,33 +4,12 @@
     "level": 50,
     "hp": "種族値 + 75 + 能力ポイント",
     "other": "floor((種族値 + 20 + 能力ポイント) × 性格補正)",
-    "note": "Pokémon Championsの能力ポイント制（1項目最大32、1pt＝実数値+1）。Lv50・個体値最大相当"
+    "note": "Pokémon Championsの能力ポイント制（1項目最大32、1pt＝実数値+1）。性格補正は上昇1.1倍・下降0.9倍"
   },
-  "attacker": {
-    "target_stat": "出題技が物理ならattack、特殊ならsp_attack",
-    "choices": [
-      0,
-      32
-    ]
-  },
-  "defender": {
-    "default_choices": [
-      0,
-      32
-    ],
-    "targeted_stat_rule": "出題技が物理ならdefense、特殊ならsp_defenseが対象",
-    "targeted_stat_choices": [
-      0,
-      2,
-      32
-    ]
-  },
-  "nature": {
-    "choices": [
-      1.0,
-      1.1
-    ],
-    "attacker": "攻撃側のattack/sp_attackのうち出題技で使う方に、補正なし(1.0)または上昇補正(1.1)をランダムに付与",
-    "defender": "防御側のdefense/sp_defenseのうち被弾する方に、補正なし(1.0)または上昇補正(1.1)をランダムに付与"
+  "usage_threshold": 10,
+  "selection": {
+    "stat_points": "pokemon.stat_point_usage から、採用率10%以上のグループを採用率で重み付け抽選し、グループ内の実際の振り方を採用率で重み付け抽選する",
+    "nature": "pokemon.nature_usage（採用率10%以上）から採用率で重み付け抽選する。ただし振り方と矛盾する性格（16ポイント以上振ったステータスを下げる性格）は候補から外す。全て外れる場合は全候補から抽選",
+    "applies_to": "攻撃側・防御側の両方。全ステータスに適用し、出題時は計算に使うステータスを開示する"
   }
 }

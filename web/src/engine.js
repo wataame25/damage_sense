@@ -11,6 +11,8 @@ var DamageEngine = (function () {
   var P_NO_FIELD = 0.6;
   var P_BOOST_USED = 0.5;
   var ITEM_MULTIPLIER_CHOICES = [1.2, 1.3];
+  var USAGE_THRESHOLD = 10;         // 採用率がこれ未満の性格・振り方・持ち物は選ばない
+  var NATURE_CONFLICT_POINTS = 16;  // これ以上振ったステータスを下げる性格は選ばない
 
   var TYPE_CHART = {
     "ノーマル": { "いわ": 0.5, "ゴースト": 0, "はがね": 0.5 },
@@ -68,7 +70,8 @@ var DamageEngine = (function () {
   }
   function calcStat(base, points, nature, isHp) {
     if (isHp) return base + 75 + points;
-    return Math.floor((base + 20 + points) * (nature || 1));
+    // 浮動小数の誤差を避けるため整数で計算（1.1倍→×11÷10、0.9倍→×9÷10）
+    return Math.floor((base + 20 + points) * Math.round((nature || 1) * 10) / 10);
   }
   function applyRank(stat, stages) {
     if (stages >= 0) return Math.floor(stat * (2 + stages) / 2);
@@ -94,6 +97,8 @@ var DamageEngine = (function () {
     this.itemMultiplier = 1;
     this.points = {};
     this.nature = {};
+    this.natureName = null;
+    this.spreadLabel = null;
     this.boosts = {};
     this.boostMove = null;
   }
@@ -321,7 +326,7 @@ var DamageEngine = (function () {
     var cands = row.item_candidates || [];
     for (var i = 0; i < cands.length; i++) {
       var item = data.items[cands[i].item_id];
-      if (item.multiplier < 1.2) continue;
+      if (item.multiplier < 1.2 || cands[i].usage_rate < USAGE_THRESHOLD) continue;
       acc += cands[i].usage_rate;
       if (roll < acc) return item;
     }
@@ -329,14 +334,10 @@ var DamageEngine = (function () {
   }
   function makeCombatant(data, row, rng, role) {
     var c = new Combatant(row, pickAbility(data, row, rng));
-    var rules = data.evRules, natures = rules.nature.choices;
+    pickSpreadAndNature(row, rng, c);
     if (role === "attacker") {
       c.item = pickItem(data, row, rng);
       if (c.item) c.itemMultiplier = choice(rng, ITEM_MULTIPLIER_CHOICES);
-      ["attack", "sp_attack"].forEach(function (k) {
-        c.points[k] = choice(rng, rules.attacker.choices);
-        c.nature[k] = choice(rng, natures);
-      });
       var boostMoves = row.moves.map(function (m) { return data.moves[m]; })
         .filter(function (m) { return BOOST_MOVES[m.name]; });
       if (boostMoves.length && row.boost_move_used_flag_eligible && rng() < P_BOOST_USED) {
@@ -347,14 +348,26 @@ var DamageEngine = (function () {
           c.boosts[b.stat] = Math.max(-6, Math.min(6, (c.boosts[b.stat] || 0) + sign * b.stages));
         });
       }
-    } else {
-      c.points.hp = choice(rng, rules.defender.default_choices);
-      ["defense", "sp_defense"].forEach(function (k) {
-        c.points[k] = choice(rng, rules.defender.targeted_stat_choices);
-        c.nature[k] = choice(rng, natures);
-      });
     }
     return c;
+  }
+  // 採用率10%以上の振り方・性格から、採用率で重み付けして選ぶ（攻撃側・防御側共通）
+  function pickSpreadAndNature(row, rng, c) {
+    var groups = row.stat_point_usage;
+    var group = weighted(rng, groups, groups.map(function (g) { return g.usage_rate; }));
+    var spread = weighted(rng, group.spreads, group.spreads.map(function (x) { return x.usage_rate; }));
+    c.points = Object.assign({}, spread.points);
+    c.spreadLabel = spread.label;
+    // 振り方と矛盾する性格（しっかり振ったステータスを下げる性格）は外す
+    var natures = row.nature_usage.filter(function (n) {
+      return !(n.down && c.points[n.down] >= NATURE_CONFLICT_POINTS);
+    });
+    if (!natures.length) natures = row.nature_usage;
+    var nature = weighted(rng, natures, natures.map(function (n) { return n.usage_rate; }));
+    c.natureName = nature.name;
+    c.nature = {};
+    if (nature.up) c.nature[nature.up] = 1.1;
+    if (nature.down) c.nature[nature.down] = 0.9;
   }
   function decideBattle(atk, dfn, rng) {
     var ws = [atk, dfn].filter(function (c) { return WEATHER_SETTERS[c.ability]; })

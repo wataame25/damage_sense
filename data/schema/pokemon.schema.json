@@ -16,7 +16,9 @@
     "is_defensive_only",
     "is_mega",
     "form_selection",
-    "ability_usage"
+    "ability_usage",
+    "nature_usage",
+    "stat_point_usage"
   ],
   "properties": {
     "id": {
@@ -106,7 +108,7 @@
     "item_candidates": {
       "type": "array",
       "maxItems": 5,
-      "description": "持ち物使用率上位10%超の候補（最大5件）",
+      "description": "火力アップ持ち物のうち所持率10%以上の候補（最大5件）",
       "items": {
         "type": "object",
         "required": [
@@ -195,6 +197,148 @@
         "excluded"
       ],
       "description": "出題時の形態選択。fixed=この形態で固定出題、random=同一種族のrandom行の中からランダムに1つ選ぶ、excluded=出題しない。メガ／メガZ／メガX・Yはいずれも通常形態からの分岐として扱い、同一種族内で1形態のみが選ばれる"
+    },
+    "nature_usage": {
+      "type": "array",
+      "description": "性格（能力補正）の採用率。採用率10%以上のみ格納。メガ形態は通常形態と同じ値（データソースが種族単位のため）",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "up",
+          "down",
+          "usage_rate"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "性格名（例: ようき）"
+          },
+          "up": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "hp",
+              "attack",
+              "defense",
+              "sp_attack",
+              "sp_defense",
+              "speed",
+              null
+            ],
+            "description": "1.1倍になるステータス。無補正の性格はnull"
+          },
+          "down": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "hp",
+              "attack",
+              "defense",
+              "sp_attack",
+              "sp_defense",
+              "speed",
+              null
+            ],
+            "description": "0.9倍になるステータス。無補正の性格はnull"
+          },
+          "usage_rate": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "stat_point_usage": {
+      "type": "array",
+      "description": "能力ポイント振りの採用率。champs.pokedb.tokyoの『合算』グループ単位で採用率10%以上のみ格納し、各グループ内に実際の振り方（個別）とその採用率を持つ",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "usage_rate",
+          "spreads"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "グループ名（例: AS = こうげき・すばやさ32振り＋余り）"
+          },
+          "usage_rate": {
+            "type": "number",
+            "description": "グループ全体の採用率（%）"
+          },
+          "spreads": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "label",
+                "usage_rate",
+                "points"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "usage_rate": {
+                  "type": "number"
+                },
+                "points": {
+                  "type": "object",
+                  "required": [
+                    "hp",
+                    "attack",
+                    "defense",
+                    "sp_attack",
+                    "sp_defense",
+                    "speed"
+                  ],
+                  "properties": {
+                    "hp": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    },
+                    "attack": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    },
+                    "defense": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    },
+                    "sp_attack": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    },
+                    "sp_defense": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    },
+                    "speed": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 32
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "additionalProperties": false

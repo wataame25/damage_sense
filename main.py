@@ -136,6 +136,8 @@ P_NO_FIELD = 0.6
 P_BOOST_USED = 0.5
 # 火力アップ持ち物の倍率（ゲーム内の正確な値が未確認のため、出題ごとに1.2倍か1.3倍をランダムに決める）
 ITEM_MULTIPLIER_CHOICES = [1.2, 1.3]
+USAGE_THRESHOLD = 10          # 採用率がこれ未満の性格・振り方・持ち物は選ばない
+NATURE_CONFLICT_POINTS = 16   # これ以上振ったステータスを下げる性格は選ばない
 
 
 # ---------------------------------------------------------------------------
@@ -171,7 +173,8 @@ def calc_stat(base, points, nature=1.0, is_hp=False):
     """Champions方式の実数値（Lv50）"""
     if is_hp:
         return base + 75 + points
-    return math.floor((base + 20 + points) * nature)
+    # 浮動小数の誤差を避けるため整数で計算（1.1倍→×11÷10、0.9倍→×9÷10）
+    return (base + 20 + points) * round(nature * 10) // 10
 
 
 def apply_rank(stat, stages):
@@ -192,7 +195,9 @@ class Combatant:
     item: dict | None = None         # items.jsonの1件（持ち物なしはNone）
     item_multiplier: float = 1.0     # 持ち物の倍率（1.2 or 1.3）
     points: dict = field(default_factory=dict)   # 能力ポイント
-    nature: dict = field(default_factory=dict)   # 性格補正 {stat: 1.0/1.1}
+    nature: dict = field(default_factory=dict)   # 性格補正 {stat: 1.1/0.9}
+    nature_name: str | None = None   # 性格名（例: ようき）
+    spread_label: str | None = None  # 振り方の名前（例: AS + h）
     boosts: dict = field(default_factory=dict)   # 能力ランク {stat: 段階}
     boost_move: str | None = None    # 使用済みにした強化技
 
@@ -443,7 +448,7 @@ def pick_item(data, row, rng):
     roll = rng.uniform(0, 100)
     acc = 0.0
     for cand in row.get("item_candidates", []):
-        if data.items[cand["item_id"]]["multiplier"] < 1.2:
+        if data.items[cand["item_id"]]["multiplier"] < 1.2 or cand["usage_rate"] < USAGE_THRESHOLD:
             continue
         acc += cand["usage_rate"]
         if roll < acc:
@@ -453,15 +458,11 @@ def pick_item(data, row, rng):
 
 def make_combatant(data, row, rng, role):
     c = Combatant(row=row, ability=pick_ability(data, row, rng))
-    rules = data.ev_rules
-    natures = rules["nature"]["choices"]
+    pick_spread_and_nature(row, rng, c)
     if role == "attacker":
         c.item = pick_item(data, row, rng)
         if c.item:
             c.item_multiplier = rng.choice(ITEM_MULTIPLIER_CHOICES)
-        for key in ("attack", "sp_attack"):
-            c.points[key] = rng.choice(rules["attacker"]["choices"])
-            c.nature[key] = rng.choice(natures)
         boost_moves = [data.moves[m] for m in row["moves"] if data.moves[m]["name"] in BOOST_MOVES]
         if boost_moves and row.get("boost_move_used_flag_eligible") and rng.random() < P_BOOST_USED:
             bm = rng.choice(boost_moves)
@@ -469,12 +470,26 @@ def make_combatant(data, row, rng, role):
             sign = -1 if c.ability == "あまのじゃく" else 1
             for b in bm["boosts_own_stat"]:
                 c.boosts[b["stat"]] = max(-6, min(6, c.boosts.get(b["stat"], 0) + sign * b["stages"]))
-    else:
-        c.points["hp"] = rng.choice(rules["defender"]["default_choices"])
-        for key in ("defense", "sp_defense"):
-            c.points[key] = rng.choice(rules["defender"]["targeted_stat_choices"])
-            c.nature[key] = rng.choice(natures)
     return c
+
+
+def pick_spread_and_nature(row, rng, c):
+    """採用率10%以上の振り方・性格から、採用率で重み付けして選ぶ（攻撃側・防御側共通）"""
+    groups = row["stat_point_usage"]
+    group = rng.choices(groups, weights=[g["usage_rate"] for g in groups])[0]
+    spread = rng.choices(group["spreads"], weights=[s["usage_rate"] for s in group["spreads"]])[0]
+    c.points = dict(spread["points"])
+    c.spread_label = spread["label"]
+    # 振り方と矛盾する性格（しっかり振ったステータスを下げる性格）は外す
+    natures = [n for n in row["nature_usage"] if not (n["down"] and c.points[n["down"]] >= NATURE_CONFLICT_POINTS)]
+    natures = natures or row["nature_usage"]
+    nature = rng.choices(natures, weights=[n["usage_rate"] for n in natures])[0]
+    c.nature_name = nature["name"]
+    c.nature = {}
+    if nature["up"]:
+        c.nature[nature["up"]] = 1.1
+    if nature["down"]:
+        c.nature[nature["down"]] = 0.9
 
 
 def decide_battle(atk, dfn, rng):
@@ -530,7 +545,8 @@ STAT_LABEL = {"hp": "HP", "attack": "こうげき", "defense": "ぼうぎょ",
 
 
 def _stat_line(c, key):
-    nat = "（性格↑）" if c.nature.get(key, 1.0) > 1 else ""
+    n = c.nature.get(key, 1.0)
+    nat = "（性格↑）" if n > 1 else "（性格↓）" if n < 1 else ""
     return f"{STAT_LABEL[key]} {c.stat(key)}（種族値{c.row['base_stats'][key]}・{c.points.get(key, 0)}振り{nat}）"
 
 
@@ -558,6 +574,7 @@ def format_question(data, q: Question):
     lines = [
         f"【攻撃側】{a.name}（{'/'.join(a.types)}）",
         f"  特性: {a.ability}　持ち物: {format_item(a)}",
+        f"  性格: {a.nature_name}　振り方: {a.spread_label}",
         f"  {_stat_line(a, a_key)}",
     ]
     if a.boost_move:
@@ -566,6 +583,7 @@ def format_question(data, q: Question):
     lines += [
         f"【防御側】{d.name}（{'/'.join(d.types)}）",
         f"  特性: {d.ability}",
+        f"  性格: {d.nature_name}　振り方: {d.spread_label}",
         f"  {_stat_line(d, 'hp')}",
         f"  {_stat_line(d, d_key)}",
         f"【天候】{data.weather[q.battle.weather]['name'] if q.battle.weather else 'なし'}"

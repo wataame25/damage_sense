@@ -24,6 +24,11 @@ class StatTest(unittest.TestCase):
         # こうげき種族値130・32振り・性格↑ → floor(182*1.1)=200
         self.assertEqual(calc_stat(130, 32, 1.1), 200)
 
+    def test_nature_up_and_down_match_pokedb(self):
+        # ガブリアス すばやさ（種族値102）: 最大+ 169 / 最大 154 / 最小 122 / 最小- 109
+        self.assertEqual([calc_stat(102, 32, 1.1), calc_stat(102, 32), calc_stat(102, 0), calc_stat(102, 0, 0.9)],
+                         [169, 154, 122, 109])
+
 
 class RoundingTest(unittest.TestCase):
     def test_poke_round(self):
@@ -102,6 +107,29 @@ class ItemTest(unittest.TestCase):
                 self.assertGreaterEqual(a.item["multiplier"], 1.2)
                 seen.add(a.item_multiplier)
         self.assertEqual(seen, {1.2, 1.3})
+
+
+class SpreadNatureTest(unittest.TestCase):
+    def test_choices_come_from_usage_over_threshold(self):
+        rng = random.Random(3)
+        for _ in range(1000):
+            q = main.generate_question(DATA, rng)
+            for c in (q.attacker, q.defender):
+                groups = c.row["stat_point_usage"]
+                self.assertTrue(all(g["usage_rate"] >= 10 for g in groups))
+                spreads = [s["points"] for g in groups for s in g["spreads"]]
+                self.assertIn(c.points, spreads)
+                nat = next(n for n in c.row["nature_usage"] if n["name"] == c.nature_name)
+                self.assertGreaterEqual(nat["usage_rate"], 10)
+                if nat["down"]:
+                    self.assertEqual(c.nature[nat["down"]], 0.9)
+                    others = [n for n in c.row["nature_usage"]
+                              if not (n["down"] and c.points[n["down"]] >= main.NATURE_CONFLICT_POINTS)]
+                    if others:
+                        self.assertLess(c.points[nat["down"]], main.NATURE_CONFLICT_POINTS)
+            if q.attacker.item:
+                cand = next(x for x in q.attacker.row["item_candidates"] if x["item_id"] == q.attacker.item["id"])
+                self.assertGreaterEqual(cand["usage_rate"], 10)
 
 
 class GeneratorTest(unittest.TestCase):

@@ -49,10 +49,21 @@
     return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.itemMultiplier + "</span>";
   }
   function statBlock(c, key) {
-    var nat = (c.nature[key] || 1) > 1;
+    var n = c.nature[key] || 1;
+    var nat = n > 1 ? ' ・ <span class="flag up">性格↑</span>' : n < 1 ? ' ・ <span class="flag down">性格↓</span>' : "";
     return '<div class="stat"><span class="stat-note">' + STAT_LABEL[key] + '</span><span class="stat-val">' + c.stat(key) +
-      '</span><span class="stat-note">種族値' + c.row.base_stats[key] + " ・ " + (c.points[key] || 0) + "振り" +
-      (nat ? ' ・ <span class="flag up">性格↑</span>' : "") + "</span></div>";
+      '</span><span class="stat-note">種族値' + c.row.base_stats[key] + " ・ " + (c.points[key] || 0) + "振り" + nat + "</span></div>";
+  }
+  var STAT_SHORT = { hp: "H", attack: "A", defense: "B", sp_attack: "C", sp_defense: "D", speed: "S" };
+  function natureLabel(c) {
+    var up = Object.keys(c.nature).filter(function (k) { return c.nature[k] > 1; })[0];
+    var down = Object.keys(c.nature).filter(function (k) { return c.nature[k] < 1; })[0];
+    return esc(c.natureName) + (up ? '<span class="stat-note">（' + STAT_SHORT[up] + "↑" + STAT_SHORT[down] + "↓）</span>" : "");
+  }
+  function spreadLabel(c) {
+    var parts = ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"].filter(function (k) { return c.points[k]; })
+      .map(function (k) { return STAT_SHORT[k] + c.points[k]; });
+    return '<span class="spread">' + (parts.join(" ") || "無振り") + "</span>";
   }
   // 確定数（防御側はHP満タン、乱数は16通り）
   function koLabel(r) {
@@ -183,7 +194,8 @@
     return '<section class="battle" aria-label="出題">' +
       '<div class="side"><div class="role">攻撃側</div><h2 class="mon-name">' + esc(a.row.name) + "</h2>" +
       '<div class="chips">' + a.row.types.map(typeChip).join("") + "</div>" +
-      '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost + "</dl>" +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost +
+      "<dt>性格</dt><dd>" + natureLabel(a) + "</dd><dt>振り方</dt><dd>" + spreadLabel(a) + "</dd></dl>" +
       statBlock(a, aKey) + "</div>" +
       '<div class="center"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
       '<div class="chips" style="justify-content:center">' + typeChip(r.moveType) + "</div>" +
@@ -192,7 +204,8 @@
       '<div class="env"><div><span>天候</span><span>' + esc(w) + '</span></div><div><span>フィールド</span><span>' + esc(f) + "</span></div></div></div>" +
       '<div class="side"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
       '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
-      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd></dl>" +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
+      "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
       statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
       "</section>";
   }
