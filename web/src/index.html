@@ -212,7 +212,8 @@ th { font-weight: 500; color: var(--muted); font-size: 12px; }
 td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; }
 th.n { text-align: right; }
 
-footer { font-size: 12px; color: var(--muted); }
+footer { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+footer p { margin: 0; max-width: 72ch; }
 
 @media (max-width: 760px) {
   .battle { grid-template-columns: 1fr; }
@@ -240,7 +241,10 @@ footer { font-size: 12px; color: var(--muted); }
   </header>
   <div class="status" id="status"></div>
   <main id="main" class="stack"></main>
-  <footer>Lv50・能力ポイント制（最大32）。防御側はHP満タン・状態異常なし。使用率データ：<span id="source"></span></footer>
+  <footer>
+    <p>Lv50・能力ポイント制（最大32）。防御側はHP満タン・状態異常なし。使用率データ：<span id="source"></span></p>
+    <p>このサイトはファンが個人で制作した非公式のツールです。任天堂・株式会社ポケモン・クリーチャーズ・ゲームフリーク、およびバトルデータベース チャンピオンズとは一切関係ありません。ポケットモンスター・ポケモン・Pokémonは任天堂・クリーチャーズ・ゲームフリークの登録商標です。</p>
+  </footer>
 </div>
 
 <script>/*__DATA__*/</script>

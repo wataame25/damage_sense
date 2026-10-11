@@ -306,7 +306,7 @@ python3 build_web.py                           # ブラウザ版に反映
 ## 8. ブラウザ版（web/）
 
 `docs/index.html` をブラウザで開くだけで遊べる（サーバー不要・データも埋め込み済み）。
-GitHub Pages で `docs/` を公開すればWebでも遊べる（手順は README.md「公開方法」）。
+GitHub Pages で `poke_damage` ブランチの `docs/` を公開している（https://wataame25.github.io/damage_sense/）。
 
 ```
 web/src/index.html   # 画面のテンプレート（CSS含む）
