@@ -7,8 +7,8 @@
       "じめん"
     ],
     "abilities": [
-      "ability_8",
-      "ability_24"
+      "ability_24",
+      "ability_8"
     ],
     "base_stats": {
       "hp": 108,
@@ -35,7 +35,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガ化率33.9%だが、通常/メガで技カテゴリ（物理・特殊）が大きく異なり計算の前提が崩れるため、通常ガブリアスに固定して出題する"
+    "mega_fixed_note": "メガ化率33.9%だが、通常/メガで技カテゴリ（物理・特殊）が大きく異なり計算の前提が崩れるため、通常ガブリアスに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_24",
+        "usage_rate": 99.0
+      },
+      {
+        "ability_id": "ability_8",
+        "usage_rate": 1.0
+      }
+    ]
   },
   {
     "id": "pokemon_0373-00",
@@ -73,7 +84,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_22",
+        "usage_rate": 99.0
+      },
+      {
+        "ability_id": "ability_153",
+        "usage_rate": 1.0
+      }
+    ]
   },
   {
     "id": "pokemon_0373-01",
@@ -110,7 +132,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0373-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が97.1%（内 ボーマンダナイト 97.1%）と高いため、メガボーマンダに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が97.1%（内 ボーマンダナイト 97.1%）と高いため、メガボーマンダに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_184",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0730-00",
@@ -148,7 +177,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_67",
+        "usage_rate": 96.0
+      },
+      {
+        "ability_id": "ability_204",
+        "usage_rate": 4.0
+      }
+    ]
   },
   {
     "id": "pokemon_0998-00",
@@ -158,8 +198,8 @@
       "こおり"
     ],
     "abilities": [
-      "ability_115",
-      "ability_270"
+      "ability_270",
+      "ability_115"
     ],
     "base_stats": {
       "hp": 115,
@@ -186,7 +226,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_270",
+        "usage_rate": 97.9
+      },
+      {
+        "ability_id": "ability_115",
+        "usage_rate": 2.1
+      }
+    ]
   },
   {
     "id": "pokemon_0998-01",
@@ -223,7 +274,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0998-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が31.7%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_270",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0448-00",
@@ -262,7 +320,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_39",
+        "usage_rate": 80.9
+      },
+      {
+        "ability_id": "ability_80",
+        "usage_rate": 12.6
+      },
+      {
+        "ability_id": "ability_154",
+        "usage_rate": 6.5
+      }
+    ]
   },
   {
     "id": "pokemon_0448-02",
@@ -299,7 +372,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0448-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が99.1%（内 ルカリオナイトＺ 90.6%）と高いため、メガルカリオＺに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が99.1%（内 ルカリオナイトＺ 90.6%）と高いため、メガルカリオＺに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_317",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0768-00",
@@ -336,7 +416,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_194",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0768-01",
@@ -373,7 +460,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0768-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が97.8%（内 グソクムシャナイト 97.8%）と高いため、メガグソクムシャに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が97.8%（内 グソクムシャナイト 97.8%）と高いため、メガグソクムシャに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_181",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0450-00",
@@ -410,7 +504,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_45",
+        "usage_rate": 99.8
+      },
+      {
+        "ability_id": "ability_159",
+        "usage_rate": 0.2
+      }
+    ]
   },
   {
     "id": "pokemon_1018-00",
@@ -420,8 +525,8 @@
       "ドラゴン"
     ],
     "abilities": [
-      "ability_5",
       "ability_192",
+      "ability_5",
       "ability_242"
     ],
     "base_stats": {
@@ -449,7 +554,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_192",
+        "usage_rate": 80.6
+      },
+      {
+        "ability_id": "ability_5",
+        "usage_rate": 19.2
+      },
+      {
+        "ability_id": "ability_242",
+        "usage_rate": 0.1
+      }
+    ]
   },
   {
     "id": "pokemon_1000-00",
@@ -486,7 +606,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_283",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0778-00",
@@ -528,7 +655,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_209",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0812-00",
@@ -537,8 +671,8 @@
       "くさ"
     ],
     "abilities": [
-      "ability_65",
-      "ability_229"
+      "ability_229",
+      "ability_65"
     ],
     "base_stats": {
       "hp": 100,
@@ -574,7 +708,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_229",
+        "usage_rate": 99.8
+      },
+      {
+        "ability_id": "ability_65",
+        "usage_rate": 0.2
+      }
+    ]
   },
   {
     "id": "pokemon_0006-00",
@@ -612,7 +757,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_66",
+        "usage_rate": 87.1
+      },
+      {
+        "ability_id": "ability_94",
+        "usage_rate": 12.9
+      }
+    ]
   },
   {
     "id": "pokemon_0006-02",
@@ -649,7 +805,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0006-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が98.5%（内 リザードナイトＹ 76.5%）と高いため、メガリザードンＹに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が98.5%（内 リザードナイトＹ 76.5%）と高いため、メガリザードンＹに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_70",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0908-00",
@@ -659,8 +822,8 @@
       "あく"
     ],
     "abilities": [
-      "ability_65",
-      "ability_168"
+      "ability_168",
+      "ability_65"
     ],
     "base_stats": {
       "hp": 76,
@@ -687,7 +850,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_168",
+        "usage_rate": 91.0
+      },
+      {
+        "ability_id": "ability_65",
+        "usage_rate": 9.0
+      }
+    ]
   },
   {
     "id": "pokemon_0823-00",
@@ -698,8 +872,8 @@
     ],
     "abilities": [
       "ability_46",
-      "ability_127",
-      "ability_240"
+      "ability_240",
+      "ability_127"
     ],
     "base_stats": {
       "hp": 98,
@@ -726,7 +900,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_46",
+        "usage_rate": 58.8
+      },
+      {
+        "ability_id": "ability_240",
+        "usage_rate": 40.2
+      },
+      {
+        "ability_id": "ability_127",
+        "usage_rate": 1.1
+      }
+    ]
   },
   {
     "id": "pokemon_0970-00",
@@ -736,8 +925,8 @@
       "どく"
     ],
     "abilities": [
-      "ability_212",
-      "ability_295"
+      "ability_295",
+      "ability_212"
     ],
     "base_stats": {
       "hp": 83,
@@ -764,7 +953,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が12.4%と低いため、通常キラフロルのみを出題対象とする"
+    "mega_fixed_note": "メガストーン所持率が12.4%と低いため、通常キラフロルのみを出題対象とする",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_295",
+        "usage_rate": 93.9
+      },
+      {
+        "ability_id": "ability_212",
+        "usage_rate": 6.1
+      }
+    ]
   },
   {
     "id": "pokemon_0903-00",
@@ -774,9 +974,9 @@
       "どく"
     ],
     "abilities": [
-      "ability_46",
       "ability_84",
-      "ability_143"
+      "ability_143",
+      "ability_46"
     ],
     "base_stats": {
       "hp": 80,
@@ -808,7 +1008,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_84",
+        "usage_rate": 93.5
+      },
+      {
+        "ability_id": "ability_143",
+        "usage_rate": 6.2
+      },
+      {
+        "ability_id": "ability_46",
+        "usage_rate": 0.3
+      }
+    ]
   },
   {
     "id": "pokemon_0815-00",
@@ -817,8 +1032,8 @@
       "ほのお"
     ],
     "abilities": [
-      "ability_66",
-      "ability_236"
+      "ability_236",
+      "ability_66"
     ],
     "base_stats": {
       "hp": 80,
@@ -850,7 +1065,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_236",
+        "usage_rate": 98.9
+      },
+      {
+        "ability_id": "ability_66",
+        "usage_rate": 1.1
+      }
+    ]
   },
   {
     "id": "pokemon_0130-00",
@@ -888,7 +1114,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が23.3%と低いため、通常ギャラドスのみを出題対象とする"
+    "mega_fixed_note": "メガストーン所持率が23.3%と低いため、通常ギャラドスのみを出題対象とする",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_22",
+        "usage_rate": 99.0
+      },
+      {
+        "ability_id": "ability_153",
+        "usage_rate": 1.0
+      }
+    ]
   },
   {
     "id": "pokemon_0902-00",
@@ -898,8 +1135,8 @@
       "ゴースト"
     ],
     "abilities": [
-      "ability_33",
       "ability_91",
+      "ability_33",
       "ability_104"
     ],
     "base_stats": {
@@ -927,7 +1164,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_91",
+        "usage_rate": 94.7
+      },
+      {
+        "ability_id": "ability_33",
+        "usage_rate": 3.7
+      },
+      {
+        "ability_id": "ability_104",
+        "usage_rate": 1.5
+      }
+    ]
   },
   {
     "id": "pokemon_0376-00",
@@ -965,7 +1217,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_29",
+        "usage_rate": 99.2
+      },
+      {
+        "ability_id": "ability_135",
+        "usage_rate": 0.8
+      }
+    ]
   },
   {
     "id": "pokemon_0376-01",
@@ -1002,7 +1265,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0376-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が94.7%（内 メタグロスナイト 94.7%）と高いため、メガメタグロスに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が94.7%（内 メタグロスナイト 94.7%）と高いため、メガメタグロスに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_181",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0681-00",
@@ -1048,7 +1318,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_176",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0876-00",
@@ -1058,9 +1335,9 @@
       "ノーマル"
     ],
     "abilities": [
+      "ability_227",
       "ability_28",
-      "ability_39",
-      "ability_227"
+      "ability_39"
     ],
     "base_stats": {
       "hp": 60,
@@ -1087,7 +1364,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_227",
+        "usage_rate": 99.8
+      },
+      {
+        "ability_id": "ability_28",
+        "usage_rate": 0.1
+      },
+      {
+        "ability_id": "ability_39",
+        "usage_rate": 0.1
+      }
+    ]
   },
   {
     "id": "pokemon_0658-00",
@@ -1097,8 +1389,8 @@
       "あく"
     ],
     "abilities": [
-      "ability_67",
-      "ability_168"
+      "ability_168",
+      "ability_67"
     ],
     "base_stats": {
       "hp": 72,
@@ -1125,7 +1417,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_168",
+        "usage_rate": 85.7
+      },
+      {
+        "ability_id": "ability_67",
+        "usage_rate": 14.3
+      }
+    ]
   },
   {
     "id": "pokemon_0658-03",
@@ -1162,7 +1465,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0658-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が44.8%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_168",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0149-00",
@@ -1172,8 +1482,8 @@
       "ひこう"
     ],
     "abilities": [
-      "ability_39",
-      "ability_136"
+      "ability_136",
+      "ability_39"
     ],
     "base_stats": {
       "hp": 91,
@@ -1200,7 +1510,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_136",
+        "usage_rate": 98.7
+      },
+      {
+        "ability_id": "ability_39",
+        "usage_rate": 1.3
+      }
+    ]
   },
   {
     "id": "pokemon_0149-01",
@@ -1237,7 +1558,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0149-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が56.8%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_136",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0009-00",
@@ -1246,8 +1574,8 @@
       "みず"
     ],
     "abilities": [
-      "ability_44",
-      "ability_67"
+      "ability_67",
+      "ability_44"
     ],
     "base_stats": {
       "hp": 79,
@@ -1274,7 +1602,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_67",
+        "usage_rate": 65.8
+      },
+      {
+        "ability_id": "ability_44",
+        "usage_rate": 34.2
+      }
+    ]
   },
   {
     "id": "pokemon_0009-01",
@@ -1310,7 +1649,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0009-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が96.1%（内 カメックスナイト 96.1%）と高いため、メガカメックスに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が96.1%（内 カメックスナイト 96.1%）と高いため、メガカメックスに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_178",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0038-01",
@@ -1320,8 +1666,8 @@
       "フェアリー"
     ],
     "abilities": [
-      "ability_81",
-      "ability_117"
+      "ability_117",
+      "ability_81"
     ],
     "base_stats": {
       "hp": 73,
@@ -1348,7 +1694,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_117",
+        "usage_rate": 99.8
+      },
+      {
+        "ability_id": "ability_81",
+        "usage_rate": 0.2
+      }
+    ]
   },
   {
     "id": "pokemon_0923-00",
@@ -1358,9 +1715,9 @@
       "かくとう"
     ],
     "abilities": [
+      "ability_89",
       "ability_10",
-      "ability_30",
-      "ability_89"
+      "ability_30"
     ],
     "base_stats": {
       "hp": 70,
@@ -1387,7 +1744,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_89",
+        "usage_rate": 94.1
+      },
+      {
+        "ability_id": "ability_10",
+        "usage_rate": 4.3
+      },
+      {
+        "ability_id": "ability_30",
+        "usage_rate": 1.6
+      }
+    ]
   },
   {
     "id": "pokemon_0479-02",
@@ -1424,7 +1796,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_26",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0637-00",
@@ -1462,7 +1841,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_49",
+        "usage_rate": 95.3
+      },
+      {
+        "ability_id": "ability_68",
+        "usage_rate": 4.7
+      }
+    ]
   },
   {
     "id": "pokemon_0260-00",
@@ -1472,8 +1862,8 @@
       "じめん"
     ],
     "abilities": [
-      "ability_6",
-      "ability_67"
+      "ability_67",
+      "ability_6"
     ],
     "base_stats": {
       "hp": 100,
@@ -1500,7 +1890,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が41.4%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガラグラージに固定するため通常形態は出題しない",
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_67",
+        "usage_rate": 82.5
+      },
+      {
+        "ability_id": "ability_6",
+        "usage_rate": 17.5
+      }
+    ]
   },
   {
     "id": "pokemon_0260-01",
@@ -1537,7 +1938,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0260-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が41.4%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率41.4%（30~60%帯）だが、指示によりメガラグラージに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_33",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0094-00",
@@ -1574,7 +1982,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_130",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0094-01",
@@ -1611,7 +2026,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0094-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が74.7%（内 ゲンガナイト 74.7%）と高いため、メガゲンガーに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が74.7%（内 ゲンガナイト 74.7%）と高いため、メガゲンガーに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_23",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0911-00",
@@ -1621,8 +2043,8 @@
       "ゴースト"
     ],
     "abilities": [
-      "ability_66",
-      "ability_109"
+      "ability_109",
+      "ability_66"
     ],
     "base_stats": {
       "hp": 104,
@@ -1649,7 +2071,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_109",
+        "usage_rate": 98.5
+      },
+      {
+        "ability_id": "ability_66",
+        "usage_rate": 1.5
+      }
+    ]
   },
   {
     "id": "pokemon_0395-00",
@@ -1659,8 +2092,8 @@
       "はがね"
     ],
     "abilities": [
-      "ability_67",
-      "ability_172"
+      "ability_172",
+      "ability_67"
     ],
     "base_stats": {
       "hp": 84,
@@ -1687,7 +2120,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_172",
+        "usage_rate": 80.4
+      },
+      {
+        "ability_id": "ability_67",
+        "usage_rate": 19.6
+      }
+    ]
   },
   {
     "id": "pokemon_0479-01",
@@ -1724,7 +2168,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_26",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0983-00",
@@ -1734,9 +2185,9 @@
       "はがね"
     ],
     "abilities": [
-      "ability_46",
+      "ability_293",
       "ability_128",
-      "ability_293"
+      "ability_46"
     ],
     "base_stats": {
       "hp": 100,
@@ -1772,7 +2223,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_293",
+        "usage_rate": 77.5
+      },
+      {
+        "ability_id": "ability_128",
+        "usage_rate": 22.1
+      },
+      {
+        "ability_id": "ability_46",
+        "usage_rate": 0.4
+      }
+    ]
   },
   {
     "id": "pokemon_0635-00",
@@ -1809,7 +2275,14 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_26",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0700-00",
@@ -1818,8 +2291,8 @@
       "フェアリー"
     ],
     "abilities": [
-      "ability_56",
-      "ability_182"
+      "ability_182",
+      "ability_56"
     ],
     "base_stats": {
       "hp": 95,
@@ -1851,7 +2324,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_182",
+        "usage_rate": 98.4
+      },
+      {
+        "ability_id": "ability_56",
+        "usage_rate": 1.6
+      }
+    ]
   },
   {
     "id": "pokemon_0026-00",
@@ -1860,8 +2344,8 @@
       "でんき"
     ],
     "abilities": [
-      "ability_9",
-      "ability_31"
+      "ability_31",
+      "ability_9"
     ],
     "base_stats": {
       "hp": 60,
@@ -1888,7 +2372,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_31",
+        "usage_rate": 85.9
+      },
+      {
+        "ability_id": "ability_9",
+        "usage_rate": 14.1
+      }
+    ]
   },
   {
     "id": "pokemon_0026-03",
@@ -1924,7 +2419,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0026-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が98.0%（内 ライチュウナイトＹ 92.8%）と高いため、メガライチュウＹに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が98.0%（内 ライチュウナイトＹ 92.8%）と高いため、メガライチュウＹに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_99",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0257-00",
@@ -1967,7 +2469,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_3",
+        "usage_rate": 98.7
+      },
+      {
+        "ability_id": "ability_66",
+        "usage_rate": 1.3
+      }
+    ]
   },
   {
     "id": "pokemon_0257-01",
@@ -1997,19 +2510,21 @@
     "snapshot_id": "M-6_single",
     "usage_rank": 39,
     "usage_rate": null,
-    "item_candidates": [
-      {
-        "item_id": "item_270",
-        "usage_rate": 14.4
-      }
-    ],
+    "item_candidates": [],
     "mega_stone_usage_rate": 55.5,
     "is_defensive_only": false,
     "boost_move_used_flag_eligible": true,
     "is_mega": true,
     "mega_of": "pokemon_0257-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が55.5%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_3",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0197-00",
@@ -2018,8 +2533,8 @@
       "あく"
     ],
     "abilities": [
-      "ability_28",
-      "ability_39"
+      "ability_39",
+      "ability_28"
     ],
     "base_stats": {
       "hp": 95,
@@ -2046,7 +2561,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_39",
+        "usage_rate": 67.8
+      },
+      {
+        "ability_id": "ability_28",
+        "usage_rate": 32.2
+      }
+    ]
   },
   {
     "id": "pokemon_0655-00",
@@ -2084,7 +2610,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_66",
+        "usage_rate": 89.2
+      },
+      {
+        "ability_id": "ability_170",
+        "usage_rate": 10.8
+      }
+    ]
   },
   {
     "id": "pokemon_0655-01",
@@ -2121,7 +2658,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0655-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が96.3%（内 マフォクシナイト 96.3%）と高いため、メガマフォクシーに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が96.3%（内 マフォクシナイト 96.3%）と高いため、メガマフォクシーに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_26",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0212-00",
@@ -2131,8 +2675,8 @@
       "はがね"
     ],
     "abilities": [
-      "ability_68",
       "ability_101",
+      "ability_68",
       "ability_135"
     ],
     "base_stats": {
@@ -2165,7 +2709,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_101",
+        "usage_rate": 98.6
+      },
+      {
+        "ability_id": "ability_68",
+        "usage_rate": 0.7
+      },
+      {
+        "ability_id": "ability_135",
+        "usage_rate": 0.7
+      }
+    ]
   },
   {
     "id": "pokemon_0212-01",
@@ -2195,19 +2754,21 @@
     "snapshot_id": "M-6_single",
     "usage_rank": 42,
     "usage_rate": null,
-    "item_candidates": [
-      {
-        "item_id": "item_270",
-        "usage_rate": 11.6
-      }
-    ],
+    "item_candidates": [],
     "mega_stone_usage_rate": 31.2,
     "is_defensive_only": false,
     "boost_move_used_flag_eligible": true,
     "is_mega": true,
     "mega_of": "pokemon_0212-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が31.2%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_101",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0748-00",
@@ -2217,9 +2778,9 @@
       "みず"
     ],
     "abilities": [
-      "ability_7",
       "ability_144",
-      "ability_196"
+      "ability_196",
+      "ability_7"
     ],
     "base_stats": {
       "hp": 50,
@@ -2246,7 +2807,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_144",
+        "usage_rate": 96.6
+      },
+      {
+        "ability_id": "ability_196",
+        "usage_rate": 2.7
+      },
+      {
+        "ability_id": "ability_7",
+        "usage_rate": 0.6
+      }
+    ]
   },
   {
     "id": "pokemon_0248-00",
@@ -2284,7 +2860,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_45",
+        "usage_rate": 99.1
+      },
+      {
+        "ability_id": "ability_127",
+        "usage_rate": 0.9
+      }
+    ]
   },
   {
     "id": "pokemon_0248-01",
@@ -2321,7 +2908,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0248-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する"
+    "mega_fixed_note": "メガストーン所持率が46.3%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_45",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0398-00",
@@ -2359,7 +2953,18 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_22",
+        "usage_rate": 90.2
+      },
+      {
+        "ability_id": "ability_120",
+        "usage_rate": 9.8
+      }
+    ]
   },
   {
     "id": "pokemon_0398-01",
@@ -2396,7 +3001,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0398-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が84.6%（内 ムクホークナイト 84.6%）と高いため、メガムクホークに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が84.6%（内 ムクホークナイト 84.6%）と高いため、メガムクホークに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_126",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0279-00",
@@ -2435,7 +3047,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_2",
+        "usage_rate": 99.7
+      },
+      {
+        "ability_id": "ability_44",
+        "usage_rate": 0.2
+      },
+      {
+        "ability_id": "ability_51",
+        "usage_rate": 0.1
+      }
+    ]
   },
   {
     "id": "pokemon_0354-00",
@@ -2444,8 +3071,8 @@
       "ゴースト"
     ],
     "abilities": [
-      "ability_15",
       "ability_119",
+      "ability_15",
       "ability_130"
     ],
     "base_stats": {
@@ -2473,7 +3100,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_119",
+        "usage_rate": 87.5
+      },
+      {
+        "ability_id": "ability_15",
+        "usage_rate": 7.7
+      },
+      {
+        "ability_id": "ability_130",
+        "usage_rate": 4.8
+      }
+    ]
   },
   {
     "id": "pokemon_0354-01",
@@ -2509,7 +3151,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0354-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が99.5%（内 ジュペッタナイト 99.5%）と高いため、メガジュペッタに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が99.5%（内 ジュペッタナイト 99.5%）と高いため、メガジュペッタに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_158",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0036-00",
@@ -2518,9 +3167,9 @@
       "フェアリー"
     ],
     "abilities": [
-      "ability_56",
+      "ability_109",
       "ability_98",
-      "ability_109"
+      "ability_56"
     ],
     "base_stats": {
       "hp": 95,
@@ -2547,7 +3196,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "excluded",
+    "ability_usage": [
+      {
+        "ability_id": "ability_109",
+        "usage_rate": 85.4
+      },
+      {
+        "ability_id": "ability_98",
+        "usage_rate": 13.6
+      },
+      {
+        "ability_id": "ability_56",
+        "usage_rate": 0.9
+      }
+    ]
   },
   {
     "id": "pokemon_0036-01",
@@ -2584,7 +3248,14 @@
     "is_mega": true,
     "mega_of": "pokemon_0036-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が76.7%（内 ピクシナイト 76.7%）と高いため、メガピクシーに固定して出題する"
+    "mega_fixed_note": "メガストーン所持率が76.7%（内 ピクシナイト 76.7%）と高いため、メガピクシーに固定して出題する",
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_156",
+        "usage_rate": 100.0
+      }
+    ]
   },
   {
     "id": "pokemon_0350-00",
@@ -2593,9 +3264,9 @@
       "みず"
     ],
     "abilities": [
-      "ability_56",
+      "ability_172",
       "ability_63",
-      "ability_172"
+      "ability_56"
     ],
     "base_stats": {
       "hp": 95,
@@ -2622,7 +3293,22 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_172",
+        "usage_rate": 81.7
+      },
+      {
+        "ability_id": "ability_63",
+        "usage_rate": 12.4
+      },
+      {
+        "ability_id": "ability_56",
+        "usage_rate": 5.9
+      }
+    ]
   },
   {
     "id": "pokemon_0473-00",
@@ -2661,6 +3347,21 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
-    "mega_fixed_note": null
+    "mega_fixed_note": null,
+    "form_selection": "fixed",
+    "ability_usage": [
+      {
+        "ability_id": "ability_12",
+        "usage_rate": 59.1
+      },
+      {
+        "ability_id": "ability_47",
+        "usage_rate": 40.0
+      },
+      {
+        "ability_id": "ability_81",
+        "usage_rate": 0.8
+      }
+    ]
   }
 ]

@@ -1,14 +1,23 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ev_rules",
-  "description": "出題時の努力値(EV)選択ルール。乱数ではなく固定の選択肢から選ぶ（main実行ファイルがこのルールに従って努力値を割り振り、出題時に開示する）",
+  "description": "出題時の能力ポイント（努力値）選択ルール。Pokémon Championsの能力ポイント制（1項目最大32）。乱数ではなく固定の選択肢から選ぶ（main実行ファイルがこのルールに従って割り振り、出題時に開示する）",
   "type": "object",
-  "required": ["attacker", "defender"],
+  "required": [
+    "system",
+    "stat_formula",
+    "attacker",
+    "defender",
+    "nature"
+  ],
   "properties": {
     "attacker": {
       "type": "object",
       "description": "攻撃側のEV選択ルール",
-      "required": ["target_stat", "choices"],
+      "required": [
+        "target_stat",
+        "choices"
+      ],
       "properties": {
         "target_stat": {
           "type": "string",
@@ -16,7 +25,9 @@
         },
         "choices": {
           "type": "array",
-          "items": { "type": "integer" },
+          "items": {
+            "type": "integer"
+          },
           "description": "対象ステータスのEVとして選択可能な値（2択）"
         }
       }
@@ -24,11 +35,17 @@
     "defender": {
       "type": "object",
       "description": "防御側のEV選択ルール",
-      "required": ["default_choices", "targeted_stat_choices", "targeted_stat_rule"],
+      "required": [
+        "default_choices",
+        "targeted_stat_choices",
+        "targeted_stat_rule"
+      ],
       "properties": {
         "default_choices": {
           "type": "array",
-          "items": { "type": "integer" },
+          "items": {
+            "type": "integer"
+          },
           "description": "被弾する技の対象ステータス以外（HP・素早さ・使われない方の防御系ステータス等）のEV選択肢（2択）"
         },
         "targeted_stat_rule": {
@@ -37,8 +54,63 @@
         },
         "targeted_stat_choices": {
           "type": "array",
-          "items": { "type": "integer" },
-          "description": "被弾する技の対象ステータス（defenseまたはsp_defense）のEV選択肢（4択）"
+          "items": {
+            "type": "integer"
+          },
+          "description": "被弾する技の対象ステータス（defenseまたはsp_defense）の選択肢（0/2/32の3択）"
+        }
+      }
+    },
+    "system": {
+      "type": "string",
+      "enum": [
+        "champions_stat_points"
+      ],
+      "description": "能力値の計算方式"
+    },
+    "stat_formula": {
+      "type": "object",
+      "description": "実数値の計算式（説明用）",
+      "required": [
+        "level",
+        "hp",
+        "other"
+      ],
+      "properties": {
+        "level": {
+          "type": "integer"
+        },
+        "hp": {
+          "type": "string"
+        },
+        "other": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "nature": {
+      "type": "object",
+      "description": "性格補正のルール（攻撃側・防御側とも該当ステータスにランダム付与）",
+      "required": [
+        "choices",
+        "attacker",
+        "defender"
+      ],
+      "properties": {
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "attacker": {
+          "type": "string"
+        },
+        "defender": {
+          "type": "string"
         }
       }
     }

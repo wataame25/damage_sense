@@ -4,9 +4,19 @@
   "description": "ポケモン一覧。種族名単位のテーブル（タイプ、特性3つまで、技5つまで、種族値、使用率データ、メガ進化の固定ルールを含む）",
   "type": "object",
   "required": [
-    "id", "name", "types", "abilities", "base_stats", "moves",
-    "snapshot_id", "usage_rank", "usage_rate",
-    "is_defensive_only", "is_mega"
+    "id",
+    "name",
+    "types",
+    "abilities",
+    "base_stats",
+    "moves",
+    "snapshot_id",
+    "usage_rank",
+    "usage_rate",
+    "is_defensive_only",
+    "is_mega",
+    "form_selection",
+    "ability_usage"
   ],
   "properties": {
     "id": {
@@ -21,32 +31,59 @@
       "type": "array",
       "minItems": 1,
       "maxItems": 2,
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "タイプ（最大2つ）"
     },
     "abilities": {
       "type": "array",
       "maxItems": 3,
-      "items": { "type": "string", "description": "abilities.id への参照" },
-      "description": "通常特性（最大2）＋隠れ特性（1）。最大3件"
+      "items": {
+        "type": "string",
+        "description": "abilities.id への参照"
+      },
+      "description": "通常特性（最大2）＋隠れ特性（1）。最大3件。採用率の高い順"
     },
     "base_stats": {
       "type": "object",
-      "required": ["hp", "attack", "defense", "sp_attack", "sp_defense", "speed"],
+      "required": [
+        "hp",
+        "attack",
+        "defense",
+        "sp_attack",
+        "sp_defense",
+        "speed"
+      ],
       "description": "種族値（努力値・個体値は含まない。努力値はmain実行ファイル側で割り振る）",
       "properties": {
-        "hp": { "type": "integer" },
-        "attack": { "type": "integer" },
-        "defense": { "type": "integer" },
-        "sp_attack": { "type": "integer" },
-        "sp_defense": { "type": "integer" },
-        "speed": { "type": "integer" }
+        "hp": {
+          "type": "integer"
+        },
+        "attack": {
+          "type": "integer"
+        },
+        "defense": {
+          "type": "integer"
+        },
+        "sp_attack": {
+          "type": "integer"
+        },
+        "sp_defense": {
+          "type": "integer"
+        },
+        "speed": {
+          "type": "integer"
+        }
       }
     },
     "moves": {
       "type": "array",
       "maxItems": 5,
-      "items": { "type": "string", "description": "moves.id への参照" },
+      "items": {
+        "type": "string",
+        "description": "moves.id への参照"
+      },
       "description": "使用率上位5種の技（攻撃技に絞り込み。りゅうのまい等の強化技が含まれる場合もある）"
     },
     "snapshot_id": {
@@ -60,7 +97,10 @@
       "description": "使用率ランキング順位（上位50位以内のみ採用）"
     },
     "usage_rate": {
-      "type": ["number", "null"],
+      "type": [
+        "number",
+        "null"
+      ],
       "description": "使用率（%）。データソース（champs.pokedb.tokyo）がポケモン単体の使用率%を公開していないため、現状はnull（使用率ランキングの順位usage_rankのみ取得可能）"
     },
     "item_candidates": {
@@ -69,15 +109,27 @@
       "description": "持ち物使用率上位10%超の候補（最大5件）",
       "items": {
         "type": "object",
-        "required": ["item_id", "usage_rate"],
+        "required": [
+          "item_id",
+          "usage_rate"
+        ],
         "properties": {
-          "item_id": { "type": "string", "description": "items.id への参照" },
-          "usage_rate": { "type": "number", "description": "使用率（%）" }
+          "item_id": {
+            "type": "string",
+            "description": "items.id への参照"
+          },
+          "usage_rate": {
+            "type": "number",
+            "description": "使用率（%）"
+          }
         }
       }
     },
     "mega_stone_usage_rate": {
-      "type": ["number", "null"],
+      "type": [
+        "number",
+        "null"
+      ],
       "description": "メガストーン所持率（%）。60%超で常時メガ、30%超60%以下でランダムにメガ/通常を出題。該当なしはnull"
     },
     "is_defensive_only": {
@@ -94,7 +146,10 @@
       "description": "メガ進化後の個体かどうか"
     },
     "mega_of": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "is_mega=trueの場合、進化元ポケモンのidを指す。通常個体はnull"
     },
     "fixed_mega_only": {
@@ -103,8 +158,43 @@
       "description": "懸念事項対応：この種族は特定のメガフォルムのみ出題する/メガを出題しない、という固定ルールがある場合true。詳細はmega_fixed_noteに記載"
     },
     "mega_fixed_note": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "固定ルールの内容（例: 'メガリザードンYのみ出題（特殊型）', 'メガガブリアスは出題しない（通常のガブリアスのみ）'）"
+    },
+    "ability_usage": {
+      "type": "array",
+      "maxItems": 3,
+      "description": "特性の採用率（%）。出題時はこの採用率で重み付けして特性を抽選する。メガ形態は単一特性のため100",
+      "items": {
+        "type": "object",
+        "required": [
+          "ability_id",
+          "usage_rate"
+        ],
+        "properties": {
+          "ability_id": {
+            "type": "string",
+            "description": "abilities.id への参照"
+          },
+          "usage_rate": {
+            "type": "number",
+            "description": "採用率（%）"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "form_selection": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "random",
+        "excluded"
+      ],
+      "description": "出題時の形態選択。fixed=この形態で固定出題、random=同一種族のrandom行の中からランダムに1つ選ぶ、excluded=出題しない。メガ／メガZ／メガX・Yはいずれも通常形態からの分岐として扱い、同一種族内で1形態のみが選ばれる"
     }
   },
   "additionalProperties": false
