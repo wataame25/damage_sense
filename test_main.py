@@ -110,6 +110,61 @@ class AbilityBoostTest(unittest.TestCase):
         self.assertAlmostEqual(r, 1.5, delta=0.04)
 
 
+class WeatherFieldTest(unittest.TestCase):
+    def mon(self, name, ability, speed_points=0, nature=None):
+        return Combatant(row(name), ability=ability, points={"speed": speed_points}, nature=nature or {})
+
+    def decide(self, a, d):
+        return main.decide_battle(a, d, random.Random(0))
+
+    def test_no_setter_means_no_weather_or_field(self):
+        b = self.decide(self.mon("ガブリアス", "さめはだ"), self.mon("ニンフィア", "フェアリースキン"))
+        self.assertEqual((b.weather, b.field), (None, None))
+
+    def test_single_setter(self):
+        b = self.decide(self.mon("ガブリアス", "さめはだ"), self.mon("ペリッパー", "あめふらし"))
+        self.assertEqual((b.weather, b.field), ("rain", None))
+
+    def test_mega_wins_even_if_faster(self):
+        # メガリザードンＹ（すばやさ100）の方がバンギラス（61）より速いが、メガシンカが優先
+        b = self.decide(self.mon("メガリザードンＹ", "ひでり", 32), self.mon("バンギラス", "すなおこし"))
+        self.assertEqual(b.weather, "sunny")
+        b = self.decide(self.mon("ペリッパー", "あめふらし"), self.mon("メガバンギラス", "すなおこし", 32))
+        self.assertEqual(b.weather, "sandstorm")
+
+    def test_slower_wins_when_both_non_mega(self):
+        b = self.decide(self.mon("ペリッパー", "あめふらし"), self.mon("カバルドン", "すなおこし"))   # 65 vs 47
+        self.assertEqual(b.weather, "sandstorm")
+        # 振り方・性格込みの実数値で比べる：カバルドンが最速(47+20+32)*1.1=108 > ペリッパー無振り85
+        b = self.decide(self.mon("ペリッパー", "あめふらし"), self.mon("カバルドン", "すなおこし", 32, {"speed": 1.1}))
+        self.assertEqual(b.weather, "rain")
+
+    def test_slower_wins_when_both_mega(self):
+        b = self.decide(self.mon("メガリザードンＹ", "ひでり"), self.mon("メガバンギラス", "すなおこし"))
+        self.assertEqual(b.weather, "sandstorm")
+
+    def test_field_is_resolved_separately_from_weather(self):
+        b = self.decide(self.mon("ゴリランダー", "グラスメイカー"), self.mon("カバルドン", "すなおこし"))
+        self.assertEqual((b.weather, b.field), ("sandstorm", "grassy_terrain"))
+        b = self.decide(self.mon("ゴリランダー", "グラスメイカー"), self.mon("イエッサン (オス)", "サイコメイカー"))
+        slower = min((c for c in ("ゴリランダー", "イエッサン (オス)")), key=lambda n: row(n)["base_stats"]["speed"])
+        self.assertEqual(b.field, "grassy_terrain" if slower == "ゴリランダー" else "psychic_terrain")
+
+    def test_generated_questions_have_weather_only_from_abilities(self):
+        rng = random.Random(9)
+        for _ in range(1000):
+            q = main.generate_question(DATA, rng)
+            abilities = {q.attacker.ability, q.defender.ability}
+            if q.battle.weather:
+                self.assertTrue(abilities & {k for k, v in main.WEATHER_SETTERS.items() if v == q.battle.weather})
+            else:
+                self.assertFalse(abilities & set(main.WEATHER_SETTERS))
+            if q.battle.field:
+                self.assertTrue(abilities & {k for k, v in main.FIELD_SETTERS.items() if v == q.battle.field})
+            else:
+                self.assertFalse(abilities & set(main.FIELD_SETTERS))
+
+
 class ItemTest(unittest.TestCase):
     def item(self, name):
         return next(i for i in DATA.items.values() if i["name"] == name)

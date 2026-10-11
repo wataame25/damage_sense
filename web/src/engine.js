@@ -7,8 +7,6 @@ var DamageEngine = (function () {
   var LEVEL = 50;
   var MAX_MIN_PERCENT = 110;
   var ANSWER_CAP = 100;
-  var P_NO_WEATHER = 0.5;
-  var P_NO_FIELD = 0.6;
   var P_BOOST_USED = 0.5;
   // 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける
   var FINAL_MOD_ITEMS = { "たつじんのおび": 4915, "いのちのたま": 5324 };
@@ -374,16 +372,31 @@ var DamageEngine = (function () {
     if (nature.up) c.nature[nature.up] = 1.1;
     if (nature.down) c.nature[nature.down] = 0.9;
   }
+  // 天候/フィールドを発生させる特性の持ち主を決める（main.py の resolve_setter と同じ規則）。
+  // 特性を持つポケモンがいなければ発生しない。両方が持つ場合は後から発動した方で上書き：
+  //   1. メガシンカしたポケモン  2. すばやさが遅いポケモン  3. 同速ならランダム
+  function resolveSetter(atk, dfn, setters, rng) {
+    var cands = [atk, dfn].filter(function (c) { return setters[c.ability]; });
+    if (!cands.length) return { id: null, note: null };
+    if (cands.length === 1) return { id: setters[cands[0].ability], note: cands[0].row.name + "の" + cands[0].ability };
+    var a = cands[0], d = cands[1], win, lose, why;
+    if (a.row.is_mega !== d.row.is_mega) {
+      win = a.row.is_mega ? a : d; lose = win === a ? d : a;
+      why = "メガシンカした" + win.row.name + "が後から発動して" + lose.row.name + "の" + lose.ability + "を上書き";
+    } else if (a.stat("speed") !== d.stat("speed")) {
+      win = a.stat("speed") < d.stat("speed") ? a : d; lose = win === a ? d : a;
+      why = "すばやさが遅い" + win.row.name + "（" + win.stat("speed") + "）が後から発動して" +
+        lose.row.name + "（" + lose.stat("speed") + "）の" + lose.ability + "を上書き";
+    } else {
+      win = choice(rng, cands); lose = win === a ? d : a;
+      why = "同速（" + win.stat("speed") + "）のためランダムで" + win.row.name + "が後から発動";
+    }
+    return { id: setters[win.ability], note: win.row.name + "の" + win.ability + "（" + why + "）" };
+  }
   function decideBattle(atk, dfn, rng) {
-    var ws = [atk, dfn].filter(function (c) { return WEATHER_SETTERS[c.ability]; })
-      .map(function (c) { return WEATHER_SETTERS[c.ability]; });
-    var fs = [atk, dfn].filter(function (c) { return FIELD_SETTERS[c.ability]; })
-      .map(function (c) { return FIELD_SETTERS[c.ability]; });
-    var weather = ws.length ? choice(rng, ws)
-      : (rng() < P_NO_WEATHER ? null : choice(rng, Object.keys(WEATHER_BALL_TYPE)));
-    var field = fs.length ? choice(rng, fs)
-      : (rng() < P_NO_FIELD ? null : choice(rng, Object.keys(TERRAIN_PULSE_TYPE)));
-    return { weather: weather, field: field };
+    var w = resolveSetter(atk, dfn, WEATHER_SETTERS, rng);
+    var f = resolveSetter(atk, dfn, FIELD_SETTERS, rng);
+    return { weather: w.id, field: f.id, weatherNote: w.note, fieldNote: f.note };
   }
   function bestMove(data, atk, dfn, battle) {
     var best = null;
@@ -420,6 +433,6 @@ var DamageEngine = (function () {
   return {
     indexData: indexData, generateQuestion: generateQuestion, calcDamage: calcDamage,
     Combatant: Combatant, makeRng: makeRng, calcStat: calcStat, typeEffectiveness: typeEffectiveness,
-    MAX_MIN_PERCENT: MAX_MIN_PERCENT, ANSWER_CAP: ANSWER_CAP
+    decideBattle: decideBattle, MAX_MIN_PERCENT: MAX_MIN_PERCENT, ANSWER_CAP: ANSWER_CAP
   };
 })();

@@ -201,7 +201,10 @@
       '<div class="chips" style="justify-content:center">' + typeChip(r.moveType) + "</div>" +
       '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b></span>" +
       (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div>" +
-      '<div class="env"><div><span>天候</span><span>' + esc(w) + '</span></div><div><span>フィールド</span><span>' + esc(f) + "</span></div></div></div>" +
+      '<div class="env"><div><span>天候</span><span>' + esc(w) + "</span></div>" +
+      (q.battle.weatherNote ? '<p class="env-note">' + esc(q.battle.weatherNote) + "</p>" : "") +
+      "<div><span>フィールド</span><span>" + esc(f) + "</span></div>" +
+      (q.battle.fieldNote ? '<p class="env-note">' + esc(q.battle.fieldNote) + "</p>" : "") + "</div></div>" +
       '<div class="side"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
       '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
       '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd><dt>性格</dt><dd>" + natureLabel(d) +

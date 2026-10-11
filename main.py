@@ -134,9 +134,6 @@ TERRAIN_PULSE_TYPE = {"electric_terrain": "でんき", "grassy_terrain": "くさ
 # 防御側の特性が無効化する技タイプ（かたやぶりで貫通）
 IMMUNITY_ABILITIES = {"ふゆう": "じめん", "ちくでん": "でんき", "ひらいしん": "でんき"}
 
-# 天候・フィールドが特性で決まらない場合に「なし」になる確率
-P_NO_WEATHER = 0.5
-P_NO_FIELD = 0.6
 P_BOOST_USED = 0.5
 # 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける
 FINAL_MOD_ITEMS = {"たつじんのおび": 4915, "いのちのたま": 5324}
@@ -224,6 +221,8 @@ class Combatant:
 class Battle:
     weather: str | None   # weather.jsonのid
     field: str | None     # field.jsonのid
+    weather_note: str | None = None   # どのポケモンの特性で発生したか
+    field_note: str | None = None
 
 
 @dataclass
@@ -498,18 +497,37 @@ def pick_spread_and_nature(row, rng, c):
         c.nature[nature["down"]] = 0.9
 
 
+def resolve_setter(atk, dfn, setters, rng):
+    """天候/フィールドを発生させる特性の持ち主を決める。特性を持つポケモンがいなければ発生しない。
+    両方が持つ場合は後から発動した方で上書きされる：
+      1. メガシンカしたポケモン（メガシンカ時に特性が発動するため後になる）
+      2. どちらもメガ／どちらも非メガなら、すばやさが遅いポケモン
+      3. 同速ならランダム
+    戻り値: (発生するid, 説明) / 該当なしは (None, None)"""
+    cands = [c for c in (atk, dfn) if c.ability in setters]
+    if not cands:
+        return None, None
+    if len(cands) == 1:
+        c = cands[0]
+        return setters[c.ability], f"{c.name}の{c.ability}"
+    a, d = cands
+    if a.row["is_mega"] != d.row["is_mega"]:
+        win, lose = (a, d) if a.row["is_mega"] else (d, a)
+        why = f"メガシンカした{win.name}が後から発動して{lose.name}の{lose.ability}を上書き"
+    elif a.stat("speed") != d.stat("speed"):
+        win, lose = sorted(cands, key=lambda c: c.stat("speed"))
+        why = (f"すばやさが遅い{win.name}（{win.stat('speed')}）が後から発動して"
+               f"{lose.name}（{lose.stat('speed')}）の{lose.ability}を上書き")
+    else:
+        win, lose = rng.sample(cands, 2)
+        why = f"同速（{win.stat('speed')}）のためランダムで{win.name}が後から発動"
+    return setters[win.ability], f"{win.name}の{win.ability}（{why}）"
+
+
 def decide_battle(atk, dfn, rng):
-    weathers = [WEATHER_SETTERS[c.ability] for c in (atk, dfn) if c.ability in WEATHER_SETTERS]
-    fields = [FIELD_SETTERS[c.ability] for c in (atk, dfn) if c.ability in FIELD_SETTERS]
-    if weathers:
-        weather = rng.choice(weathers)
-    else:
-        weather = None if rng.random() < P_NO_WEATHER else rng.choice(list(WEATHER_BALL_TYPE))
-    if fields:
-        fld = rng.choice(fields)
-    else:
-        fld = None if rng.random() < P_NO_FIELD else rng.choice(list(TERRAIN_PULSE_TYPE))
-    return Battle(weather=weather, field=fld)
+    weather, weather_note = resolve_setter(atk, dfn, WEATHER_SETTERS, rng)
+    fld, field_note = resolve_setter(atk, dfn, FIELD_SETTERS, rng)
+    return Battle(weather=weather, field=fld, weather_note=weather_note, field_note=field_note)
 
 
 def best_move(data, atk, dfn, battle):
@@ -592,8 +610,8 @@ def format_question(data, q: Question):
         f"  性格: {d.nature_name}　振り方: {d.spread_label}",
         f"  {_stat_line(d, 'hp')}",
         f"  {_stat_line(d, d_key)}",
-        f"【天候】{data.weather[q.battle.weather]['name'] if q.battle.weather else 'なし'}"
-        f"　【フィールド】{data.field[q.battle.field]['name'] if q.battle.field else 'なし'}",
+        f"【天候】{data.weather[q.battle.weather]['name'] + '：' + q.battle.weather_note if q.battle.weather else 'なし'}",
+        f"【フィールド】{data.field[q.battle.field]['name'] + '：' + q.battle.field_note if q.battle.field else 'なし'}",
         f"【使用技】{move_desc}",
     ]
     return "\n".join(lines)

@@ -24,6 +24,12 @@ SCENARIOS.forEach(function (s, i) {
     return x;
   }
   var atk = mk(s.attacker), dfn = mk(s.defender);
+  if (s.decided) {
+    var b = DamageEngine.decideBattle(atk, dfn, DamageEngine.makeRng(1));
+    checked++;
+    if (b.weather !== s.decided.weather || b.field !== s.decided.field)
+      mismatches.push({ scenario: i, decided: s.decided, got: { weather: b.weather, field: b.field } });
+  }
   s.expected.forEach(function (e) {
     var r = DamageEngine.calcDamage(data, atk, dfn, data.moves[e.move], s.battle);
     var got = r ? r.damages : null;
@@ -55,8 +61,12 @@ class WebParityTest(unittest.TestCase):
                 for mid in q.attacker.row["moves"]:
                     r = main.calc_damage(data, q.attacker, q.defender, data.moves[mid], b)
                     expected.append({"move": mid, "damages": r.damages if r else None})
+                decided = None
+                if b is q.battle and q.attacker.stat("speed") != q.defender.stat("speed"):
+                    decided = {"weather": q.battle.weather, "field": q.battle.field}
                 scenarios.append({"attacker": combatant_json(q.attacker), "defender": combatant_json(q.defender),
-                                  "battle": {"weather": b.weather, "field": b.field}, "expected": expected})
+                                  "battle": {"weather": b.weather, "field": b.field}, "expected": expected,
+                                  "decided": decided})
         with tempfile.TemporaryDirectory() as tmp:
             files = []
             for name, content in [("data.js", data_js()),
