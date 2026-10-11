@@ -46,7 +46,7 @@
     else if (rule.move_type) target = rule.move_type + "技";
     else if (rule.move_category) target = rule.move_category + "技";
     else target = "全ての攻撃技";
-    return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.itemMultiplier + "</span>";
+    return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.item.multiplier + "</span>";
   }
   function statBlock(c, key) {
     var n = c.nature[key] || 1;

@@ -20,7 +20,7 @@ SCENARIOS.forEach(function (s, i) {
   function mk(c) {
     var x = new DamageEngine.Combatant(data.pokemon.find(function (r) { return r.id === c.id; }), c.ability);
     x.item = c.item ? data.items[c.item] : null;
-    x.itemMultiplier = c.item_multiplier; x.points = c.points; x.nature = c.nature; x.boosts = c.boosts;
+    x.points = c.points; x.nature = c.nature; x.boosts = c.boosts;
     return x;
   }
   var atk = mk(s.attacker), dfn = mk(s.defender);
@@ -37,7 +37,7 @@ print(JSON.stringify({ checked: checked, mismatches: mismatches.slice(0, 5), cou
 
 def combatant_json(c):
     return {"id": c.row["id"], "ability": c.ability, "item": c.item["id"] if c.item else None,
-            "item_multiplier": c.item_multiplier, "points": c.points, "nature": c.nature, "boosts": c.boosts}
+            "points": c.points, "nature": c.nature, "boosts": c.boosts}
 
 
 @unittest.skipUnless(JSC.exists(), "jsc がありません")

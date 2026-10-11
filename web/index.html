@@ -258,7 +258,8 @@ var DamageEngine = (function () {
   var P_NO_WEATHER = 0.5;
   var P_NO_FIELD = 0.6;
   var P_BOOST_USED = 0.5;
-  var ITEM_MULTIPLIER_CHOICES = [1.2, 1.3];
+  // 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける
+  var FINAL_MOD_ITEMS = { "たつじんのおび": 4915, "いのちのたま": 5324 };
   var USAGE_THRESHOLD = 10;         // 採用率がこれ未満の性格・振り方・持ち物は選ばない
   var NATURE_CONFLICT_POINTS = 16;  // これ以上振ったステータスを下げる性格は選ばない
 
@@ -343,7 +344,6 @@ var DamageEngine = (function () {
     this.row = row;
     this.ability = ability;
     this.item = null;
-    this.itemMultiplier = 1;
     this.points = {};
     this.nature = {};
     this.natureName = null;
@@ -423,8 +423,8 @@ var DamageEngine = (function () {
       notes.push("はたきおとす：防御側が道具を持っている前提で威力1.5倍");
     }
     if (name === "アクロバット") notes.push("アクロバット：攻撃側が道具を持っている前提で威力2倍にしない");
-    if (atk.item && itemApplies(atk.item, move, moveType, physical, eff)) {
-      addP(to4096(atk.itemMultiplier), atk.item.name);
+    if (atk.item && !FINAL_MOD_ITEMS[atk.item.name] && itemApplies(atk.item, move, moveType, physical, eff)) {
+      addP(to4096(atk.item.multiplier), atk.item.name);
     }
     if (battle.field) {
       var fd = data.field[battle.field];
@@ -504,6 +504,10 @@ var DamageEngine = (function () {
     var fm = [];
     if (dfnAbility === "マルチスケイル") { fm.push(2048); trace.final.push({ label: "マルチスケイル", mod: 2048 }); }
     if (dfnAbility === "はどうのぼうご" && move.makes_contact) { fm.push(2048); trace.final.push({ label: "はどうのぼうご", mod: 2048 }); }
+    if (atk.item && FINAL_MOD_ITEMS[atk.item.name] && itemApplies(atk.item, move, moveType, physical, eff)) {
+      fm.push(FINAL_MOD_ITEMS[atk.item.name]);
+      trace.final.push({ label: atk.item.name, mod: FINAL_MOD_ITEMS[atk.item.name] });
+    }
     var finalMod = chainMods(fm);
 
     var damages = [];
@@ -587,8 +591,6 @@ var DamageEngine = (function () {
     pickSpreadAndNature(row, rng, c);
     if (role === "attacker") {
       c.item = pickItem(data, row, rng);
-      // タイプ指定の持ち物（のろいのおふだ等）は items.json の倍率どおり、それ以外は1.2倍か1.3倍をランダム
-      if (c.item) c.itemMultiplier = c.item.applies_to.move_type ? c.item.multiplier : choice(rng, ITEM_MULTIPLIER_CHOICES);
       var boostMoves = row.moves.map(function (m) { return data.moves[m]; })
         .filter(function (m) { return BOOST_MOVES[m.name]; });
       if (boostMoves.length && row.boost_move_used_flag_eligible && rng() < P_BOOST_USED) {
@@ -718,7 +720,7 @@ var DamageEngine = (function () {
     else if (rule.move_type) target = rule.move_type + "技";
     else if (rule.move_category) target = rule.move_category + "技";
     else target = "全ての攻撃技";
-    return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.itemMultiplier + "</span>";
+    return esc(c.item.name) + ' <span class="flag up">' + esc(target) + " ×" + c.item.multiplier + "</span>";
   }
   function statBlock(c, key) {
     var n = c.nature[key] || 1;

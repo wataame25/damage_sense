@@ -87,43 +87,40 @@ class DamageTest(unittest.TestCase):
 
 
 class ItemTest(unittest.TestCase):
-    def test_item_multiplier_applied_to_matching_type(self):
-        item = next(i for i in DATA.items.values() if i["name"] == "くろいメガネ")
-        base = Combatant(row("ドドゲザン"), ability="そうだいしょう")
-        plain = calc_damage(DATA, base, Combatant(row("ゲンガー"), ability="のろわれボディ"),
-                            move("ドゲザン"), Battle(None, None))
-        for mult in (1.2, 1.3):
-            atk = Combatant(row("ドドゲザン"), ability="そうだいしょう", item=item, item_multiplier=mult)
-            res = calc_damage(DATA, atk, Combatant(row("ゲンガー"), ability="のろわれボディ"),
-                              move("ドゲザン"), Battle(None, None))
-            self.assertAlmostEqual(res.max_damage / plain.max_damage, mult, delta=0.03)
-        # タイプ不一致の技には掛からない
-        atk = Combatant(row("ドドゲザン"), ability="そうだいしょう", item=item, item_multiplier=1.3)
-        dfn = Combatant(row("ゲンガー"), ability="のろわれボディ")
-        self.assertEqual(calc_damage(DATA, atk, dfn, move("アイアンヘッド"), Battle(None, None)).damages,
-                         calc_damage(DATA, base, dfn, move("アイアンヘッド"), Battle(None, None)).damages)
+    def item(self, name):
+        return next(i for i in DATA.items.values() if i["name"] == name)
 
-    def test_items_only_on_non_mega_with_random_multiplier(self):
+    def ratio(self, item, atk_name, ability, move_name, dfn_name, dfn_ability):
+        dfn = Combatant(row(dfn_name), ability=dfn_ability)
+        plain = calc_damage(DATA, Combatant(row(atk_name), ability=ability), dfn, move(move_name), Battle(None, None))
+        held = calc_damage(DATA, Combatant(row(atk_name), ability=ability, item=item), dfn, move(move_name), Battle(None, None))
+        return held.max_damage / plain.max_damage, held, plain
+
+    def test_type_item_is_1_2_and_only_for_its_type(self):
+        r, _, _ = self.ratio(self.item("くろいメガネ"), "ドドゲザン", "そうだいしょう", "ドゲザン", "ゲンガー", "のろわれボディ")
+        self.assertAlmostEqual(r, 1.2, delta=0.03)
+        _, held, plain = self.ratio(self.item("くろいメガネ"), "ドドゲザン", "そうだいしょう", "アイアンヘッド", "ゲンガー", "のろわれボディ")
+        self.assertEqual(held.damages, plain.damages)
+
+    def test_life_orb_1_3(self):
+        r, _, _ = self.ratio(self.item("いのちのたま"), "ミミッキュ", "ばけのかわ", "じゃれつく", "ガブリアス", "さめはだ")
+        self.assertAlmostEqual(r, 1.3, delta=0.03)
+
+    def test_expert_belt_1_2_only_super_effective(self):
+        belt = self.item("たつじんのおび")
+        r, _, _ = self.ratio(belt, "ミミッキュ", "ばけのかわ", "じゃれつく", "ガブリアス", "さめはだ")
+        self.assertAlmostEqual(r, 1.2, delta=0.03)
+        _, held, plain = self.ratio(belt, "ミミッキュ", "ばけのかわ", "じゃれつく", "カバルドン", "すなおこし")
+        self.assertEqual(held.damages, plain.damages)
+
+    def test_items_only_on_non_mega(self):
         rng = random.Random(1)
-        seen = set()
         for _ in range(3000):
-            q = main.generate_question(DATA, rng)
-            a = q.attacker
+            a = main.generate_question(DATA, rng).attacker
             if a.row["is_mega"]:
                 self.assertIsNone(a.item)
             if a.item:
                 self.assertGreaterEqual(a.item["multiplier"], 1.2)
-                if a.item["applies_to"]["move_type"]:
-                    self.assertEqual(a.item_multiplier, a.item["multiplier"])
-                else:
-                    seen.add(a.item_multiplier)
-        self.assertEqual(seen, {1.2, 1.3})
-
-    def test_type_items_are_fixed(self):
-        rng = random.Random(0)
-        for name in ("のろいのおふだ", "くろいメガネ", "ようせいのハネ", "きせきのタネ"):
-            item = next(i for i in DATA.items.values() if i["name"] == name)
-            self.assertEqual({main.item_multiplier(item, rng) for _ in range(50)}, {1.2})
 
 
 class SpreadNatureTest(unittest.TestCase):
