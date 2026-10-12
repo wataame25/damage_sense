@@ -216,10 +216,10 @@ class SpreadNatureTest(unittest.TestCase):
                 self.assertGreaterEqual(nat["usage_rate"], 10)
                 if nat["down"]:
                     self.assertEqual(c.nature[nat["down"]], 0.9)
-                    others = [n for n in c.row["nature_usage"]
-                              if not (n["down"] and c.points[n["down"]] >= main.NATURE_CONFLICT_POINTS)]
-                    if others:
-                        self.assertLess(c.points[nat["down"]], main.NATURE_CONFLICT_POINTS)
+                # 特化側（16以上振ったステータス）を上げ、特化側を下げる性格は選ばない
+                invested = {k for k, v in c.points.items() if v >= 16 and k != "hp"}
+                self.assertIn(nat["up"], invested, (c.name, c.spread_label, c.nature_name))
+                self.assertNotIn(nat["down"], invested, (c.name, c.spread_label, c.nature_name))
             if q.attacker.item:
                 cand = next(x for x in q.attacker.row["item_candidates"] if x["item_id"] == q.attacker.item["id"])
                 self.assertGreaterEqual(cand["usage_rate"], 10)

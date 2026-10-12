@@ -138,7 +138,7 @@ P_BOOST_USED = 0.5
 # 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける
 FINAL_MOD_ITEMS = {"たつじんのおび": 4915, "いのちのたま": 5324}
 USAGE_THRESHOLD = 10          # 採用率がこれ未満の性格・振り方・持ち物は選ばない
-NATURE_CONFLICT_POINTS = 16   # これ以上振ったステータスを下げる性格は選ばない
+INVESTED_POINTS = 16          # これ以上振ったステータスを「特化側」とみなす（性格の選択に使う）
 
 
 # ---------------------------------------------------------------------------
@@ -485,9 +485,7 @@ def pick_spread_and_nature(row, rng, c):
     spread = rng.choices(group["spreads"], weights=[s["usage_rate"] for s in group["spreads"]])[0]
     c.points = dict(spread["points"])
     c.spread_label = spread["label"]
-    # 振り方と矛盾する性格（しっかり振ったステータスを下げる性格）は外す
-    natures = [n for n in row["nature_usage"] if not (n["down"] and c.points[n["down"]] >= NATURE_CONFLICT_POINTS)]
-    natures = natures or row["nature_usage"]
+    natures = [n for n in row["nature_usage"] if nature_fits(n, c.points)] or row["nature_usage"]
     nature = rng.choices(natures, weights=[n["usage_rate"] for n in natures])[0]
     c.nature_name = nature["name"]
     c.nature = {}
@@ -495,6 +493,13 @@ def pick_spread_and_nature(row, rng, c):
         c.nature[nature["up"]] = 1.1
     if nature["down"]:
         c.nature[nature["down"]] = 0.9
+
+
+def nature_fits(nature, points):
+    """振り方に合う性格か：特化側（16ポイント以上振ったステータス）を上げ、特化側を下げない性格。
+    例：AS振りならこうげき/すばやさ上昇、HB振りならぼうぎょ上昇。無補正の性格は選ばない"""
+    invested = {k for k, v in points.items() if v >= INVESTED_POINTS and k != "hp"}
+    return nature["up"] in invested and nature["down"] not in invested
 
 
 def resolve_setter(atk, dfn, setters, rng):

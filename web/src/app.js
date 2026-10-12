@@ -8,6 +8,8 @@
   var NORMAL_TOLERANCE = 5;
   var CHALLENGE_QUESTIONS = 10;
   var BEST_KEY = "damage_sense.challengeBest";
+  var SITE_URL = "https://wataame25.github.io/damage_sense/";  // 共有時に付けるリンク（GitHub Pages）
+  var SHARE_TAG = "#ダメージ感覚";
 
   var TYPE_COLOR = {
     "ノーマル": "#9a9a7a", "ほのお": "#e8742f", "みず": "#4a86e8", "でんき": "#d9ad1c", "くさ": "#5aa83e",
@@ -304,6 +306,47 @@
     return html;
   }
 
+  // 1問ごとの誤差を記号に：◎2%以内 ○5%以内 △10%以内 ×それ以上
+  function errorMark(diff) { return diff <= 2 ? "◎" : diff <= 5 ? "○" : diff <= 10 ? "△" : "×"; }
+
+  function shareText() {
+    var h = state.history;
+    var total = h.reduce(function (a, x) { return a + x.diff; }, 0);
+    var season = data.snapshot ? "（シーズン" + data.snapshot.snapshot_id.replace("_single", "") + "）" : "";
+    return "ダメージ感覚 チャレンジ" + season + "\n" +
+      "誤差の合計 " + total.toFixed(1) + "%（1問あたり " + (total / h.length).toFixed(1) + "%）\n" +
+      h.map(function (x) { return errorMark(x.diff); }).join("") + "\n" + SHARE_TAG;
+  }
+
+  function renderShare() {
+    var text = shareText();
+    var xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(SITE_URL);
+    return '<div class="share"><h3>結果を共有</h3>' +
+      '<pre class="share-preview" id="share-preview">' + esc(text + "\n" + SITE_URL) + "</pre>" +
+      '<div class="actions">' +
+      '<a class="btn" id="share-x" href="' + esc(xUrl) + '" target="_blank" rel="noopener noreferrer">Xで共有</a>' +
+      '<button class="btn ghost" type="button" id="share-copy">結果をコピー</button>' +
+      (navigator.share ? '<button class="btn ghost" type="button" id="share-native">その他のアプリで共有</button>' : "") +
+      '<span class="kbd" id="share-status" role="status"></span></div></div>';
+  }
+
+  function copyShare() {
+    var status = document.getElementById("share-status");
+    var full = shareText() + "\n" + SITE_URL;
+    var done = function () { status.textContent = "コピーしました"; };
+    var fail = function () {
+      // クリップボードが使えない環境では、プレビュー欄を選択状態にして手動コピーしてもらう
+      var range = document.createRange();
+      range.selectNodeContents(document.getElementById("share-preview"));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      status.textContent = "コピーできませんでした。選択された文章をコピーしてください";
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(full).then(done, fail);
+      else fail();
+    } catch (e) { fail(); }
+  }
+
   function renderSummary() {
     var h = state.history;
     var html = '<section class="summary reveal"><h2>' + (state.mode === "challenge" ? "チャレンジ結果" : "おつかれさまでした") + "</h2><div class=\"big\">";
@@ -313,6 +356,8 @@
       if (state.prevBest !== null && state.prevBest !== undefined) {
         html += "<div><span>これまでの自己ベスト</span><b>" + state.prevBest.toFixed(1) + "%</b></div>";
       }
+      html += '<div><span>1問ごと（◎2%以内 ○5%以内 △10%以内 ×それ以上）</span><b class="marks">' +
+        h.map(function (x) { return errorMark(x.diff); }).join("") + "</b></div>";
     } else {
       var ok = h.filter(function (x) { return x.correct; }).length;
       html += "<div><span>回答</span><b>" + h.length + "問</b></div><div><span>正解</span><b>" + ok + "問</b></div>";
@@ -330,6 +375,7 @@
       });
       html += "</tbody></table></div>";
     }
+    if (state.mode === "challenge" && h.length) html += renderShare();
     html += '<div class="actions"><button class="btn" type="button" id="again">もう一度</button></div></section>';
     return html;
   }
@@ -356,6 +402,12 @@
     if (quit) quit.addEventListener("click", finish);
     var again = document.getElementById("again");
     if (again) again.addEventListener("click", function () { setMode(state.mode); });
+    var copy = document.getElementById("share-copy");
+    if (copy) copy.addEventListener("click", copyShare);
+    var nat = document.getElementById("share-native");
+    if (nat) nat.addEventListener("click", function () {
+      navigator.share({ title: "ダメージ感覚", text: shareText(), url: SITE_URL }).catch(function () { /* キャンセル時は何もしない */ });
+    });
   }
 
   document.querySelectorAll(".modes button").forEach(function (b) {

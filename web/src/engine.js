@@ -11,7 +11,7 @@ var DamageEngine = (function () {
   // 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける
   var FINAL_MOD_ITEMS = { "たつじんのおび": 4915, "いのちのたま": 5324 };
   var USAGE_THRESHOLD = 10;         // 採用率がこれ未満の性格・振り方・持ち物は選ばない
-  var NATURE_CONFLICT_POINTS = 16;  // これ以上振ったステータスを下げる性格は選ばない
+  var INVESTED_POINTS = 16;  // これ以上振ったステータスを「特化側」とみなす（性格の選択に使う）
 
   var TYPE_CHART = {
     "ノーマル": { "いわ": 0.5, "ゴースト": 0, "はがね": 0.5 },
@@ -361,9 +361,10 @@ var DamageEngine = (function () {
     var spread = weighted(rng, group.spreads, group.spreads.map(function (x) { return x.usage_rate; }));
     c.points = Object.assign({}, spread.points);
     c.spreadLabel = spread.label;
-    // 振り方と矛盾する性格（しっかり振ったステータスを下げる性格）は外す
+    // 振り方に合う性格のみ：特化側（16ポイント以上振ったステータス）を上げ、特化側を下げない性格
     var natures = row.nature_usage.filter(function (n) {
-      return !(n.down && c.points[n.down] >= NATURE_CONFLICT_POINTS);
+      var inv = function (k) { return k && k !== "hp" && c.points[k] >= INVESTED_POINTS; };
+      return inv(n.up) && !inv(n.down);
     });
     if (!natures.length) natures = row.nature_usage;
     var nature = weighted(rng, natures, natures.map(function (n) { return n.usage_rate; }));
