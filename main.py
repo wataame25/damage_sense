@@ -110,7 +110,7 @@ def type_effectiveness(move_type, defender_types, move_name=None):
 # 出題対象外の技（威力が変動する／連続技／カウンター系／参照ステータスが特殊）
 UNSUPPORTED_MOVES = {
     "ミラーコート", "メタルバースト", "くさむすび",          # 威力なし・相手依存
-    "つららばり", "みずしゅりけん", "トリプルアクセル", "ダブルウイング",  # 連続技
+    "つららばり", "みずしゅりけん", "トリプルアクセル", "ダブルウイング", "スケイルショット",  # 連続技
     "ボディプレス", "イカサマ",                             # 攻撃側のこうげき/とくこう以外を参照
 }
 # パンチ・波動・音の技（champs.pokedb.tokyo の技タグに合わせる）
@@ -265,6 +265,8 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
         return None
     if name == "ソーラービーム" and battle.weather != "sunny":
         return None  # はれ以外は溜めが必要なため出題対象外
+    if name == "エレクトロビーム" and battle.weather != "rain":
+        return None  # あめ以外は溜めが必要なため出題対象外
     if name == "でんこうそうげき" and "でんき" not in atk.types:
         return None
 
@@ -334,6 +336,9 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
     a_key = "attack" if physical else "sp_attack"
     a_stat = atk.stat(a_key)
     a_stage = atk.boosts.get(a_key, 0)
+    if name == "エレクトロビーム":
+        a_stage = min(6, a_stage + (-1 if atk.ability == "あまのじゃく" else 1))
+        notes.append("エレクトロビーム：攻撃前にとくこうが1段階上がる（あめのため溜めなしで攻撃）")
     if dfn_ability == "てんねん":
         a_stage = 0
     a_stat = apply_rank(a_stat, a_stage)

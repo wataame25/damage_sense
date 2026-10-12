@@ -24,7 +24,7 @@ UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 
 TOP_N = 50
 USAGE_THRESHOLD = 10          # 性格・振り方・持ち物はこれ未満の採用率を除外
-ATTACK_MOVES = 5              # 採用率上位の攻撃技をいくつ持つか
+MOVE_USAGE_THRESHOLD = 15     # 採用率がこれ以上の技（サイトの上位10種から）を使う
 BOOST_MOVES = {"りゅうのまい", "つるぎのまい", "わるだくみ", "ちょうのまい"}
 DEFENSIVE_ONLY = {"アーマーガア", "ドヒドイデ", "ピクシー", "メガピクシー"}   # README指定。攻撃側に選ばない
 MEGA_FIXED_RATE = 60          # メガストーン所持率がこれを超えたらメガ固定
@@ -181,15 +181,15 @@ def build_species(rank, key, p, masters, added):
             added["abilities"].append(n)
         return aid
 
-    # 技：採用率上位の攻撃技5つ＋上位5位以内の積み技
+    # 技：採用率15%以上の攻撃技＋採用率15%以上の積み技（サイトに載っている上位10種から）
     ranked = sorted(p["moves"], key=lambda d: d["rank"])
     for d in ranked:
         mid = f"move_{d['move_key']}"
         if mid not in moves_m:
             moves_m[mid] = move_record(d)
             added["moves"].append(d["name"])
-    attack = [d for d in ranked if d["category_label"] != "変化"][:ATTACK_MOVES]
-    boost = [d for d in ranked[:5] if d["name"] in BOOST_MOVES]
+    attack = [d for d in ranked if d["category_label"] != "変化" and d["rate"] >= MOVE_USAGE_THRESHOLD]
+    boost = [d for d in ranked if d["name"] in BOOST_MOVES and d["rate"] >= MOVE_USAGE_THRESHOLD]
     chosen = sorted({d["move_key"]: d for d in attack + boost}.values(), key=lambda d: d["rank"])
     move_ids = [f"move_{d['move_key']}" for d in chosen]
     boost_flag = bool(boost)

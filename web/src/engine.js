@@ -36,7 +36,7 @@ var DamageEngine = (function () {
 
   function set(arr) { var o = {}; arr.forEach(function (x) { o[x] = true; }); return o; }
   var UNSUPPORTED_MOVES = set(["ミラーコート", "メタルバースト", "くさむすび", "つららばり", "みずしゅりけん",
-    "トリプルアクセル", "ダブルウイング", "ボディプレス", "イカサマ"]);
+    "トリプルアクセル", "ダブルウイング", "スケイルショット", "ボディプレス", "イカサマ"]);
   var PUNCH_MOVES = set(["れいとうパンチ", "かみなりパンチ", "ほのおのパンチ", "マッハパンチ", "バレットパンチ", "コメットパンチ", "ドレインパンチ", "でんこうそうげき"]);
   var PULSE_MOVES = set(["みずのはどう", "あくのはどう", "りゅうのはどう", "はどうだん", "だいちのはどう"]);
   var SOUND_MOVES = set(["ハイパーボイス", "うたかたのアリア", "むしのさざめき", "フレアソング", "みわくのボイス", "バークアウト"]);
@@ -124,6 +124,7 @@ var DamageEngine = (function () {
     var name = move.name;
     if (move.category === "変化" || move.power === null || UNSUPPORTED_MOVES[name]) return null;
     if (name === "ソーラービーム" && battle.weather !== "sunny") return null;
+    if (name === "エレクトロビーム" && battle.weather !== "rain") return null;  // あめ以外は溜めが必要
     if (name === "でんこうそうげき" && atk.row.types.indexOf("でんき") < 0) return null;
 
     var notes = [];
@@ -192,6 +193,10 @@ var DamageEngine = (function () {
     var aKey = physical ? "attack" : "sp_attack";
     var aStat = atk.stat(aKey);
     var aStage = atk.boosts[aKey] || 0;
+    if (name === "エレクトロビーム") {
+      aStage = Math.min(6, aStage + (atk.ability === "あまのじゃく" ? -1 : 1));
+      notes.push("エレクトロビーム：攻撃前にとくこうが1段階上がる（あめのため溜めなしで攻撃）");
+    }
     if (dfnAbility === "てんねん") {
       if (aStage) trace.attack.push({ label: "てんねん（ランク無視）", mod: null });
       aStage = 0;

@@ -77,6 +77,18 @@ class DamageTest(unittest.TestCase):
         dfn.points = {"defense": 0, "sp_defense": 32}
         self.assertGreater(calc_damage(DATA, atk, dfn, move("サイコショック"), Battle(None, None)).min_damage, res.min_damage)
 
+    def test_electro_shot_only_in_rain_with_spa_boost(self):
+        atk = Combatant(row("ブリジュラス"), ability="じきゅうりょく", points={"sp_attack": 32})
+        dfn = Combatant(row("ギャラドス"), ability="いかく")
+        shot = move("エレクトロビーム")
+        self.assertIsNone(calc_damage(DATA, atk, dfn, shot, Battle(None, None)))
+        rain = calc_damage(DATA, atk, dfn, shot, Battle("rain", None))
+        # 同じ威力・タイプの普通の技を、とくこう+1で撃った場合と一致する
+        plain = dict(shot, name="テスト用でんき技")
+        boosted = Combatant(row("ブリジュラス"), ability="じきゅうりょく", points={"sp_attack": 32}, boosts={"sp_attack": 1})
+        self.assertEqual(rain.damages, calc_damage(DATA, boosted, dfn, plain, Battle("rain", None)).damages)
+        self.assertIsNone(calc_damage(DATA, atk, dfn, move("スケイルショット"), Battle(None, None)))
+
     def test_multiscale_halves(self):
         atk = Combatant(row("マンムー"), ability="どんかん")
         dfn = Combatant(row("カイリュー"), ability="せいしんりょく")

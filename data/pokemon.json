@@ -23,7 +23,11 @@
       "move_525",
       "move_434",
       "move_53",
-      "move_200"
+      "move_200",
+      "move_414",
+      "move_317",
+      "move_799",
+      "move_408"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 1,
@@ -188,7 +192,11 @@
       "move_525",
       "move_434",
       "move_53",
-      "move_200"
+      "move_200",
+      "move_414",
+      "move_317",
+      "move_799",
+      "move_408"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 1,
@@ -339,8 +347,7 @@
       "move_89",
       "move_349",
       "move_434",
-      "move_126",
-      "move_53"
+      "move_126"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 2,
@@ -524,8 +531,7 @@
       "move_89",
       "move_349",
       "move_434",
-      "move_126",
-      "move_53"
+      "move_126"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 2,
@@ -704,9 +710,7 @@
     "moves": [
       "move_585",
       "move_664",
-      "move_453",
-      "move_812",
-      "move_57"
+      "move_453"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 3,
@@ -832,7 +836,7 @@
       "move_862",
       "move_556",
       "move_14",
-      "move_333"
+      "move_349"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 4,
@@ -1101,7 +1105,7 @@
       "move_862",
       "move_556",
       "move_14",
-      "move_333"
+      "move_349"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 4,
@@ -1654,7 +1658,10 @@
       "move_660",
       "move_141",
       "move_14",
-      "move_529"
+      "move_529",
+      "move_369",
+      "move_370",
+      "move_453"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 6,
@@ -1913,7 +1920,10 @@
       "move_660",
       "move_141",
       "move_14",
-      "move_529"
+      "move_529",
+      "move_369",
+      "move_370",
+      "move_453"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 6,
@@ -2167,10 +2177,7 @@
       "speed": 47
     },
     "moves": [
-      "move_89",
-      "move_423",
-      "move_317",
-      "move_90"
+      "move_89"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 7,
@@ -2368,7 +2375,8 @@
       "move_430",
       "move_85",
       "move_525",
-      "move_396"
+      "move_396",
+      "move_905"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 8,
@@ -2591,9 +2599,7 @@
       "move_247",
       "move_874",
       "move_417",
-      "move_85",
-      "move_408",
-      "move_411"
+      "move_85"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 9,
@@ -2719,8 +2725,7 @@
       "move_425",
       "move_14",
       "move_421",
-      "move_452",
-      "move_409"
+      "move_452"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 10,
@@ -2887,7 +2892,8 @@
       "move_369",
       "move_282",
       "move_667",
-      "move_778"
+      "move_778",
+      "move_452"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 11,
@@ -3057,7 +3063,10 @@
       "move_53",
       "move_406",
       "move_403",
-      "move_394"
+      "move_394",
+      "move_488",
+      "move_311",
+      "move_349"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 12,
@@ -3065,7 +3074,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 98.6,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
@@ -3211,7 +3220,10 @@
       "move_53",
       "move_406",
       "move_403",
-      "move_394"
+      "move_394",
+      "move_488",
+      "move_311",
+      "move_349"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 12,
@@ -3219,7 +3231,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 98.6,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": true,
     "mega_of": "pokemon_0006-00",
     "fixed_mega_only": true,
@@ -3694,7 +3706,9 @@
       "move_414",
       "move_482",
       "move_412",
-      "move_866"
+      "move_866",
+      "move_341",
+      "move_188"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 15,
@@ -4222,7 +4236,9 @@
       "move_419",
       "move_127",
       "move_89",
-      "move_915"
+      "move_915",
+      "move_349",
+      "move_423"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 18,
@@ -4230,7 +4246,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 24.0,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
@@ -4473,7 +4489,8 @@
       "move_706",
       "move_8",
       "move_89",
-      "move_9"
+      "move_9",
+      "move_442"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 19,
@@ -4633,7 +4650,8 @@
       "move_706",
       "move_8",
       "move_89",
-      "move_9"
+      "move_9",
+      "move_442"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 19,
@@ -4790,8 +4808,7 @@
       "move_854",
       "move_834",
       "move_453",
-      "move_812",
-      "move_423"
+      "move_812"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 20,
@@ -4949,7 +4966,9 @@
       "move_809",
       "move_533",
       "move_247",
-      "move_430"
+      "move_14",
+      "move_430",
+      "move_442"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 21,
@@ -4966,7 +4985,7 @@
     ],
     "mega_stone_usage_rate": null,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
@@ -5192,9 +5211,7 @@
     "moves": [
       "move_797",
       "move_595",
-      "move_605",
-      "move_247",
-      "move_412"
+      "move_605"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 22,
@@ -5365,7 +5382,11 @@
       "move_245",
       "move_434",
       "move_85",
-      "move_89"
+      "move_89",
+      "move_403",
+      "move_525",
+      "move_406",
+      "move_58"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 23,
@@ -5513,7 +5534,11 @@
       "move_245",
       "move_434",
       "move_85",
-      "move_89"
+      "move_89",
+      "move_403",
+      "move_525",
+      "move_406",
+      "move_58"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 23,
@@ -6324,9 +6349,7 @@
     "moves": [
       "move_573",
       "move_59",
-      "move_585",
-      "move_420",
-      "move_399"
+      "move_585"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 26,
@@ -6553,8 +6576,7 @@
       "move_892",
       "move_8",
       "move_370",
-      "move_183",
-      "move_609"
+      "move_183"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 27,
@@ -6746,9 +6768,7 @@
     "moves": [
       "move_56",
       "move_521",
-      "move_85",
-      "move_435",
-      "move_492"
+      "move_85"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 28,
@@ -6922,9 +6942,7 @@
       "move_483",
       "move_552",
       "move_202",
-      "move_405",
-      "move_595",
-      "move_94"
+      "move_405"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 29,
@@ -7160,9 +7178,7 @@
     "moves": [
       "move_247",
       "move_482",
-      "move_196",
-      "move_411",
-      "move_506"
+      "move_196"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 30,
@@ -7310,9 +7326,7 @@
     "moves": [
       "move_247",
       "move_482",
-      "move_196",
-      "move_411",
-      "move_506"
+      "move_196"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 30,
@@ -7462,8 +7476,7 @@
       "move_89",
       "move_812",
       "move_8",
-      "move_834",
-      "move_243"
+      "move_834"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 31,
@@ -7598,8 +7611,7 @@
       "move_89",
       "move_812",
       "move_8",
-      "move_834",
-      "move_243"
+      "move_834"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 31,
@@ -7730,9 +7742,7 @@
     "moves": [
       "move_871",
       "move_247",
-      "move_506",
-      "move_914",
-      "move_414"
+      "move_506"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 32,
@@ -8117,9 +8127,7 @@
     "moves": [
       "move_315",
       "move_521",
-      "move_85",
-      "move_492",
-      "move_435"
+      "move_85"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 34,
@@ -8336,9 +8344,7 @@
       "move_389",
       "move_869",
       "move_442",
-      "move_14",
-      "move_368",
-      "move_12"
+      "move_14"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 35,
@@ -8709,7 +8715,8 @@
       "move_411",
       "move_447",
       "move_521",
-      "move_252"
+      "move_252",
+      "move_417"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 37,
@@ -8717,7 +8724,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 98.1,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": false,
@@ -8862,7 +8869,8 @@
       "move_411",
       "move_447",
       "move_521",
-      "move_252"
+      "move_252",
+      "move_417"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 37,
@@ -8870,7 +8878,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 98.1,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": true,
     "mega_of": "pokemon_0026-00",
     "fixed_mega_only": true,
@@ -9010,9 +9018,7 @@
     "moves": [
       "move_304",
       "move_595",
-      "move_98",
-      "move_63",
-      "move_247"
+      "move_98"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 38,
@@ -9286,8 +9292,7 @@
       "move_370",
       "move_14",
       "move_9",
-      "move_136",
-      "move_444"
+      "move_136"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 39,
@@ -9458,8 +9463,7 @@
       "move_370",
       "move_14",
       "move_9",
-      "move_136",
-      "move_444"
+      "move_136"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 39,
@@ -9617,8 +9621,7 @@
       "speed": 65
     },
     "moves": [
-      "move_492",
-      "move_555"
+      "move_492"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 40,
@@ -10129,8 +10132,7 @@
       "move_369",
       "move_14",
       "move_282",
-      "move_370",
-      "move_814"
+      "move_370"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 42,
@@ -10323,8 +10325,7 @@
       "move_369",
       "move_14",
       "move_282",
-      "move_370",
-      "move_814"
+      "move_370"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 42,
@@ -10448,9 +10449,7 @@
       "speed": 35
     },
     "moves": [
-      "move_611",
-      "move_710",
-      "move_886"
+      "move_611"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 43,
@@ -10657,6 +10656,7 @@
       "move_444",
       "move_8",
       "move_89",
+      "move_349",
       "move_317"
     ],
     "snapshot_id": "M-6_single",
@@ -10665,7 +10665,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 47.8,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
@@ -10847,6 +10847,7 @@
       "move_444",
       "move_8",
       "move_89",
+      "move_349",
       "move_317"
     ],
     "snapshot_id": "M-6_single",
@@ -10855,7 +10856,7 @@
     "item_candidates": [],
     "mega_stone_usage_rate": 47.8,
     "is_defensive_only": false,
-    "boost_move_used_flag_eligible": false,
+    "boost_move_used_flag_eligible": true,
     "is_mega": true,
     "mega_of": "pokemon_0248-00",
     "fixed_mega_only": true,
@@ -10979,8 +10980,7 @@
       "move_370",
       "move_413",
       "move_299",
-      "move_369",
-      "move_515"
+      "move_369"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 45,
@@ -11271,8 +11271,7 @@
       "move_370",
       "move_413",
       "move_299",
-      "move_369",
-      "move_515"
+      "move_369"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 45,
@@ -11701,8 +11700,7 @@
     "moves": [
       "move_585",
       "move_53",
-      "move_500",
-      "move_595"
+      "move_500"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 47,
@@ -11876,8 +11874,7 @@
     "moves": [
       "move_585",
       "move_53",
-      "move_500",
-      "move_595"
+      "move_500"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 47,
@@ -12043,10 +12040,7 @@
     },
     "moves": [
       "move_809",
-      "move_425",
-      "move_441",
-      "move_389",
-      "move_421"
+      "move_425"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 48,
@@ -12224,10 +12218,7 @@
     },
     "moves": [
       "move_809",
-      "move_425",
-      "move_441",
-      "move_389",
-      "move_421"
+      "move_425"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 48,
@@ -12400,9 +12391,7 @@
     "moves": [
       "move_503",
       "move_58",
-      "move_243",
-      "move_812",
-      "move_914"
+      "move_243"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 49,
@@ -12634,7 +12623,8 @@
       "move_420",
       "move_556",
       "move_333",
-      "move_317"
+      "move_317",
+      "move_283"
     ],
     "snapshot_id": "M-6_single",
     "usage_rank": 50,
