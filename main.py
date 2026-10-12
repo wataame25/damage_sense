@@ -622,11 +622,25 @@ def format_question(data, q: Question):
     return "\n".join(lines)
 
 
+def stat_formula(c, key):
+    """実数値の計算式（能力補正＝性格込み）"""
+    b, p, n = c.row["base_stats"][key], c.points.get(key, 0), c.nature.get(key, 1.0)
+    if key == "hp":
+        return f"{b} + 75 + {p} = {c.stat(key)}"
+    if n == 1.0:
+        return f"{b} + 20 + {p} = {c.stat(key)}"
+    return f"floor(({b} + 20 + {p}) × {n:g}) = {c.stat(key)}（能力補正{'↑' if n > 1 else '↓'}）"
+
+
 def format_answer(q: Question):
     r = q.result
+    a_key = "attack" if r.move["category"] == "物理" else "sp_attack"
     lines = [
         f"ダメージ: {r.min_damage}〜{r.max_damage} / HP {r.hp}",
         f"割合: {r.min_percent:.1f}%〜{r.max_percent:.1f}%（相性 ×{r.effectiveness:g}）",
+        f"  {STAT_LABEL[a_key]}: {stat_formula(q.attacker, a_key)}",
+        f"  {STAT_LABEL[r.defense_key]}: {stat_formula(q.defender, r.defense_key)}",
+        f"  HP: {stat_formula(q.defender, 'hp')}",
     ]
     lines += [f"  ※{n}" for n in r.notes]
     return "\n".join(lines)

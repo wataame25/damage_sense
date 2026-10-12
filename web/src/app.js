@@ -86,6 +86,7 @@
     state.guess = null;
     state.options = state.mode === "easy" ? makeChoices(state.q) : null;
     render();
+    window.scrollTo(0, 0);
     var input = document.getElementById("guess");
     if (input) input.focus({ preventScroll: true });
   }
@@ -142,6 +143,7 @@
       if (isNaN(best) || total < best) storageSet(BEST_KEY, String(total));
     }
     render();
+    window.scrollTo(0, 0);
   }
 
   function setMode(mode) {
@@ -194,20 +196,20 @@
     var f = q.battle.field ? data.field[q.battle.field].name : "なし";
     var typeChanged = r.moveType !== r.move.type;
     return '<section class="battle" aria-label="出題">' +
-      '<div class="side"><div class="role">攻撃側</div><h2 class="mon-name">' + esc(a.row.name) + "</h2>" +
+      '<div class="side atk"><div class="role">攻撃側</div><h2 class="mon-name">' + esc(a.row.name) + "</h2>" +
       '<div class="chips">' + a.row.types.map(typeChip).join("") + "</div>" +
       '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost +
       "<dt>性格</dt><dd>" + natureLabel(a) + "</dd><dt>振り方</dt><dd>" + spreadLabel(a) + "</dd></dl>" +
       statBlock(a, aKey) + "</div>" +
-      '<div class="center"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
-      '<div class="chips" style="justify-content:center">' + typeChip(r.moveType) + "</div>" +
+      '<div class="center"><div class="move-head"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
+      '<div class="chips move-type">' + typeChip(r.moveType) + "</div>" +
       '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b></span>" +
-      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div>" +
+      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div></div>" +
       '<div class="env"><div><span>天候</span><span>' + esc(w) + "</span></div>" +
       (q.battle.weatherNote ? '<p class="env-note">' + esc(q.battle.weatherNote) + "</p>" : "") +
       "<div><span>フィールド</span><span>" + esc(f) + "</span></div>" +
       (q.battle.fieldNote ? '<p class="env-note">' + esc(q.battle.fieldNote) + "</p>" : "") + "</div></div>" +
-      '<div class="side"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
+      '<div class="side dfn"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
       '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
       '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
       "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
@@ -262,6 +264,23 @@
     if (m.mod === null || m.mod === undefined) return esc(m.label) + (m.value !== undefined ? " ×" + m.value : "");
     return esc(m.label) + " ×" + (m.mod / 4096).toFixed(m.mod % 1024 === 0 ? 1 : 2) + "<span class=\"stat-note\">（" + m.mod + "/4096）</span>";
   }
+  // 実数値の計算式（能力補正＝性格込み）
+  function statFormula(c, key) {
+    var b = c.row.base_stats[key], p = c.points[key] || 0, n = c.nature[key] || 1, v = c.stat(key);
+    if (key === "hp") return b + " + 75 + " + p + " = " + v;
+    if (n === 1) return b + " + 20 + " + p + " = " + v;
+    return "floor((" + b + " + 20 + " + p + ") × " + n + ") = " + v;
+  }
+  function natureNote(c, key) {
+    var n = c.nature[key] || 1;
+    return n > 1 ? '<span class="flag up">能力補正↑ ×1.1</span>' : n < 1 ? '<span class="flag down">能力補正↓ ×0.9</span>' : "";
+  }
+  function statRow(label, c, key, list, used) {
+    var html = "<code>" + statFormula(c, key) + "</code>" + natureNote(c, key);
+    if (list && list.length) html += "　" + list.map(modLabel).join("、") + " → <code>" + used + "</code>";
+    return '<div class="calc-row"><span>' + label + "</span><span>" + html + "</span></div>";
+  }
+
   function traceRow(label, list, extra) {
     var body = list.length ? list.map(modLabel).join("、") : "なし";
     return '<div class="calc-row"><span>' + label + "</span><span>" + (extra ? extra + "　" : "") + body + "</span></div>";
@@ -291,13 +310,18 @@
       '<div class="fig"><span>確定数</span><b>' + koLabel(r) + "</b></div></div>" +
       '<details class="breakdown"><summary>計算の内訳</summary><div class="calc">' +
       traceRow("威力", t.power, "<code>" + r.basePower + " → " + r.power + "</code>") +
-      traceRow(r.move.category === "物理" ? "こうげき" : "とくこう", t.attack, "<code>" + r.attackStat + "</code>") +
-      traceRow(STAT_LABEL[r.defenseKey], t.defense, "<code>" + r.defenseStat + "</code>") +
+      '<div class="calc-row"><span>実数値の式</span><span class="stat-note">(種族値 + 20 + 能力ポイント) × 能力補正 ／ HP = 種族値 + 75 + 能力ポイント</span></div>' +
+      statRow(r.move.category === "物理" ? "こうげき" : "とくこう", q.attacker,
+        r.move.category === "物理" ? "attack" : "sp_attack", t.attack, r.attackStat) +
+      statRow(STAT_LABEL[r.defenseKey], q.defender, r.defenseKey, t.defense, r.defenseStat) +
+      statRow("HP", q.defender, "hp") +
       '<div class="calc-row"><span>基本ダメージ</span><span><code>floor(floor(22 × ' + r.power + " × " + r.attackStat + " ÷ " + r.defenseStat +
       ") ÷ 50) + 2 = " + r.baseDamage + "</code></span></div>" +
       traceRow("中略（乱数前）", t.middle) +
       traceRow("後略（乱数後）", t.final) +
       '<div class="calc-row"><span>乱数16通り</span><span class="rolls">' + r.damages.join(" ") + "</span></div>" +
+      '<div class="calc-row"><span>割合</span><span><code>' + r.minDamage + " ÷ " + r.hp + " = " + pct(r.minPercent) +
+      "</code> 〜 <code>" + r.maxDamage + " ÷ " + r.hp + " = " + pct(r.maxPercent) + "</code></span></div>" +
       "</div>" + (r.notes.length ? '<ul class="notes">' + r.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" : "") +
       "</details>" +
       '<div class="actions"><button class="btn" type="button" id="next">' + nextLabel + "</button>" +

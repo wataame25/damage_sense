@@ -71,6 +71,10 @@ body {
 }
 .wrap { max-width: 1040px; margin: 0 auto; padding-block: 20px 48px; display: grid; gap: 16px; }
 .stack { display: grid; gap: 16px; min-width: 0; }
+/* グリッドの子要素が中身の幅で画面からはみ出さないようにする */
+.wrap > *, .stack > *, .battle > *, .answer > *, .result > *, .summary > *, .calc > *, .calc-row > * { min-width: 0; }
+.calc code { overflow-wrap: anywhere; }
+.status span { overflow-wrap: anywhere; }
 button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -120,6 +124,8 @@ dl.facts dd { margin: 0; }
 
 .center { background: var(--surface-2); padding: 18px 16px; display: grid; gap: 14px; align-content: center; text-align: center; }
 .move-name { font-family: var(--font-display); font-size: 24px; line-height: 1.2; margin: 0; }
+.move-head { display: grid; gap: 10px; justify-items: center; }
+.move-type { justify-content: center; }
 .move-meta { font-size: 13px; color: var(--muted); display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 10px; }
 .move-meta b { font-family: var(--font-data); color: var(--ink); font-weight: 500; }
 .arrow { font-family: var(--font-display); color: var(--muted); font-size: 18px; letter-spacing: .3em; }
@@ -224,11 +230,47 @@ a.btn { text-decoration: none; display: inline-flex; align-items: center; }
 footer { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
 footer p { margin: 0; max-width: 72ch; }
 
+.calc-row .flag { margin-left: 6px; font-size: 11px; }
 @media (max-width: 760px) {
-  .battle { grid-template-columns: 1fr; }
-  .side + .center, .center + .side { border-left: 0; border-top: 1px solid var(--line); }
+  /* スマホ：技と天候を上の帯に、攻撃側と防御側を左右に並べて1画面に収める */
+  .wrap { padding-block: 10px 32px; gap: 10px; }
+  .brand h1 { font-size: 22px; }
+  .brand p { font-size: 11px; }
+  .modes button { padding: 5px 12px; font-size: 13px; }
+  .status { font-size: 12px; gap: 4px 12px; }
+  .pip { width: 14px; height: 6px; }
+  .battle { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "move move" "atk dfn"; }
+  .side.atk { grid-area: atk; }
+  .side.dfn { grid-area: dfn; }
+  .center { grid-area: move; }
+  .side + .center, .center + .side { border-left: 0; }
+  .side.dfn { border-left: 1px solid var(--line); }
+  .center { border-bottom: 1px solid var(--line); padding: 10px 12px; gap: 6px; text-align: left; }
+  .move-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .arrow { display: none; }
+  .move-name { font-size: 20px; }
+  .move-type { justify-content: flex-start; }
+  .move-meta { justify-content: flex-start; font-size: 12px; }
+  .env { font-size: 12px; gap: 3px; }
+  .env div { padding-top: 3px; }
+  .env-note { font-size: 10px; }
+  .side { padding: 10px; gap: 6px; }
+  .role { font-size: 10px; }
+  .mon-name { font-size: 17px; }
+  .type { font-size: 11px; padding: 0 7px; }
+  dl.facts { grid-template-columns: auto minmax(0, 1fr); gap: 2px 6px; font-size: 12px; }
+  dl.facts dt { font-size: 10px; padding-top: 1px; }
+  dl.facts dd { overflow-wrap: anywhere; }
+  .flag { font-size: 10px; padding: 0 5px; }
+  .spread { font-size: 11px; }
+  .stat { grid-template-columns: auto minmax(0, 1fr); gap: 0 6px; }
+  .stat-val { font-size: 18px; }
+  .stat > .stat-note:last-child { grid-column: 1 / -1; font-size: 10px; }
+  .answer, .result { padding: 14px; }
   .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .choices { grid-template-columns: 1fr; }
+  .choices { grid-template-columns: 1fr; gap: 8px; }
+  .choice { padding: 9px 12px; }
+  .calc-row { grid-template-columns: 1fr; gap: 0; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .reveal { animation: rise .25s ease-out; }
