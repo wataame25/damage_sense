@@ -468,7 +468,10 @@ def make_combatant(data, row, rng, role):
     pick_spread_and_nature(row, rng, c)
     if role == "attacker":
         c.item = pick_item(data, row, rng)
-        boost_moves = [data.moves[m] for m in row["moves"] if data.moves[m]["name"] in BOOST_MOVES]
+        # 積み技は振り方に合うもの（AS振りならこうげきが上がる技）だけを使用済みにする
+        stats = attacking_stats(c)
+        boost_moves = [data.moves[m] for m in row["moves"] if data.moves[m]["name"] in BOOST_MOVES
+                       and any(b["stat"] in stats for b in data.moves[m]["boosts_own_stat"])]
         if boost_moves and row.get("boost_move_used_flag_eligible") and rng.random() < P_BOOST_USED:
             bm = rng.choice(boost_moves)
             c.boost_move = bm["name"]
@@ -535,9 +538,19 @@ def decide_battle(atk, dfn, rng):
     return Battle(weather=weather, field=fld, weather_note=weather_note, field_note=field_note)
 
 
+def attacking_stats(c):
+    """振り方から攻撃側の戦い方を決める：こうげき/とくこうのうち16ポイント以上振った方。
+    両方振っている・どちらも振っていない場合は両方"""
+    inv = {k for k in ("attack", "sp_attack") if c.points.get(k, 0) >= INVESTED_POINTS}
+    return inv if len(inv) == 1 else {"attack", "sp_attack"}
+
+
 def best_move(data, atk, dfn, battle):
-    """防御側に最もダメージを与えられる技（最高乱数→最低乱数の順で比較）"""
-    results = [calc_damage(data, atk, dfn, data.moves[m], battle) for m in atk.row["moves"]]
+    """防御側に最もダメージを与えられる技（最高乱数→最低乱数の順で比較）。
+    振り方に合う分類の技だけを使う（AS振りなら物理技、CS振りなら特殊技）"""
+    cats = {"物理" if k == "attack" else "特殊" for k in attacking_stats(atk)}
+    results = [calc_damage(data, atk, dfn, data.moves[m], battle) for m in atk.row["moves"]
+               if data.moves[m]["category"] in cats]
     results = [r for r in results if r]
     if not results:
         return None

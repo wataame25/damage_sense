@@ -225,6 +225,35 @@ class SpreadNatureTest(unittest.TestCase):
                 self.assertGreaterEqual(cand["usage_rate"], 10)
 
 
+class MoveMatchesSpreadTest(unittest.TestCase):
+    def test_attacker_uses_moves_matching_spread(self):
+        rng = random.Random(11)
+        for _ in range(3000):
+            q = main.generate_question(DATA, rng)
+            a, cat = q.attacker, q.result.move["category"]
+            atk_inv, spa_inv = a.points["attack"] >= 16, a.points["sp_attack"] >= 16
+            if atk_inv and not spa_inv:
+                self.assertEqual(cat, "物理", (a.name, a.spread_label, q.result.move["name"]))
+            if spa_inv and not atk_inv:
+                self.assertEqual(cat, "特殊", (a.name, a.spread_label, q.result.move["name"]))
+            if a.boost_move:
+                key = "attack" if cat == "物理" else "sp_attack"
+                self.assertGreater(a.boosts.get(key, 0) * (-1 if a.ability == "あまのじゃく" else 1), 0,
+                                   (a.name, a.spread_label, a.boost_move))
+
+    def test_mega_salamence_as_uses_physical(self):
+        rng = random.Random(0)
+        a = main.make_combatant(DATA, row("メガボーマンダ"), rng, "attacker")
+        self.assertEqual(main.attacking_stats(a), {"attack"})
+        for d in DATA.pokemon:
+            if d["is_mega"] or d["name"] == "ボーマンダ":
+                continue
+            dfn = main.make_combatant(DATA, d, rng, "defender")
+            r = main.best_move(DATA, a, dfn, main.Battle(None, None))
+            if r:
+                self.assertEqual(r.move["category"], "物理", d["name"])
+
+
 class MegaSpreadTest(unittest.TestCase):
     def test_mega_spreads_match_mega_attacking_stat(self):
         for r in DATA.pokemon:

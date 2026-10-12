@@ -89,7 +89,9 @@ class WebParityTest(unittest.TestCase):
                  " [q.attacker, q.defender].forEach(function (c) { var up = null, down = null;" \
                  "  Object.keys(c.nature).forEach(function (k) { if (c.nature[k] > 1) up = k; if (c.nature[k] < 1) down = k; });" \
                  "  var inv = function (k) { return k && k !== 'hp' && c.points[k] >= 16; };" \
-                 "  if (!inv(up) || inv(down)) bad++; }); }" \
+                 "  if (!inv(up) || inv(down)) bad++; });" \
+                 " var a = q.attacker, cat = q.result.move.category, ai = a.points.attack >= 16, ci = a.points.sp_attack >= 16;" \
+                 " if ((ai && !ci && cat !== '物理') || (ci && !ai && cat !== '特殊')) bad++; }" \
                  "print(bad);"
         with tempfile.TemporaryDirectory() as tmp:
             files = []

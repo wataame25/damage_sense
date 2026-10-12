@@ -644,8 +644,12 @@ var DamageEngine = (function () {
     pickSpreadAndNature(row, rng, c);
     if (role === "attacker") {
       c.item = pickItem(data, row, rng);
+      // 積み技は振り方に合うもの（AS振りならこうげきが上がる技）だけを使用済みにする
+      var stats = attackingStats(c);
       var boostMoves = row.moves.map(function (m) { return data.moves[m]; })
-        .filter(function (m) { return BOOST_MOVES[m.name]; });
+        .filter(function (m) {
+          return BOOST_MOVES[m.name] && m.boosts_own_stat.some(function (b) { return stats.indexOf(b.stat) >= 0; });
+        });
       if (boostMoves.length && row.boost_move_used_flag_eligible && rng() < P_BOOST_USED) {
         var bm = choice(rng, boostMoves);
         c.boostMove = bm.name;
@@ -702,9 +706,17 @@ var DamageEngine = (function () {
     var f = resolveSetter(atk, dfn, FIELD_SETTERS, rng);
     return { weather: w.id, field: f.id, weatherNote: w.note, fieldNote: f.note };
   }
+  // 振り方から攻撃側の戦い方を決める：こうげき/とくこうのうち16ポイント以上振った方（両方・どちらも無しなら両方）
+  function attackingStats(c) {
+    var inv = ["attack", "sp_attack"].filter(function (k) { return (c.points[k] || 0) >= INVESTED_POINTS; });
+    return inv.length === 1 ? inv : ["attack", "sp_attack"];
+  }
+  // 振り方に合う分類の技だけを使う（AS振りなら物理技、CS振りなら特殊技）
   function bestMove(data, atk, dfn, battle) {
     var best = null;
+    var cats = attackingStats(atk).map(function (k) { return k === "attack" ? "物理" : "特殊"; });
     atk.row.moves.forEach(function (m) {
+      if (cats.indexOf(data.moves[m].category) < 0) return;
       var r = calcDamage(data, atk, dfn, data.moves[m], battle);
       if (!r) return;
       if (!best || r.maxDamage > best.maxDamage ||
