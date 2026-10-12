@@ -31,6 +31,7 @@ MEGA_FIXED_RATE = 60          # メガストーン所持率がこれを超えた
 MEGA_RANDOM_RATE = 30         # これを超えたら通常/メガをランダム
 FORCE_NORMAL = {"ガブリアス"}  # 通常形態に固定（物理/特殊が入れ替わるため）
 FORCE_MEGA = {"ラグラージ"}    # メガ形態に固定（指示による）
+INVESTED_POINTS = 16          # これ以上振ったステータスを「特化側」とみなす
 STAT_LETTER = {"H": "hp", "A": "attack", "B": "defense", "C": "sp_attack", "D": "sp_defense", "S": "speed"}
 STAT_JP = {"攻撃": "attack", "防御": "defense", "特攻": "sp_attack", "特防": "sp_defense", "素早さ": "speed"}
 
@@ -197,6 +198,20 @@ def build_species(rank, key, p, masters, added):
     natures = [n for n in p["natures"] if n["usage_rate"] >= USAGE_THRESHOLD]
     spreads = [g for g in p["spread_groups"] if g["usage_rate"] >= USAGE_THRESHOLD]
 
+    def mega_spreads(form):
+        """メガ形態はメガ後の戦い方に合う振り方だけにする：メガ後の種族値でこうげき・とくこうの高い方に
+        16ポイント以上振っている振り方を残す（データは通常形態と共通の集計のため）。守備専用のポケモンは絞らない"""
+        if form["display_name"] in DEFENSIVE_ONLY:
+            return spreads
+        st = stats_of(form)
+        key = "attack" if st["attack"] >= st["sp_attack"] else "sp_attack"
+        out = []
+        for g in spreads:
+            kept = [x for x in g["spreads"] if x["points"][key] >= INVESTED_POINTS]
+            if kept:
+                out.append(dict(g, spreads=kept))
+        return out or spreads
+
     def row(form_key, form, is_mega):
         fname = form["display_name"]
         abil = ([(n, r) for n, r in p["abilities"]] if not is_mega
@@ -210,7 +225,7 @@ def build_species(rank, key, p, masters, added):
             "is_mega": is_mega, "mega_of": pid if is_mega else None, "fixed_mega_only": False,
             "mega_fixed_note": None, "form_selection": "fixed",
             "ability_usage": [{"ability_id": ability_id(n), "usage_rate": r} for n, r in abil],
-            "nature_usage": natures, "stat_point_usage": spreads,
+            "nature_usage": natures, "stat_point_usage": mega_spreads(form) if is_mega else spreads,
         }
 
     normal = row(key, base, False)

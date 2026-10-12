@@ -225,6 +225,29 @@ class SpreadNatureTest(unittest.TestCase):
                 self.assertGreaterEqual(cand["usage_rate"], 10)
 
 
+class MegaSpreadTest(unittest.TestCase):
+    def test_mega_spreads_match_mega_attacking_stat(self):
+        for r in DATA.pokemon:
+            if not r["is_mega"] or r["is_defensive_only"]:
+                continue
+            b = r["base_stats"]
+            key = "attack" if b["attack"] >= b["sp_attack"] else "sp_attack"
+            for g in r["stat_point_usage"]:
+                for sp in g["spreads"]:
+                    self.assertGreaterEqual(sp["points"][key], 16, (r["name"], sp["label"]))
+            # どの振り方にも、特化側を上げる性格が存在する
+            for g in r["stat_point_usage"]:
+                for sp in g["spreads"]:
+                    self.assertTrue(any(main.nature_fits(n, sp["points"]) for n in r["nature_usage"]), (r["name"], sp["label"]))
+
+    def test_examples(self):
+        labels = lambda n: [g["label"] for g in row(n)["stat_point_usage"]]
+        self.assertEqual(labels("メガラグラージ"), ["AS"])
+        self.assertEqual(labels("メガリザードンＹ"), ["CS"])
+        self.assertIn("HB", labels("ラグラージ"))          # 通常形態は絞らない
+        self.assertEqual(labels("メガピクシー"), ["HB"])     # 守備専用は絞らない
+
+
 class GeneratorTest(unittest.TestCase):
     def test_bulk_generation_respects_rules(self):
         rng = random.Random(0)
