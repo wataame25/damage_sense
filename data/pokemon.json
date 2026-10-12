@@ -35,8 +35,8 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガ化率33.5%だが、通常/メガで技カテゴリ（物理・特殊）が大きく異なり計算の前提が崩れるため、通常ガブリアスに固定して出題する",
-    "form_selection": "fixed",
+    "mega_fixed_note": "メガストーン所持率が33.5%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
     "ability_usage": [
       {
         "ability_id": "ability_24",
@@ -158,6 +158,155 @@
               "attack": 32,
               "defense": 1,
               "sp_attack": 0,
+              "sp_defense": 0,
+              "speed": 32
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pokemon_0445-02",
+    "name": "メガガブリアスＺ",
+    "types": [
+      "ドラゴン"
+    ],
+    "abilities": [
+      "ability_26"
+    ],
+    "base_stats": {
+      "hp": 108,
+      "attack": 130,
+      "defense": 85,
+      "sp_attack": 141,
+      "sp_defense": 85,
+      "speed": 151
+    },
+    "moves": [
+      "move_89",
+      "move_525",
+      "move_434",
+      "move_53",
+      "move_200"
+    ],
+    "snapshot_id": "M-6_single",
+    "usage_rank": 1,
+    "usage_rate": null,
+    "item_candidates": [],
+    "mega_stone_usage_rate": 33.5,
+    "is_defensive_only": false,
+    "boost_move_used_flag_eligible": false,
+    "is_mega": true,
+    "mega_of": "pokemon_0445-00",
+    "fixed_mega_only": true,
+    "mega_fixed_note": "メガストーン所持率が33.5%（30~60%帯）のため、通常／メガをランダムに出題する",
+    "form_selection": "random",
+    "ability_usage": [
+      {
+        "ability_id": "ability_26",
+        "usage_rate": 100.0
+      }
+    ],
+    "nature_usage": [
+      {
+        "name": "ようき",
+        "up": "speed",
+        "down": "sp_attack",
+        "usage_rate": 26.4
+      },
+      {
+        "name": "いじっぱり",
+        "up": "attack",
+        "down": "sp_attack",
+        "usage_rate": 21.2
+      },
+      {
+        "name": "おくびょう",
+        "up": "speed",
+        "down": "attack",
+        "usage_rate": 19.3
+      },
+      {
+        "name": "わんぱく",
+        "up": "defense",
+        "down": "sp_attack",
+        "usage_rate": 16.7
+      }
+    ],
+    "stat_point_usage": [
+      {
+        "label": "CS",
+        "usage_rate": 26.5,
+        "spreads": [
+          {
+            "label": "CS + h",
+            "usage_rate": 21.4,
+            "points": {
+              "hp": 2,
+              "attack": 0,
+              "defense": 0,
+              "sp_attack": 32,
+              "sp_defense": 0,
+              "speed": 32
+            }
+          },
+          {
+            "label": "CS + b",
+            "usage_rate": 1.8,
+            "points": {
+              "hp": 0,
+              "attack": 0,
+              "defense": 2,
+              "sp_attack": 32,
+              "sp_defense": 0,
+              "speed": 32
+            }
+          },
+          {
+            "label": "CS + bd",
+            "usage_rate": 1.2,
+            "points": {
+              "hp": 0,
+              "attack": 0,
+              "defense": 1,
+              "sp_attack": 32,
+              "sp_defense": 1,
+              "speed": 32
+            }
+          },
+          {
+            "label": "CS + d",
+            "usage_rate": 0.9,
+            "points": {
+              "hp": 0,
+              "attack": 0,
+              "defense": 0,
+              "sp_attack": 32,
+              "sp_defense": 2,
+              "speed": 32
+            }
+          },
+          {
+            "label": "CS + a",
+            "usage_rate": 0.6,
+            "points": {
+              "hp": 0,
+              "attack": 2,
+              "defense": 0,
+              "sp_attack": 32,
+              "sp_defense": 0,
+              "speed": 32
+            }
+          },
+          {
+            "label": "CS",
+            "usage_rate": 0.6,
+            "points": {
+              "hp": 0,
+              "attack": 0,
+              "defense": 0,
+              "sp_attack": 32,
               "sp_defense": 0,
               "speed": 32
             }
@@ -5228,8 +5377,8 @@
     "is_mega": false,
     "mega_of": null,
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が57.5%（30~60%帯）のため、通常／メガをランダムに出題する",
-    "form_selection": "random",
+    "mega_fixed_note": "メガカイリューに固定するため通常形態は出題しない",
+    "form_selection": "excluded",
     "ability_usage": [
       {
         "ability_id": "ability_136",
@@ -5376,8 +5525,8 @@
     "is_mega": true,
     "mega_of": "pokemon_0149-00",
     "fixed_mega_only": true,
-    "mega_fixed_note": "メガストーン所持率が57.5%（30~60%帯）のため、通常／メガをランダムに出題する",
-    "form_selection": "random",
+    "mega_fixed_note": "メガストーン所持率57.5%だが、指示によりメガカイリューに固定して出題する",
+    "form_selection": "fixed",
     "ability_usage": [
       {
         "ability_id": "ability_136",

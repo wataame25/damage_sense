@@ -301,7 +301,19 @@ class GeneratorTest(unittest.TestCase):
             self.assertNotEqual(q.defender.row["form_selection"], "excluded")
             if q.attacker.row["is_mega"]:
                 self.assertIsNone(q.attacker.item)
-            self.assertNotIn(q.attacker.row["name"], ("ラグラージ", "リザードン", "メガガブリアス"))
+            self.assertNotIn(q.attacker.row["name"], ("ラグラージ", "リザードン", "メガガブリアス", "カイリュー"))
+            self.assertNotEqual(q.defender.row["name"], "カイリュー")
+
+    def test_garchomp_normal_as_and_mega_z_cs_random(self):
+        rng = random.Random(4)
+        seen = {}
+        for _ in range(4000):
+            q = main.generate_question(DATA, rng)
+            for c in (q.attacker, q.defender):
+                if c.row["name"] in ("ガブリアス", "メガガブリアスＺ"):
+                    seen.setdefault(c.row["name"], set()).add(
+                        "CS" if c.points["sp_attack"] >= 16 else "AS" if c.points["attack"] >= 16 else "other")
+        self.assertEqual(seen, {"ガブリアス": {"AS"}, "メガガブリアスＺ": {"CS"}})
 
 
 if __name__ == "__main__":
