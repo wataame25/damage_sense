@@ -273,7 +273,7 @@ class MegaSpreadTest(unittest.TestCase):
         labels = lambda n: [g["label"] for g in row(n)["stat_point_usage"]]
         self.assertEqual(labels("メガラグラージ"), ["AS"])
         self.assertEqual(labels("メガリザードンＹ"), ["CS"])
-        self.assertIn("HB", labels("ラグラージ"))          # 通常形態は絞らない
+        self.assertEqual(labels("ラグラージ"), ["HB"])     # 通常ラグラージはHBのみ（AS振りはメガの型）
         self.assertEqual(labels("メガピクシー"), ["HB"])     # 守備専用は絞らない
 
 
@@ -301,7 +301,7 @@ class GeneratorTest(unittest.TestCase):
             self.assertNotEqual(q.defender.row["form_selection"], "excluded")
             if q.attacker.row["is_mega"]:
                 self.assertIsNone(q.attacker.item)
-            self.assertNotIn(q.attacker.row["name"], ("ラグラージ", "リザードン", "メガガブリアス", "カイリュー"))
+            self.assertNotIn(q.attacker.row["name"], ("リザードン", "メガガブリアス", "カイリュー"))
             self.assertNotEqual(q.defender.row["name"], "カイリュー")
 
     def test_garchomp_normal_as_and_mega_z_cs_random(self):
@@ -314,6 +314,18 @@ class GeneratorTest(unittest.TestCase):
                     seen.setdefault(c.row["name"], set()).add(
                         "CS" if c.points["sp_attack"] >= 16 else "AS" if c.points["attack"] >= 16 else "other")
         self.assertEqual(seen, {"ガブリアス": {"AS"}, "メガガブリアスＺ": {"CS"}})
+
+    def test_swampert_normal_hb_and_mega_as_random(self):
+        rng = random.Random(5)
+        seen = {}
+        for _ in range(4000):
+            q = main.generate_question(DATA, rng)
+            for c in (q.attacker, q.defender):
+                if c.row["name"] in ("ラグラージ", "メガラグラージ"):
+                    p = c.points
+                    seen.setdefault(c.row["name"], set()).add(
+                        "AS" if p["attack"] >= 16 and p["speed"] >= 16 else "HB" if p["hp"] >= 16 and p["defense"] >= 16 else "other")
+        self.assertEqual(seen, {"ラグラージ": {"HB"}, "メガラグラージ": {"AS"}})
 
 
 if __name__ == "__main__":

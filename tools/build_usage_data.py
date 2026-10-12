@@ -30,10 +30,10 @@ DEFENSIVE_ONLY = {"アーマーガア", "ドヒドイデ", "ピクシー", "メ�
 MEGA_FIXED_RATE = 60          # メガストーン所持率がこれを超えたらメガ固定
 MEGA_RANDOM_RATE = 30         # これを超えたら通常/メガをランダム
 FORCE_NORMAL = set()          # 通常形態に固定する種族（メガ率に関係なく）
-FORCE_MEGA = {"ラグラージ", "カイリュー"}  # メガ形態に固定（指示による。通常カイリューは環境にいないため）
+FORCE_MEGA = {"カイリュー"}    # メガ形態に固定（指示による。通常カイリューは環境にいないため）
 # 通常形態では使われない振り方（メガ形態の型が混ざって集計されているもの）。{ポケモン名: 除外する攻撃ステータス}
-# ガブリアスのCS振りはメガガブリアスＺの型で、通常ガブリアスには環境にいない
-NORMAL_FORM_EXCLUDE = {"ガブリアス": "sp_attack"}
+# ガブリアスのCS振りはメガガブリアスＺの型、ラグラージのAS振りはメガラグラージの型（通常ラグラージはHB）
+NORMAL_FORM_EXCLUDE = {"ガブリアス": "sp_attack", "ラグラージ": "attack"}
 INVESTED_POINTS = 16          # これ以上振ったステータスを「特化側」とみなす
 STAT_LETTER = {"H": "hp", "A": "attack", "B": "defense", "C": "sp_attack", "D": "sp_defense", "S": "speed"}
 STAT_JP = {"攻撃": "attack", "防御": "defense", "特攻": "sp_attack", "特防": "sp_defense", "素早さ": "speed"}
