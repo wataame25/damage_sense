@@ -277,6 +277,19 @@ class MegaSpreadTest(unittest.TestCase):
         self.assertEqual(labels("メガピクシー"), ["HB"])     # 守備専用は絞らない
 
 
+class DataIntegrityTest(unittest.TestCase):
+    def test_ids_and_references(self):
+        import re
+        ids = [r["id"] for r in DATA.pokemon]
+        self.assertEqual(len(ids), len(set(ids)))
+        for r in DATA.pokemon:
+            self.assertRegex(r["id"], r"^pokemon_\d{4}-\d{2}$")
+            if r["mega_of"]:
+                self.assertIn(r["mega_of"], ids)
+            for m in r["moves"]:
+                self.assertIn(m, DATA.moves)
+
+
 class GeneratorTest(unittest.TestCase):
     def test_bulk_generation_respects_rules(self):
         rng = random.Random(0)

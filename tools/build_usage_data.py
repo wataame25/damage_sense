@@ -31,6 +31,9 @@ MEGA_FIXED_RATE = 60          # メガストーン所持率がこれを超えた
 MEGA_RANDOM_RATE = 30         # これを超えたら通常/メガをランダム
 FORCE_NORMAL = {"ガブリアス"}  # 通常形態に固定（物理/特殊が入れ替わるため）
 FORCE_MEGA = {"ラグラージ"}    # メガ形態に固定（指示による）
+# 通常形態では使われない振り方（メガ形態の型が混ざって集計されているもの）。{ポケモン名: 除外する攻撃ステータス}
+# ガブリアスのCS振りはメガガブリアスＺの型で、通常ガブリアスには環境にいない
+NORMAL_FORM_EXCLUDE = {"ガブリアス": "sp_attack"}
 INVESTED_POINTS = 16          # これ以上振ったステータスを「特化側」とみなす
 STAT_LETTER = {"H": "hp", "A": "attack", "B": "defense", "C": "sp_attack", "D": "sp_defense", "S": "speed"}
 STAT_JP = {"攻撃": "attack", "防御": "defense", "特攻": "sp_attack", "特防": "sp_defense", "素早さ": "speed"}
@@ -197,6 +200,11 @@ def build_species(rank, key, p, masters, added):
              if r >= USAGE_THRESHOLD and n in p["item_keys"] and f"item_{p['item_keys'][n]}" in items_m][:5]
     natures = [n for n in p["natures"] if n["usage_rate"] >= USAGE_THRESHOLD]
     spreads = [g for g in p["spread_groups"] if g["usage_rate"] >= USAGE_THRESHOLD]
+    normal_spreads = spreads
+    if name in NORMAL_FORM_EXCLUDE:
+        excluded_stat = NORMAL_FORM_EXCLUDE[name]
+        normal_spreads = [g for g in spreads
+                          if not any(x["points"][excluded_stat] >= INVESTED_POINTS for x in g["spreads"])]
 
     def mega_spreads(form):
         """メガ形態はメガ後の戦い方に合う振り方だけにする：メガ後の種族値でこうげき・とくこうの高い方に
@@ -225,7 +233,7 @@ def build_species(rank, key, p, masters, added):
             "is_mega": is_mega, "mega_of": pid if is_mega else None, "fixed_mega_only": False,
             "mega_fixed_note": None, "form_selection": "fixed",
             "ability_usage": [{"ability_id": ability_id(n), "usage_rate": r} for n, r in abil],
-            "nature_usage": natures, "stat_point_usage": mega_spreads(form) if is_mega else spreads,
+            "nature_usage": natures, "stat_point_usage": mega_spreads(form) if is_mega else normal_spreads,
         }
 
     normal = row(key, base, False)
