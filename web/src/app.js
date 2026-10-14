@@ -203,8 +203,10 @@
       statBlock(a, aKey) + "</div>" +
       '<div class="center"><div class="move-head"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
       '<div class="chips move-type">' + typeChip(r.moveType) + "</div>" +
-      '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b></span>" +
-      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div></div>" +
+      '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b>" + knockOffNote(q) + "</span>" +
+      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div>" +
+      (r.stab ? '<div class="stab-row"><span class="flag stab">' + esc(r.stabLabel) + " ×" + (r.stab / 4096) + "</span></div>" : "") +
+      "</div>" +
       '<div class="env"><div><span>天候</span><span>' + esc(w) + "</span></div>" +
       (q.battle.weatherNote ? '<p class="env-note">' + esc(q.battle.weatherNote) + "</p>" : "") +
       "<div><span>フィールド</span><span>" + esc(f) + "</span></div>" +
@@ -215,6 +217,12 @@
       "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
       statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
       "</section>";
+  }
+
+  // はたきおとす：非メガの相手は道具を持っている前提で1.5倍、メガの相手はメガストーンを落とせないので等倍
+  function knockOffNote(q) {
+    if (q.result.move.name !== "はたきおとす") return "";
+    return q.defender.row.is_mega ? "（メガ相手のため等倍）" : " ×1.5（相手が道具持ち）";
   }
 
   function renderAnswer(q) {

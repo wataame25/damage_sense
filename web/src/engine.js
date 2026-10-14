@@ -43,6 +43,8 @@ var DamageEngine = (function () {
   var TARGET_DEFENSE_SPECIAL_MOVES = set(["サイコショック"]);  // 特殊技だが相手のぼうぎょで計算
   var RECOIL_MOVES = set(["すてみタックル", "フレアドライブ", "ブレイブバード", "ウッドハンマー", "ウェーブタックル", "とびひざげり"]);
   var ALWAYS_CRIT_MOVES = set(["トリックフラワー"]);
+  // 場に出たターンにしか使えない技。積み技を使った後（＝出たターンではない）には使えない
+  var FIRST_TURN_MOVES = set(["であいがしら", "ねこだまし"]);
   var BOOST_MOVES = set(["りゅうのまい", "つるぎのまい", "わるだくみ", "ちょうのまい"]);
   var WEATHER_SETTERS = { "ひでり": "sunny", "あめふらし": "rain", "すなおこし": "sandstorm", "ゆきふらし": "snow" };
   var FIELD_SETTERS = { "エレキメイカー": "electric_terrain", "グラスメイカー": "grassy_terrain",
@@ -250,11 +252,15 @@ var DamageEngine = (function () {
     }
 
     // 後略：タイプ一致・相性・最終補正
-    var stab = 0;
-    if (atk.row.types.indexOf(moveType) >= 0 || atk.ability === "へんげんじざい" || atk.ability === "リベロ") {
+    var stab = 0, stabLabel = null;
+    if (atk.row.types.indexOf(moveType) >= 0) {
       stab = atk.ability === "てきおうりょく" ? 8192 : 6144;
-      trace.final.push({ label: atk.ability === "てきおうりょく" ? "タイプ一致（てきおうりょく）" : "タイプ一致", mod: stab });
+      stabLabel = stab === 8192 ? "タイプ一致（てきおうりょく）" : "タイプ一致";
+    } else if (atk.ability === "へんげんじざい" || atk.ability === "リベロ") {
+      stab = 6144;
+      stabLabel = "タイプ一致（" + atk.ability + "：技と同じタイプに変化）";
     }
+    if (stab) trace.final.push({ label: stabLabel, mod: stab });
     trace.final.push({ label: "タイプ相性", mod: null, value: eff });
     var fm = [];
     if (dfnAbility === "マルチスケイル") { fm.push(2048); trace.final.push({ label: "マルチスケイル", mod: 2048 }); }
@@ -276,7 +282,7 @@ var DamageEngine = (function () {
     var hp = dfn.stat("hp");
     return {
       move: move, moveType: moveType, basePower: basePower, power: power,
-      attackStat: aStat, defenseStat: dStat, defenseKey: dKey, baseDamage: baseDamage,
+      attackStat: aStat, defenseStat: dStat, defenseKey: dKey, baseDamage: baseDamage, stab: stab, stabLabel: stabLabel,
       damages: damages, hp: hp, effectiveness: eff, notes: notes, trace: trace,
       minDamage: damages[0], maxDamage: damages[15],
       minPercent: damages[0] / hp * 100, maxPercent: damages[15] / hp * 100
@@ -419,6 +425,7 @@ var DamageEngine = (function () {
     var cats = attackingStats(atk).map(function (k) { return k === "attack" ? "物理" : "特殊"; });
     atk.row.moves.forEach(function (m) {
       if (cats.indexOf(data.moves[m].category) < 0) return;
+      if (atk.boostMove && FIRST_TURN_MOVES[data.moves[m].name]) return;  // 積み技の後は出たターンではない
       var r = calcDamage(data, atk, dfn, data.moves[m], battle);
       if (!r) return;
       if (!best || r.maxDamage > best.maxDamage ||

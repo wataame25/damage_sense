@@ -122,6 +122,8 @@ SOUND_MOVES = {"ハイパーボイス", "うたかたのアリア", "むしの�
 TARGET_DEFENSE_SPECIAL_MOVES = {"サイコショック"}
 RECOIL_MOVES = {"すてみタックル", "フレアドライブ", "ブレイブバード", "ウッドハンマー", "ウェーブタックル", "とびひざげり"}
 ALWAYS_CRIT_MOVES = {"トリックフラワー"}
+# 場に出たターンにしか使えない技。積み技を使った後（＝出たターンではない）には使えない
+FIRST_TURN_MOVES = {"であいがしら", "ねこだまし"}
 # README記載の「攻撃力を強化する技」。出題時にランダムで1回使用済みにできる
 BOOST_MOVES = {"りゅうのまい", "つるぎのまい", "わるだくみ", "ちょうのまい"}
 
@@ -235,6 +237,8 @@ class DamageResult:
     effectiveness: float
     notes: list
     defense_key: str = "defense"   # 防御側の参照ステータス（サイコショックは特殊でもdefense）
+    stab: int = 0                  # タイプ一致補正（4096分率。0は不一致）
+    stab_label: str | None = None  # 画面表示用（例: タイプ一致（リベロ））
 
     @property
     def min_damage(self):
@@ -377,9 +381,12 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
         notes.append(f"{name}：必ず急所（1.5倍）")
 
     # --- 後略：タイプ一致・相性・その他の最終補正 ---
-    stab = 0
-    if move_type in atk.types or atk.ability in ("へんげんじざい", "リベロ"):
+    stab, stab_label = 0, None
+    if move_type in atk.types:
         stab = 8192 if atk.ability == "てきおうりょく" else 6144
+        stab_label = "タイプ一致（てきおうりょく）" if stab == 8192 else "タイプ一致"
+    elif atk.ability in ("へんげんじざい", "リベロ"):
+        stab, stab_label = 6144, f"タイプ一致（{atk.ability}：技と同じタイプに変化）"
     final_mods = []
     if dfn_ability == "マルチスケイル":
         final_mods.append(2048)  # HP満タン前提
@@ -399,7 +406,8 @@ def calc_damage(data: GameData, atk: Combatant, dfn: Combatant, move: dict, batt
         damages.append(max(1, d))
 
     return DamageResult(move=move, move_type=move_type, power=power, damages=damages,
-                        hp=dfn.stat("hp"), effectiveness=eff, notes=notes, defense_key=d_key)
+                        hp=dfn.stat("hp"), effectiveness=eff, notes=notes, defense_key=d_key,
+                        stab=stab, stab_label=stab_label)
 
 
 def item_applies(item, move, move_type, physical, eff):
@@ -555,7 +563,8 @@ def best_move(data, atk, dfn, battle):
     振り方に合う分類の技だけを使う（AS振りなら物理技、CS振りなら特殊技）"""
     cats = {"物理" if k == "attack" else "特殊" for k in attacking_stats(atk)}
     results = [calc_damage(data, atk, dfn, data.moves[m], battle) for m in atk.row["moves"]
-               if data.moves[m]["category"] in cats]
+               if data.moves[m]["category"] in cats
+               and not (atk.boost_move and data.moves[m]["name"] in FIRST_TURN_MOVES)]
     results = [r for r in results if r]
     if not results:
         return None
@@ -655,7 +664,8 @@ def format_answer(q: Question):
     a_key = "attack" if r.move["category"] == "物理" else "sp_attack"
     lines = [
         f"ダメージ: {r.min_damage}〜{r.max_damage} / HP {r.hp}",
-        f"割合: {r.min_percent:.1f}%〜{r.max_percent:.1f}%（相性 ×{r.effectiveness:g}）",
+        f"割合: {r.min_percent:.1f}%〜{r.max_percent:.1f}%（相性 ×{r.effectiveness:g}"
+        f"{'、' + r.stab_label + ' ×' + format(r.stab / 4096, 'g') if r.stab else ''}）",
         f"  {STAT_LABEL[a_key]}: {stat_formula(q.attacker, a_key)}",
         f"  {STAT_LABEL[r.defense_key]}: {stat_formula(q.defender, r.defense_key)}",
         f"  HP: {stat_formula(q.defender, 'hp')}",

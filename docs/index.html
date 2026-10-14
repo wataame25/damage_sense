@@ -127,6 +127,8 @@ dl.facts dd { margin: 0; }
 .center { background: var(--surface-2); padding: 18px 16px; display: grid; gap: 14px; align-content: center; text-align: center; }
 .move-name { font-family: var(--font-display); font-size: 24px; line-height: 1.2; margin: 0; }
 .move-head { display: grid; gap: 10px; justify-items: center; }
+.flag.stab { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); font-weight: 500; }
+.stab-row { display: flex; }
 .move-type { justify-content: center; }
 .move-meta { font-size: 13px; color: var(--muted); display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 10px; }
 .move-meta b { font-family: var(--font-data); color: var(--ink); font-weight: 500; }
@@ -346,6 +348,8 @@ var DamageEngine = (function () {
   var TARGET_DEFENSE_SPECIAL_MOVES = set(["サイコショック"]);  // 特殊技だが相手のぼうぎょで計算
   var RECOIL_MOVES = set(["すてみタックル", "フレアドライブ", "ブレイブバード", "ウッドハンマー", "ウェーブタックル", "とびひざげり"]);
   var ALWAYS_CRIT_MOVES = set(["トリックフラワー"]);
+  // 場に出たターンにしか使えない技。積み技を使った後（＝出たターンではない）には使えない
+  var FIRST_TURN_MOVES = set(["であいがしら", "ねこだまし"]);
   var BOOST_MOVES = set(["りゅうのまい", "つるぎのまい", "わるだくみ", "ちょうのまい"]);
   var WEATHER_SETTERS = { "ひでり": "sunny", "あめふらし": "rain", "すなおこし": "sandstorm", "ゆきふらし": "snow" };
   var FIELD_SETTERS = { "エレキメイカー": "electric_terrain", "グラスメイカー": "grassy_terrain",
@@ -553,11 +557,15 @@ var DamageEngine = (function () {
     }
 
     // 後略：タイプ一致・相性・最終補正
-    var stab = 0;
-    if (atk.row.types.indexOf(moveType) >= 0 || atk.ability === "へんげんじざい" || atk.ability === "リベロ") {
+    var stab = 0, stabLabel = null;
+    if (atk.row.types.indexOf(moveType) >= 0) {
       stab = atk.ability === "てきおうりょく" ? 8192 : 6144;
-      trace.final.push({ label: atk.ability === "てきおうりょく" ? "タイプ一致（てきおうりょく）" : "タイプ一致", mod: stab });
+      stabLabel = stab === 8192 ? "タイプ一致（てきおうりょく）" : "タイプ一致";
+    } else if (atk.ability === "へんげんじざい" || atk.ability === "リベロ") {
+      stab = 6144;
+      stabLabel = "タイプ一致（" + atk.ability + "：技と同じタイプに変化）";
     }
+    if (stab) trace.final.push({ label: stabLabel, mod: stab });
     trace.final.push({ label: "タイプ相性", mod: null, value: eff });
     var fm = [];
     if (dfnAbility === "マルチスケイル") { fm.push(2048); trace.final.push({ label: "マルチスケイル", mod: 2048 }); }
@@ -579,7 +587,7 @@ var DamageEngine = (function () {
     var hp = dfn.stat("hp");
     return {
       move: move, moveType: moveType, basePower: basePower, power: power,
-      attackStat: aStat, defenseStat: dStat, defenseKey: dKey, baseDamage: baseDamage,
+      attackStat: aStat, defenseStat: dStat, defenseKey: dKey, baseDamage: baseDamage, stab: stab, stabLabel: stabLabel,
       damages: damages, hp: hp, effectiveness: eff, notes: notes, trace: trace,
       minDamage: damages[0], maxDamage: damages[15],
       minPercent: damages[0] / hp * 100, maxPercent: damages[15] / hp * 100
@@ -722,6 +730,7 @@ var DamageEngine = (function () {
     var cats = attackingStats(atk).map(function (k) { return k === "attack" ? "物理" : "特殊"; });
     atk.row.moves.forEach(function (m) {
       if (cats.indexOf(data.moves[m].category) < 0) return;
+      if (atk.boostMove && FIRST_TURN_MOVES[data.moves[m].name]) return;  // 積み技の後は出たターンではない
       var r = calcDamage(data, atk, dfn, data.moves[m], battle);
       if (!r) return;
       if (!best || r.maxDamage > best.maxDamage ||
@@ -963,8 +972,10 @@ var DamageEngine = (function () {
       statBlock(a, aKey) + "</div>" +
       '<div class="center"><div class="move-head"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
       '<div class="chips move-type">' + typeChip(r.moveType) + "</div>" +
-      '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b></span>" +
-      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div></div>" +
+      '<div class="move-meta"><span>' + esc(r.move.category) + "</span><span>威力 <b>" + r.basePower + "</b>" + knockOffNote(q) + "</span>" +
+      (typeChanged ? "<span>（" + esc(r.move.type) + "→" + esc(r.moveType) + "）</span>" : "") + "</div>" +
+      (r.stab ? '<div class="stab-row"><span class="flag stab">' + esc(r.stabLabel) + " ×" + (r.stab / 4096) + "</span></div>" : "") +
+      "</div>" +
       '<div class="env"><div><span>天候</span><span>' + esc(w) + "</span></div>" +
       (q.battle.weatherNote ? '<p class="env-note">' + esc(q.battle.weatherNote) + "</p>" : "") +
       "<div><span>フィールド</span><span>" + esc(f) + "</span></div>" +
@@ -975,6 +986,12 @@ var DamageEngine = (function () {
       "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
       statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
       "</section>";
+  }
+
+  // はたきおとす：非メガの相手は道具を持っている前提で1.5倍、メガの相手はメガストーンを落とせないので等倍
+  function knockOffNote(q) {
+    if (q.result.move.name !== "はたきおとす") return "";
+    return q.defender.row.is_mega ? "（メガ相手のため等倍）" : " ×1.5（相手が道具持ち）";
   }
 
   function renderAnswer(q) {

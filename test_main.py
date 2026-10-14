@@ -89,6 +89,30 @@ class DamageTest(unittest.TestCase):
         self.assertEqual(rain.damages, calc_damage(DATA, boosted, dfn, plain, Battle("rain", None)).damages)
         self.assertIsNone(calc_damage(DATA, atk, dfn, move("スケイルショット"), Battle(None, None)))
 
+    def test_knock_off_mega_65_non_mega_1_5x(self):
+        atk = Combatant(row("ドドゲザン"), ability="そうだいしょう", points={"attack": 32})
+        ko = move("はたきおとす")
+        mega = calc_damage(DATA, atk, Combatant(row("メガゲンガー"), ability="かげふみ"), ko, Battle(None, None))
+        self.assertEqual(mega.power, 65)
+        normal = calc_damage(DATA, atk, Combatant(row("ゲンガー"), ability="のろわれボディ"), ko, Battle(None, None))
+        self.assertEqual(normal.power, 97)   # 65 × 6144/4096 = 97.5 → 五捨五超入（ちょうど.5は切り捨て）で97
+
+    def test_stab_labels(self):
+        dfn = Combatant(row("ニンフィア"), ability="フェアリースキン")
+        r = calc_damage(DATA, Combatant(row("ドドゲザン"), ability="そうだいしょう"), dfn, move("アイアンヘッド"), Battle(None, None))
+        self.assertEqual((r.stab, r.stab_label), (6144, "タイプ一致"))
+        r = calc_damage(DATA, Combatant(row("イダイトウ (オス)"), ability="てきおうりょく"), dfn, move("ウェーブタックル"), Battle(None, None))
+        self.assertEqual(r.stab, 8192)
+        r = calc_damage(DATA, Combatant(row("エースバーン"), ability="リベロ"), dfn, move("とびひざげり"), Battle(None, None))
+        self.assertEqual(r.stab, 6144)
+        self.assertIn("リベロ", r.stab_label)
+        r = calc_damage(DATA, Combatant(row("ドドゲザン"), ability="そうだいしょう"), dfn, move("ふいうち"), Battle(None, None))
+        self.assertEqual((r.stab, r.stab_label), (6144, "タイプ一致"))
+        r = calc_damage(DATA, Combatant(row("マンムー"), ability="どんかん"), dfn, move("じしん"), Battle(None, None))
+        self.assertEqual((r.stab, r.stab_label), (6144, "タイプ一致"))
+        r = calc_damage(DATA, Combatant(row("マンムー"), ability="どんかん"), dfn, move("がんせきふうじ"), Battle(None, None))
+        self.assertEqual((r.stab, r.stab_label), (0, None))   # いわ技はマンムー（こおり/じめん）と不一致
+
     def test_multiscale_halves(self):
         atk = Combatant(row("マンムー"), ability="どんかん")
         dfn = Combatant(row("カイリュー"), ability="せいしんりょく")
@@ -264,6 +288,19 @@ class MoveMatchesSpreadTest(unittest.TestCase):
             r = main.best_move(DATA, a, dfn, main.Battle(None, None))
             if r:
                 self.assertEqual(r.move["category"], "物理", d["name"])
+
+
+class FirstTurnMoveTest(unittest.TestCase):
+    def test_no_first_turn_moves_after_boost(self):
+        rng = random.Random(21)
+        seen_boosted_golisopod = 0
+        for _ in range(6000):
+            q = main.generate_question(DATA, rng)
+            if q.attacker.boost_move:
+                self.assertNotIn(q.result.move["name"], main.FIRST_TURN_MOVES, (q.attacker.name, q.attacker.boost_move))
+                if "グソクムシャ" in q.attacker.name:
+                    seen_boosted_golisopod += 1
+        self.assertGreater(seen_boosted_golisopod, 0)
 
 
 class MegaSpreadTest(unittest.TestCase):
