@@ -347,7 +347,15 @@ var DamageEngine = (function () {
     }
     return null;
   }
+  // 攻撃時と防御時で姿が変わるポケモン（ギルガルド）は、役割に応じたフォルムの種族値と名前にする
+  function battleFormRow(row, role) {
+    var forms = row.battle_forms;
+    if (!forms) return row;
+    var f = forms[role];
+    return Object.assign({}, row, { name: row.name + "（" + f.form_name + "）", base_stats: f.base_stats });
+  }
   function makeCombatant(data, row, rng, role) {
+    row = battleFormRow(row, role);
     var c = new Combatant(row, pickAbility(data, row, rng));
     pickSpreadAndNature(row, rng, c);
     if (role === "attacker") {

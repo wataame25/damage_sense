@@ -168,7 +168,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0445-02",
@@ -321,7 +322,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0373-00",
@@ -506,7 +508,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0373-01",
@@ -686,7 +689,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0730-00",
@@ -809,7 +813,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0998-00",
@@ -1079,7 +1084,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0998-01",
@@ -1344,7 +1350,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0448-00",
@@ -1493,7 +1500,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0448-02",
@@ -1632,7 +1640,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0768-00",
@@ -1894,7 +1903,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0768-01",
@@ -2156,7 +2166,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0450-00",
@@ -2348,7 +2359,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_1018-00",
@@ -2575,7 +2587,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_1000-00",
@@ -2700,7 +2713,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0778-00",
@@ -2867,7 +2881,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0812-00",
@@ -3037,7 +3052,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0006-00",
@@ -3195,7 +3211,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0006-02",
@@ -3318,7 +3335,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0908-00",
@@ -3521,7 +3539,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0823-00",
@@ -3680,7 +3699,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0970-00",
@@ -3849,7 +3869,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0903-00",
@@ -4003,7 +4024,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0815-00",
@@ -4210,7 +4232,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0130-00",
@@ -4463,7 +4486,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0376-00",
@@ -4625,7 +4649,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0376-01",
@@ -4782,7 +4807,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0902-00",
@@ -4941,7 +4967,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0681-00",
@@ -5186,7 +5213,31 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": {
+      "attacker": {
+        "form_name": "ブレードフォルム",
+        "base_stats": {
+          "hp": 60,
+          "attack": 140,
+          "defense": 50,
+          "sp_attack": 140,
+          "sp_defense": 50,
+          "speed": 60
+        }
+      },
+      "defender": {
+        "form_name": "シールドフォルム",
+        "base_stats": {
+          "hp": 60,
+          "attack": 50,
+          "defense": 140,
+          "sp_attack": 50,
+          "sp_defense": 140,
+          "speed": 60
+        }
+      }
+    }
   },
   {
     "id": "pokemon_0876-00",
@@ -5356,7 +5407,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0149-00",
@@ -5509,7 +5561,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0149-01",
@@ -5657,7 +5710,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0658-00",
@@ -5848,7 +5902,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0658-03",
@@ -6034,7 +6089,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0009-00",
@@ -6182,7 +6238,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0009-01",
@@ -6325,7 +6382,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0038-01",
@@ -6550,7 +6608,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0923-00",
@@ -6745,7 +6804,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0479-02",
@@ -6917,7 +6977,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0637-00",
@@ -7155,7 +7216,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0094-00",
@@ -7303,7 +7365,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0094-01",
@@ -7451,7 +7514,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0260-00",
@@ -7587,7 +7651,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0260-01",
@@ -7718,7 +7783,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0911-00",
@@ -7883,7 +7949,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0395-00",
@@ -8104,7 +8171,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0479-01",
@@ -8318,7 +8386,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0983-00",
@@ -8492,7 +8561,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0635-00",
@@ -8690,7 +8760,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0026-00",
@@ -8845,7 +8916,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0026-03",
@@ -8995,7 +9067,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0700-00",
@@ -9266,7 +9339,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0257-00",
@@ -9438,7 +9512,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0257-01",
@@ -9600,7 +9675,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0197-00",
@@ -9774,7 +9850,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0655-00",
@@ -9942,7 +10019,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0655-01",
@@ -10105,7 +10183,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0212-00",
@@ -10300,7 +10379,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0212-01",
@@ -10426,7 +10506,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0748-00",
@@ -10630,7 +10711,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0248-00",
@@ -10822,7 +10904,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0248-01",
@@ -10955,7 +11038,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0398-00",
@@ -11247,7 +11331,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0398-01",
@@ -11408,7 +11493,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0279-00",
@@ -11676,7 +11762,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0036-00",
@@ -11851,7 +11938,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0036-01",
@@ -12017,7 +12105,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0354-00",
@@ -12197,7 +12286,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0354-01",
@@ -12367,7 +12457,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0350-00",
@@ -12596,7 +12687,8 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   },
   {
     "id": "pokemon_0473-00",
@@ -12805,6 +12897,7 @@
           }
         ]
       }
-    ]
+    ],
+    "battle_forms": null
   }
 ]

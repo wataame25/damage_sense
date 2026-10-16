@@ -476,7 +476,17 @@ def pick_item(data, row, rng):
     return None
 
 
+def battle_form_row(row, role):
+    """攻撃時と防御時で姿が変わるポケモン（ギルガルド）は、役割に応じたフォルムの種族値と名前にする"""
+    forms = row.get("battle_forms")
+    if not forms:
+        return row
+    f = forms[role]
+    return dict(row, name=f"{row['name']}（{f['form_name']}）", base_stats=f["base_stats"])
+
+
 def make_combatant(data, row, rng, role):
+    row = battle_form_row(row, role)
     c = Combatant(row=row, ability=pick_ability(data, row, rng))
     pick_spread_and_nature(row, rng, c)
     if role == "attacker":

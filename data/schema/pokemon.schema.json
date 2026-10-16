@@ -339,6 +339,108 @@
           }
         }
       }
+    },
+    "battle_forms": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "攻撃時と防御時で姿が変わるポケモン（ギルガルド：攻撃時ブレードフォルム、防御時シールドフォルム）の各フォルムの種族値。出題時は役割に応じてこちらの種族値で計算する。該当しないポケモンはnull",
+      "required": [
+        "attacker",
+        "defender"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "attacker": {
+          "type": "object",
+          "required": [
+            "form_name",
+            "base_stats"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "form_name": {
+              "type": "string"
+            },
+            "base_stats": {
+              "type": "object",
+              "required": [
+                "hp",
+                "attack",
+                "defense",
+                "sp_attack",
+                "sp_defense",
+                "speed"
+              ],
+              "properties": {
+                "hp": {
+                  "type": "integer"
+                },
+                "attack": {
+                  "type": "integer"
+                },
+                "defense": {
+                  "type": "integer"
+                },
+                "sp_attack": {
+                  "type": "integer"
+                },
+                "sp_defense": {
+                  "type": "integer"
+                },
+                "speed": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "defender": {
+          "type": "object",
+          "required": [
+            "form_name",
+            "base_stats"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "form_name": {
+              "type": "string"
+            },
+            "base_stats": {
+              "type": "object",
+              "required": [
+                "hp",
+                "attack",
+                "defense",
+                "sp_attack",
+                "sp_defense",
+                "speed"
+              ],
+              "properties": {
+                "hp": {
+                  "type": "integer"
+                },
+                "attack": {
+                  "type": "integer"
+                },
+                "defense": {
+                  "type": "integer"
+                },
+                "sp_attack": {
+                  "type": "integer"
+                },
+                "sp_defense": {
+                  "type": "integer"
+                },
+                "speed": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "additionalProperties": false

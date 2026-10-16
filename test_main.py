@@ -290,6 +290,30 @@ class MoveMatchesSpreadTest(unittest.TestCase):
                 self.assertEqual(r.move["category"], "物理", d["name"])
 
 
+class BattleFormTest(unittest.TestCase):
+    def test_aegislash_blade_when_attacking_shield_when_defending(self):
+        rng = random.Random(0)
+        a = main.make_combatant(DATA, row("ギルガルド"), rng, "attacker")
+        d = main.make_combatant(DATA, row("ギルガルド"), rng, "defender")
+        self.assertEqual(a.name, "ギルガルド（ブレードフォルム）")
+        self.assertEqual((a.row["base_stats"]["attack"], a.row["base_stats"]["sp_attack"]), (140, 140))
+        self.assertEqual(d.name, "ギルガルド（シールドフォルム）")
+        self.assertEqual((d.row["base_stats"]["defense"], d.row["base_stats"]["sp_defense"]), (140, 140))
+        # 元のデータは書き換えない
+        self.assertEqual(row("ギルガルド")["name"], "ギルガルド")
+
+    def test_generated_questions_use_right_form(self):
+        rng = random.Random(8)
+        seen = set()
+        for _ in range(4000):
+            q = main.generate_question(DATA, rng)
+            if q.attacker.row["id"] == "pokemon_0681-00":
+                self.assertEqual(q.attacker.row["base_stats"]["attack"], 140); seen.add("atk")
+            if q.defender.row["id"] == "pokemon_0681-00":
+                self.assertEqual(q.defender.row["base_stats"]["defense"], 140); seen.add("dfn")
+        self.assertEqual(seen, {"atk", "dfn"})
+
+
 class FirstTurnMoveTest(unittest.TestCase):
     def test_no_first_turn_moves_after_boost(self):
         rng = random.Random(21)

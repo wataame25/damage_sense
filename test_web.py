@@ -18,7 +18,8 @@ var data = DamageEngine.indexData(GAME_DATA);
 var mismatches = [], checked = 0;
 SCENARIOS.forEach(function (s, i) {
   function mk(c) {
-    var x = new DamageEngine.Combatant(data.pokemon.find(function (r) { return r.id === c.id; }), c.ability);
+    var base = data.pokemon.find(function (r) { return r.id === c.id; });
+    var x = new DamageEngine.Combatant(Object.assign({}, base, { name: c.name, base_stats: c.base_stats }), c.ability);
     x.item = c.item ? data.items[c.item] : null;
     x.points = c.points; x.nature = c.nature; x.boosts = c.boosts;
     return x;
@@ -42,7 +43,7 @@ print(JSON.stringify({ checked: checked, mismatches: mismatches.slice(0, 5), cou
 
 
 def combatant_json(c):
-    return {"id": c.row["id"], "ability": c.ability, "item": c.item["id"] if c.item else None,
+    return {"id": c.row["id"], "name": c.row["name"], "base_stats": c.row["base_stats"], "ability": c.ability, "item": c.item["id"] if c.item else None,
             "points": c.points, "nature": c.nature, "boosts": c.boosts}
 
 

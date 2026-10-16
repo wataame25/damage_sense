@@ -29,6 +29,8 @@ BOOST_MOVES = {"りゅうのまい", "つるぎのまい", "わるだくみ", "�
 DEFENSIVE_ONLY = {"アーマーガア", "ドヒドイデ", "ピクシー", "メガピクシー"}   # README指定。攻撃側に選ばない
 MEGA_FIXED_RATE = 60          # メガストーン所持率がこれを超えたらメガ固定
 MEGA_RANDOM_RATE = 30         # これを超えたら通常/メガをランダム
+# 攻撃時と防御時で姿が変わる種族：{ポケモン名: (攻撃時のフォルム名, 防御時のフォルム名)}
+BATTLE_FORMS = {"ギルガルド": ("ブレードフォルム", "シールドフォルム")}
 FORCE_NORMAL = set()          # 通常形態に固定する種族（メガ率に関係なく）
 FORCE_MEGA = {"カイリュー"}    # メガ形態に固定（指示による。通常カイリューは環境にいないため）
 # 通常形態では使われない振り方（メガ形態の型が混ざって集計されているもの）。{ポケモン名: 除外する攻撃ステータス}
@@ -234,7 +236,15 @@ def build_species(rank, key, p, masters, added):
             "mega_fixed_note": None, "form_selection": "fixed",
             "ability_usage": [{"ability_id": ability_id(n), "usage_rate": r} for n, r in abil],
             "nature_usage": natures, "stat_point_usage": mega_spreads(form) if is_mega else normal_spreads,
+            "battle_forms": battle_forms(fname) if not is_mega else None,
         }
+
+    def battle_forms(fname):
+        if fname not in BATTLE_FORMS:
+            return None
+        by_form = {f.get("form_name"): f for f in p["forms"].values()}
+        return {role: {"form_name": fn, "base_stats": stats_of(by_form[fn])}
+                for role, fn in zip(("attacker", "defender"), BATTLE_FORMS[fname])}
 
     normal = row(key, base, False)
     rate = stone_rate or 0
