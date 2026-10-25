@@ -122,6 +122,7 @@ dl.facts dd { margin: 0; }
 .flag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
 .flag.up { border-color: var(--accent); color: var(--accent); }
 .flag.down { border-color: var(--hp-bad); color: var(--hp-bad); }
+.flag.rank { font-family: var(--font-data); }
 .spread { font-family: var(--font-data); font-size: 13px; font-variant-numeric: tabular-nums; }
 
 .center { background: var(--surface-2); padding: 18px 16px; display: grid; gap: 14px; align-content: center; text-align: center; }
@@ -876,6 +877,11 @@ var DamageEngine = (function () {
     return '<div class="stat"><span class="stat-note">' + STAT_LABEL[key] + '</span><span class="stat-val">' + c.stat(key) +
       '</span><span class="stat-note">種族値' + c.row.base_stats[key] + " ・ " + (c.points[key] || 0) + "振り" + nat + "</span></div>";
   }
+  function rankLabel(c, key) {
+    var st = c.boosts[key] || 0;
+    var cls = st > 0 ? "up" : st < 0 ? "down" : "";
+    return STAT_LABEL[key] + ' <span class="flag rank ' + cls + '">' + (st > 0 ? "+" + st : st < 0 ? String(st) : "±0") + "</span>";
+  }
   var STAT_SHORT = { hp: "H", attack: "A", defense: "B", sp_attack: "C", sp_defense: "D", speed: "S" };
   function natureLabel(c) {
     var up = Object.keys(c.nature).filter(function (k) { return c.nature[k] > 1; })[0];
@@ -1057,23 +1063,18 @@ var DamageEngine = (function () {
     var boost = "";
     if (a.boostMove) {
       var st = a.boosts[aKey] || 0;
-      boost = "<dt>強化</dt><dd>" + esc(a.boostMove) + "を1回使用済み" +
-        (st ? ' <span class="flag up">' + STAT_LABEL[aKey] + "ランク" + (st > 0 ? "+" : "") + st + "</span>" : "（" + STAT_LABEL[aKey] + "は変化なし）") + "</dd>";
+      boost = "<dt>強化</dt><dd>" + esc(a.boostMove) + "を1回使用済み</dd>";
     }
-    // いかくは考慮しない（場に出たときの能力ダウンなし）ことを両側に明示する
-    var intim = d.ability === "いかく";
-    if (intim && physical) {
-      var rank = a.boosts[aKey] || 0;
-      boost += "<dt>ランク</dt><dd>こうげき" + (rank > 0 ? "+" + rank : "±0") + ' <span class="flag">相手のいかくでは下がっていない</span></dd>';
-    }
-    var intimNote = intim ? '<span class="ability-note">いかくは考慮しません' + (physical ? "（攻撃側のこうげきは下がっていない）" : "（特殊技のため影響なし）") + "</span>" : "";
+    // 能力ランクは公開情報なので、変化がなくても計算に使うステータスのランクを常に表示する
+    var aRank = rankLabel(a, aKey) + (r.move.name === "エレクトロビーム" ? '<span class="ability-note">技の効果で攻撃時にとくこう+1</span>' : "");
+    var dRank = rankLabel(d, dKey);
     var w = q.battle.weather ? data.weather[q.battle.weather].name : "なし";
     var f = q.battle.field ? data.field[q.battle.field].name : "なし";
     var typeChanged = r.moveType !== r.move.type;
     return '<section class="battle" aria-label="出題">' +
       '<div class="side atk"><div class="role">攻撃側</div><h2 class="mon-name">' + esc(a.row.name) + "</h2>" +
       '<div class="chips">' + a.row.types.map(typeChip).join("") + "</div>" +
-      '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(a.ability) + "</dd><dt>持ち物</dt><dd>" + itemLabel(a) + "</dd>" + boost + "<dt>ランク</dt><dd>" + aRank + "</dd>" +
       "<dt>性格</dt><dd>" + natureLabel(a) + "</dd><dt>振り方</dt><dd>" + spreadLabel(a) + "</dd></dl>" +
       statBlock(a, aKey) + "</div>" +
       '<div class="center"><div class="move-head"><div class="arrow">▶▶</div><h2 class="move-name">' + esc(r.move.name) + "</h2>" +
@@ -1088,7 +1089,7 @@ var DamageEngine = (function () {
       (q.battle.fieldNote ? '<p class="env-note">' + esc(q.battle.fieldNote) + "</p>" : "") + "</div></div>" +
       '<div class="side dfn"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
       '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
-      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + intimNote + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd><dt>ランク</dt><dd>" + dRank + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
       "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
       statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
       "</section>";
