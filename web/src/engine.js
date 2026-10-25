@@ -5,7 +5,7 @@ var DamageEngine = (function () {
   "use strict";
 
   var LEVEL = 50;
-  var MAX_MIN_PERCENT = 110;
+  var MAX_MIN_PERCENT = 105;
   var ANSWER_CAP = 100;
   var P_BOOST_USED = 0.5;
   // 最終補正として掛かる持ち物（実機の4096分率）。それ以外の持ち物は威力補正として items.json の倍率で掛ける

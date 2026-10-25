@@ -85,7 +85,7 @@ class WebParityTest(unittest.TestCase):
     def test_js_generator_runs(self):
         script = "var d = DamageEngine.indexData(GAME_DATA); var rng = DamageEngine.makeRng(7); var bad = 0;" \
                  "for (var i = 0; i < 2000; i++) { var q = DamageEngine.generateQuestion(d, rng);" \
-                 " if (q.result.minPercent > 110 || q.attacker.row.is_defensive_only || (q.attacker.row.is_mega && q.attacker.item)" \
+                 " if (q.result.minPercent > 105 || q.attacker.row.is_defensive_only || (q.attacker.row.is_mega && q.attacker.item)" \
                  " || q.attacker.row.form_selection === 'excluded' || q.defender.row.form_selection === 'excluded') bad++;" \
                  " [q.attacker, q.defender].forEach(function (c) { var up = null, down = null;" \
                  "  Object.keys(c.nature).forEach(function (k) { if (c.nature[k] > 1) up = k; if (c.nature[k] < 1) down = k; });" \

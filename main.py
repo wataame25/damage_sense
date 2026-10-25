@@ -22,7 +22,7 @@ from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 LEVEL = 50
-MAX_MIN_PERCENT = 110      # 最低乱数がこれを超える問題は出題しない
+MAX_MIN_PERCENT = 105      # 最低乱数がこれを超える問題は出題しない
 ANSWER_CAP = 100           # 最低乱数が100を超える場合は100を入力する
 NORMAL_TOLERANCE = 5       # 普通モードの正解判定（±%）
 CHALLENGE_QUESTIONS = 10
