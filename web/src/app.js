@@ -19,7 +19,7 @@
   };
   var STAT_LABEL = { hp: "HP", attack: "こうげき", defense: "ぼうぎょ", sp_attack: "とくこう", sp_defense: "とくぼう" };
 
-  var state = { mode: "easy", q: null, answered: false, history: [], options: null, guess: null, finished: false };
+  var state = { title: true, mode: "easy", q: null, answered: false, history: [], options: null, guess: null, finished: false };
 
   var $main = document.getElementById("main");
   var $status = document.getElementById("status");
@@ -147,17 +147,65 @@
   }
 
   function setMode(mode) {
+    state.title = false;
     state.mode = mode;
     state.history = [];
     state.finished = false;
     newQuestion();
   }
 
+  function goTitle() {
+    state.title = true;
+    state.finished = false;
+    render();
+    window.scrollTo(0, 0);
+  }
+
   // ------------------------------------------------------------ 描画
+
+  var MODES = [
+    { key: "easy", name: "簡単", how: "4つの「最低〜最高ダメージ％」から選ぶ", goal: "正しい範囲を選べば正解" },
+    { key: "normal", name: "普通", how: "最低乱数のダメージ％を数字で入力", goal: "誤差±" + NORMAL_TOLERANCE + "%以内で正解" },
+    { key: "challenge", name: "チャレンジ", how: "最低乱数のダメージ％を入力（全" + CHALLENGE_QUESTIONS + "問）", goal: "誤差の合計が小さいほど高成績" }
+  ];
+
+  function renderTitle() {
+    var best = parseFloat(storageGet(BEST_KEY));
+    var html = '<section class="title reveal">' +
+      '<div class="hero"><p class="hero-kicker">ポケモンチャンピオンズ ダメージ計算トレーニング</p>' +
+      '<p class="hero-logo">ダメージ感覚</p>' +
+      '<p class="hero-lead">この技で、相手のHPを何％削れる？<br>実戦でよく使われている型どうしの対面で、ダメージの感覚を鍛えよう。</p></div>' +
+      '<div class="mode-cards">';
+    MODES.forEach(function (m) {
+      html += '<button type="button" class="mode-card" data-start="' + m.key + '"><span class="mc-name">' + m.name + "</span>" +
+        '<span class="mc-how">' + esc(m.how) + '</span><span class="mc-goal">' + esc(m.goal) + "</span>" +
+        (m.key === "challenge" && !isNaN(best) ? '<span class="mc-best">自己ベスト ' + best.toFixed(1) + "%</span>" : "") +
+        '<span class="mc-go">はじめる →</span></button>';
+    });
+    html += "</div>" +
+      '<div class="guide"><h2>遊び方</h2><ol class="steps">' +
+      "<li><b>対面を見る</b><span>攻撃側・使う技・防御側が表示されます。特性・持ち物・性格・能力ポイント・実数値、天候やフィールドも確認しましょう。</span></li>" +
+      "<li><b>ダメージを答える</b><span>その技で防御側のHPを何％削れるかを答えます。普通・チャレンジは<em>最低乱数</em>（一番低いダメージ）の割合を入力します。</span></li>" +
+      "<li><b>答え合わせ</b><span>HPバーと確定数で結果を表示。「計算の内訳」を開くと、実数値・補正・乱数16通りまで確認できます。</span></li>" +
+      "</ol></div>" +
+      '<div class="guide"><h2>ルールとヒント</h2><ul class="tips">' +
+      "<li>最低乱数のダメージが100％を超える問題では <b>100</b> と入力してください（最低乱数が" + E.MAX_MIN_PERCENT + "％を超える問題は出ません）。</li>" +
+      "<li>技は、攻撃側の技のうち相手に一番ダメージが出るものが自動で選ばれます。タイプ一致のときは表示されます。</li>" +
+      "<li>Lv50・能力ポイント制（1項目最大32）で計算。防御側はHP満タン・状態異常なし、急所なし、いかくなどは考えません。</li>" +
+      "<li>簡単モードは数字キー 1〜4 で選べます。答えたあとは Enter で次の問題へ。</li>" +
+      "<li>チャレンジの結果は X などで共有できます。</li>" +
+      "</ul></div></section>";
+    return html;
+  }
 
   function renderStatus() {
     var h = state.history;
     var html = "";
+    if (state.title) {
+      $status.innerHTML = "";
+      document.querySelectorAll(".modes button").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+      return;
+    }
     if (state.mode === "challenge") {
       html += '<div class="pips" aria-label="進行状況">';
       for (var i = 0; i < CHALLENGE_QUESTIONS; i++) {
@@ -408,13 +456,16 @@
       html += "</tbody></table></div>";
     }
     if (state.mode === "challenge" && h.length) html += renderShare();
-    html += '<div class="actions"><button class="btn" type="button" id="again">もう一度</button></div></section>';
+    html += '<div class="actions"><button class="btn" type="button" id="again">もう一度</button>' +
+      '<button class="btn ghost" type="button" data-title>タイトルへ</button></div></section>';
     return html;
   }
 
   function render() {
     renderStatus();
-    if (state.finished) {
+    if (state.title) {
+      $main.innerHTML = renderTitle();
+    } else if (state.finished) {
       $main.innerHTML = renderSummary();
     } else {
       $main.innerHTML = renderBattle(state.q) + renderAnswer(state.q) + (state.answered ? renderResult(state.q) : "");
@@ -423,6 +474,10 @@
   }
 
   function bind() {
+    $main.querySelectorAll("[data-start]").forEach(function (b) {
+      b.addEventListener("click", function () { setMode(b.dataset.start); });
+    });
+    $main.querySelectorAll("[data-title]").forEach(function (b) { b.addEventListener("click", goTitle); });
     $main.querySelectorAll("[data-choice]").forEach(function (b) {
       b.addEventListener("click", function () { submitChoice(+b.dataset.choice); });
     });
@@ -447,7 +502,7 @@
   });
   document.addEventListener("keydown", function (e) {
     if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
-    if (!state.finished && !state.answered && state.mode === "easy" && /^[1-4]$/.test(e.key)) submitChoice(+e.key - 1);
+    if (!state.title && !state.finished && !state.answered && state.mode === "easy" && /^[1-4]$/.test(e.key)) submitChoice(+e.key - 1);
   });
 
   var snap = data.snapshot;
@@ -455,5 +510,6 @@
     document.getElementById("snapshot").textContent = "シーズン" + snap.snapshot_id.replace("_single", "") + " シングル使用率上位50（" + snap.date + "取得）";
     document.getElementById("source").textContent = snap.source_url;
   }
-  newQuestion();
+  document.getElementById("home").addEventListener("click", goTitle);
+  render();
 })();
