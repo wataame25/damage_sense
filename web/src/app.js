@@ -191,7 +191,7 @@
       '<div class="guide"><h2>ルールとヒント</h2><ul class="tips">' +
       "<li>最低乱数のダメージが100％を超える問題では <b>100</b> と入力してください（最低乱数が" + E.MAX_MIN_PERCENT + "％を超える問題は出ません）。</li>" +
       "<li>技は、攻撃側の技のうち相手に一番ダメージが出るものが自動で選ばれます。タイプ一致のときは表示されます。</li>" +
-      "<li>Lv50・能力ポイント制（1項目最大32）で計算。防御側はHP満タン・状態異常なし、急所なし、いかくなどは考えません。</li>" +
+      "<li>Lv50・能力ポイント制（1項目最大32）で計算。防御側はHP満タン・状態異常なし、急所なし、いかくなどの能力ダウンは考えません（防御側がいかくでも、攻撃側のこうげきは下がっていない状態で計算します）。</li>" +
       "<li>簡単モードは数字キー 1〜4 で選べます。答えたあとは Enter で次の問題へ。</li>" +
       "<li>チャレンジの結果は X などで共有できます。</li>" +
       "</ul></div></section>";
@@ -240,6 +240,13 @@
       boost = "<dt>強化</dt><dd>" + esc(a.boostMove) + "を1回使用済み" +
         (st ? ' <span class="flag up">' + STAT_LABEL[aKey] + "ランク" + (st > 0 ? "+" : "") + st + "</span>" : "（" + STAT_LABEL[aKey] + "は変化なし）") + "</dd>";
     }
+    // いかくは考慮しない（場に出たときの能力ダウンなし）ことを両側に明示する
+    var intim = d.ability === "いかく";
+    if (intim && physical) {
+      var rank = a.boosts[aKey] || 0;
+      boost += "<dt>ランク</dt><dd>こうげき" + (rank > 0 ? "+" + rank : "±0") + ' <span class="flag">相手のいかくでは下がっていない</span></dd>';
+    }
+    var intimNote = intim ? '<span class="ability-note">いかくは考慮しません' + (physical ? "（攻撃側のこうげきは下がっていない）" : "（特殊技のため影響なし）") + "</span>" : "";
     var w = q.battle.weather ? data.weather[q.battle.weather].name : "なし";
     var f = q.battle.field ? data.field[q.battle.field].name : "なし";
     var typeChanged = r.moveType !== r.move.type;
@@ -261,7 +268,7 @@
       (q.battle.fieldNote ? '<p class="env-note">' + esc(q.battle.fieldNote) + "</p>" : "") + "</div></div>" +
       '<div class="side dfn"><div class="role">防御側</div><h2 class="mon-name">' + esc(d.row.name) + "</h2>" +
       '<div class="chips">' + d.row.types.map(typeChip).join("") + "</div>" +
-      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
+      '<dl class="facts"><dt>特性</dt><dd>' + esc(d.ability) + intimNote + "</dd><dt>性格</dt><dd>" + natureLabel(d) +
       "</dd><dt>振り方</dt><dd>" + spreadLabel(d) + "</dd></dl>" +
       statBlock(d, "hp") + statBlock(d, dKey) + "</div>" +
       "</section>";
